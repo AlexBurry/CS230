@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Rat",
+            "request": "launch",
+            "mainClass": "Rat",
+            "projectName": "CS230_9491c05f"
+        },
+        {
+            "type": "java",
             "name": "Launch App",
             "request": "launch",
             "mainClass": "App",
@@ -17,6 +24,6 @@
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
-        },
+        }
     ]
 }
