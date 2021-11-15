@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch App2",
+            "name": "Launch App",
             "request": "launch",
-            "mainClass": "App2",
+            "mainClass": "App",
             "projectName": "CS230_838fe99e",
             "vmArgs": "--module-path \"D:/GameJamFiles/GithubStuff/CS230/javafx-sdk-17.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
         },
