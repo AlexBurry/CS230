@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
  
-public class Test extends Application {
+public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         Button btn = new Button();
@@ -34,7 +34,8 @@ public class Test extends Application {
         primaryStage.show();
     }
  
- public static void main(String[] args) {
-        launch(args);
-    }
+public static void main(String[] args) {
+    launch(args);
+}
+
 }
