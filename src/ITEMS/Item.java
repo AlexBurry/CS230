@@ -1,3 +1,4 @@
+package ITEMS;
 import javafx.scene.image.Image;
 
 /**
