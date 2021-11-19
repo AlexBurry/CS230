@@ -6,5 +6,7 @@ public class Level {
     private int mSexChangeSpawnRate;
     private int fSexChangeSpawnRate;
     private int gasSpawnRate;
-
+    private int poisonSpawnRate;
+    private int sterlisationSpawnRate;
+    private int noEntrySpawnRate;
 }
