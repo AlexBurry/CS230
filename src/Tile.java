@@ -13,16 +13,8 @@ public class Tile {
 
     public Tile(char type) {
         this.type = type;
-        if (this.type == 'P' || this.type == 'T') {
-            isTraversable = true;
-        } else {
-            isTraversable = false;
-        }
-        if (this.type == 'P') {
-            isRatVisible = true;
-        } else {
-            isRatVisible = false;
-        }
+        isTraversable = this.type == 'P' || this.type == 'T';
+        isRatVisible = this.type == 'P';
     }
 
     public void draw(int[][] location) {

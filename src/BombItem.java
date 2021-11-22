@@ -1,13 +1,11 @@
-package ITEMS;
-
 /**
- * Poison the rat and kill it
+ * A bomb which explodes across several tiles.
  * @author Trafford
  * @author Jack
  * @version 0.1
  * @since 0.1
  */
-public class PoisonItem extends Item{
+public class BombItem extends Item{
 
     @Override
     public void draw(int[][] position) {

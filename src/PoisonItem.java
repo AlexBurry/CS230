@@ -1,13 +1,11 @@
-package ITEMS;
-
 /**
- * The main gas node of a gas item. Controls gas dissipation
+ * Poison the rat and kill it
  * @author Trafford
  * @author Jack
  * @version 0.1
  * @since 0.1
  */
-public class GasItem extends Item{
+public class PoisonItem extends Item{
 
     @Override
     public void draw(int[][] position) {

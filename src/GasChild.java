@@ -1,5 +1,3 @@
-package ITEMS;
-
 /**
  * Smaller node of gasItem, reproduces on condition.
  * @author Trafford
