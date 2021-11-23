@@ -6,7 +6,7 @@
  */
 public class Board {
     private Tile[][] tileMap;
-    private Item[][] itemMap;
+    private static Item[][] itemMap;
     private Rat[][] ratMap;
 
     /**
@@ -27,7 +27,7 @@ public class Board {
      * @param y y coordinate of the item
      * @param item the item object
      */
-    public void addItemToMap(int x, int y, Item item) {
+    public static void addItemToMap(int x, int y, Item item) {
         itemMap[x][y] = item;
     }
 
