@@ -7,21 +7,18 @@
 public class Board {
     private Tile[][] tileMap;
     private Item[][] itemMap;
-    private Rat[][] mRatMap;
-    private Rat[][] fRatMap;
+    private Rat[][] ratMap;
 
     /**
      * Constructor function for board
      * @param tiles tile map in 2D array
      * @param items item map in 2D array
-     * @param mRats male rat map in 2D array
-     * @param fRats female rat map in 2D array
+     * @param rats male rat map in 2D array
      */
-    public Board(Tile[][] tiles, Item[][] items, Rat[][] mRats, Rat[][] fRats) {
+    public Board(Tile[][] tiles, Item[][] items, Rat[][] rats) {
         tileMap = tiles;
         itemMap = items;
-        mRatMap = mRats;
-        fRatMap = fRats;
+        ratMap =  rats;
     }
 
     /**
@@ -41,17 +38,7 @@ public class Board {
      * @param rat the rat object
      */
     public void addMRatToMap(int x, int y, Rat rat) {
-        mRatMap[x][y] = rat;
-    }
-
-    /**
-     * Function to add a female rat to the fRatMap
-     * @param x x coordinate of the rat
-     * @param y y coordinate of the rat
-     * @param rat the rat object
-     */
-    public void addFRatToMap(int x, int y, Rat rat) {
-        fRatMap[x][y] = rat;
+        ratMap[x][y] = rat;
     }
 
     public void removeItemFromMap() {
@@ -75,10 +62,6 @@ public class Board {
     }
 
     public Rat[][] getmRatMap() {
-        return mRatMap;
-    }
-
-    public Rat[][] getfRatMap() {
-        return fRatMap;
+        return ratMap;
     }
 }

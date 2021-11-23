@@ -18,11 +18,11 @@ public class Level {
     private int numberOfPoison;
     private int numberOfNoEntry;
     private final int MAX_ITEM_NUMBER = 4;
-    private Board levelBoard;
+    private static Board levelBoard;
 
-    public Level (Tile[][] tiles, Item[][] items, Rat[][] mRats, Rat[][] fRats, int allowedTime, int timeRemaining,
+    public Level (Tile[][] tiles, Item[][] items, Rat[][] rats, int allowedTime, int timeRemaining,
                   int currentScore) {
-        levelBoard = new Board(tiles, items, mRats, fRats);
+        levelBoard = new Board(tiles, items, rats);
     }
 
 //    public Board constructBoard(Tile[][] tiles, Item[][] items, Rat[][] mRats, Rat[][] fRats) {
