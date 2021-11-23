@@ -18,5 +18,7 @@ public class GasItem extends Item{
         // TODO Auto-generated method stub
         
     }
-    
+
+
+
 }

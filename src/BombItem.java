@@ -18,5 +18,7 @@ public class BombItem extends Item{
         // TODO Auto-generated method stub
         
     }
-    
+
+
+
 }

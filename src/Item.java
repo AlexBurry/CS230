@@ -36,4 +36,8 @@ public abstract class Item {
      */
     public abstract void deleteItem();
 
+    protected void tryPlaceItemOnLocation(int x, int y){
+        //Board.addItemToMap(x,y,this);
+    };
+
 }
