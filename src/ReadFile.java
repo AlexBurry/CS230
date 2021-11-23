@@ -7,11 +7,18 @@ public class ReadFile {
         File inputFile = new File(levelFile);
         Scanner in = null;
         in = new Scanner(levelFile);
+        Tile[][] tilemap = readMap(in);
     }
 
-//    private String readMap() {
-//
-//    }
+    private Tile[][] readMap(Scanner in) {
+        String curLine = in.nextLine();
+        Scanner token = new Scanner(String.valueOf(curLine));
+
+        while (in.hasNext()) {
+
+        }
+        return null;
+    }
 //
 //    private String readTimeLimit() {
 //

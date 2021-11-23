@@ -65,4 +65,20 @@ public class Board {
     public void removeFRatFromMap() {
 
     }
+
+    public Tile[][] getTileMap() {
+        return tileMap;
+    }
+
+    public Item[][] getItemMap() {
+        return itemMap;
+    }
+
+    public Rat[][] getmRatMap() {
+        return mRatMap;
+    }
+
+    public Rat[][] getfRatMap() {
+        return fRatMap;
+    }
 }

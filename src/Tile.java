@@ -17,6 +17,10 @@ public class Tile {
         isRatVisible = this.type == 'P';
     }
 
+    public void tempDraw() {
+        System.out.print(type);
+    }
+
     public void draw(int[][] location) {
         //TODO: implement draw method
     }

@@ -18,13 +18,23 @@ public class Level {
     private int numberOfPoison;
     private int numberOfNoEntry;
     private final int MAX_ITEM_NUMBER = 4;
-    //private Board levelBoard;
+    private Board levelBoard;
 
-    public Level () {
-
+    public Level (Tile[][] tiles, Item[][] items, Rat[][] mRats, Rat[][] fRats, int allowedTime, int timeRemaining,
+                  int currentScore) {
+        levelBoard = new Board(tiles, items, mRats, fRats);
     }
 
-    public Board constructBoard(Tile[][] tiles, Item[][] items, Rat[][] mRats, Rat[][] fRats) {
-        return new Board(tiles, items, mRats, fRats);
-    }
+//    public Board constructBoard(Tile[][] tiles, Item[][] items, Rat[][] mRats, Rat[][] fRats) {
+//        return new Board(tiles, items, mRats, fRats);
+//    }
+
+//    public void checkCollisions() {
+//        Rat[][] mRatMap = levelBoard.getmRatMap();
+//        Rat[][] fRatMap = levelBoard.getfRatMap();
+//        Item[][] itemMap = levelBoard.getItemMap();
+//
+//    }
+
+
 }
