@@ -24,11 +24,6 @@ public class Rat {
         this.isSterile = isSterile;
     }
 
-    public static void main(String[] args) {
-        System.out.println("Start of rats class");
-    }
-
-
     @Override
     public String toString() {
         return "";
