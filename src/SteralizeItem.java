@@ -8,7 +8,7 @@
 public class SteralizeItem extends Item{
 
     @Override
-    public void draw(int[][] position) {
+    public void draw(int x, int y) {
         // TODO Auto-generated method stub
         
     }

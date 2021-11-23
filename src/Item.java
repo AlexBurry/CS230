@@ -15,10 +15,12 @@ public abstract class Item {
     /**
      * 
      * Draws the item to a tile location
-     * @param position The coordinates which will point to a tile location.
+     * @param x The coordinates which will point to a tile location.
+     * @param y
      */
     
-    public abstract void draw(int[][] position);
+    public abstract void draw(int x, int y);
+
 
 
     /**
@@ -36,6 +38,12 @@ public abstract class Item {
      */
     public abstract void deleteItem();
 
+    /**
+     * Adds an item to the item array in the Board class.
+     * @param x x coordinate
+     * @param y y coordinate
+     */
+    //for now, this does nothing. But we need to make sure adding it is actually possible.
     protected void tryPlaceItemOnLocation(int x, int y){
         Board.addItemToMap(x,y,this);
     };

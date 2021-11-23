@@ -8,8 +8,10 @@
  */
 public class NoEntryItem extends Item{
 
+    private int healthPoints = 5;
+
     @Override
-    public void draw(int[][] position) {
+    public void draw(int x, int y) {
         // TODO Auto-generated method stub
         
     }

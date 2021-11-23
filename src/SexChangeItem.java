@@ -10,7 +10,7 @@ public class SexChangeItem extends Item {
     private int sex = 0; // default to male
 
     @Override
-    public void draw(int[][] position) {
+    public void draw(int x, int y) {
         // TODO Auto-generated method stub
         
     }
@@ -20,5 +20,5 @@ public class SexChangeItem extends Item {
         // TODO Auto-generated method stub
         
     }
-    
+
 }
