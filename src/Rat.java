@@ -15,11 +15,13 @@ public class Rat {
     private Boolean isDeath;
     private Boolean alive;
     private Boolean isSterile;
+    private int speed;
+    
 
-    public Rat(Boolean sex, Boolean isBaby, Boolean isDeath, Boolean alive, Boolean isSterile) {
+    public Rat(Boolean sex, Boolean isBaby, Boolean isDeathRat, Boolean alive, Boolean isSterile) {
         this.sex = sex;
         this.isBaby = isBaby;
-        this.isDeath = isDeath;
+        this.isDeath = isDeathRat;
         this.alive = alive;
         this.isSterile = isSterile;
     }
