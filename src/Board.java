@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Represents the board.
@@ -28,8 +29,10 @@ public class Board extends Application{
     private static ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
     private static Canvas canvas;
-    private static int mapX;
-    private static int mapY;
+    private int mapX;
+    private int mapY;
+    private final int GAME_WIDTH = 1200;
+    private final int GAME_HEIGHT = 800;
 
 
     /**
@@ -54,19 +57,19 @@ public class Board extends Application{
 
     public void start(Stage primaryStage) {
         Pane root = buildGUI();
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
         drawBoard();
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    private static Pane buildGUI() {
+    private Pane buildGUI() {
         // Create top-level panel that will hold all GUI nodes.
         BorderPane root = new BorderPane();
 
         // Create the canvas that we will draw on.
         // We store this as a global variable so other methods can access it.
-        canvas = new Canvas(800, 800);
+        canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
         root.setCenter(canvas);
 
         return root;
@@ -75,18 +78,21 @@ public class Board extends Application{
     public void drawBoard() {
         // Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
+        Image tileImage = new Image("grasstile.png");
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+
         // Set the background to gray.
-        gc.setFill(Color.GRAY);
+        gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        Image tileImage = new Image("tile.png");
+
         for (int x = 0; x < mapX; x++) {
-            for (int y = 0; y < mapY; x++) {
-                gc.drawImage(tileImage, x, 2);
+            for (int y = 0; y < mapY; y++) {
+                gc.drawImage(tileImage, x * 60, y * 60);
+                Random obj = new Random();
+                gc.rotate(obj.nextInt(360));
             }
         }
 

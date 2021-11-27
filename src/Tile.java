@@ -31,21 +31,16 @@ public class Tile {
 
     public void draw(int x, int y, Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        Rectangle r = new Rectangle(40, 40, 40, 40);
         switch (type) {
             case "g":
-//                r.setFill(Color.GREEN);
-//                r.setStroke(Color.DARKGRAY);
-                Image tileImage = new Image("grasstile.png");
+                Image tileImage = new Image("rat.png");
                 gc.drawImage(tileImage, x, y);
                 break;
             case "p":
-                r.setFill(Color.GRAY);
-                r.setStroke(Color.DARKGRAY);
+
                 break;
             case "t":
-                r.setFill(Color.BROWN);
-                r.setStroke(Color.DARKGRAY);
+          ;
         }
     }
 

@@ -28,7 +28,10 @@ public class App extends Application {
 //        }
 
         Tile[][] tilemap = new Tile[4][4];
-        Canvas canvas = new Canvas(800, 800);
+        Canvas canvas = new Canvas(1200, 800);
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Rats: DLC-less Edition");
+        primaryStage.getIcons().add(new Image("raticon.png"));
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
                 String type = "g";
@@ -38,7 +41,7 @@ public class App extends Application {
         }
 
         //Board testBoard = new Board();
-        Board testBoard = new Board(tilemap, 4, 4);
+        Board testBoard = new Board(tilemap, 40, 40);
         testBoard.start(primaryStage);
 
     }
