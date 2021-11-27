@@ -1,4 +1,6 @@
-import javax.sound.sampled.SourceDataLine;
+import javafx.scene.image.Image;
+import java.util.Vector;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * The main rat class. Covers all basic features of Rats.
@@ -10,20 +12,49 @@ import javax.sound.sampled.SourceDataLine;
 
 public class Rat {
 
-    private Boolean sex;
-    private Boolean isBaby;
-    private Boolean isDeath;
-    private Boolean alive;
-    private Boolean isSterile;
+    private boolean sex;
+    private boolean isBaby;
+    private boolean isDeath;
+    private boolean alive;
+    private boolean isSterile;
     private int speed;
-    
 
-    public Rat(Boolean sex, Boolean isBaby, Boolean isDeathRat, Boolean alive, Boolean isSterile) {
+    private Image sprite;
+    private double imgWidth;
+    private double imgHeight;
+
+    private Vector position;
+    private Vector velocity;
+
+
+
+
+    public Rat(boolean sex, boolean isBaby, boolean isDeathRat, boolean alive, boolean isSterile) {
         this.sex = sex;
         this.isBaby = isBaby;
         this.isDeath = isDeathRat;
         this.alive = alive;
         this.isSterile = isSterile;
+
+        position = new Vector(0,0);
+        velocity = new Vector(0,0);
+    }
+        /*
+        sets and gets the width and height of the image.
+        currently imgWidth and imgHeight has no use.
+         */
+    public void setImage(String filename){
+        sprite = new Image(filename);
+        imgWidth = sprite.getWidth();
+        imgHeight = sprite.getHeight();
+    }
+
+    public void setPosition(double x, double y){
+        //position.set(x,y);
+    }
+
+    public void draw(int x, int y) {
+
     }
 
     @Override
