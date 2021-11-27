@@ -1,25 +1,97 @@
+import com.sun.javafx.stage.EmbeddedWindow;
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+
 /**
  * Represents the board.
  * @author Alex
  * @version 0.1
  * @since 0.1
  */
-public class Board {
+public class Board extends Application{
     private Tile[][] tileMap;
-    private static Item[][] itemMap;
-    private Rat[][] ratMap;
+    private static ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Rat> rats = new ArrayList<>();
+    private static Canvas canvas;
+    private static int mapX;
+    private static int mapY;
+
 
     /**
      * Constructor function for board
      * @param tiles tile map in 2D array
-     * @param items item map in 2D array
-     * @param rats male rat map in 2D array
+     //* @param items item map in 2D array
+     //* @param rats male rat map in 2D array
      */
-    public Board(Tile[][] tiles, Item[][] items, Rat[][] rats) {
+    public Board(Tile[][] tiles, /*Item[][] items, Rat[][] rats,*/ int mapX, int mapY) {
         tileMap = tiles;
-        itemMap = items;
-        ratMap =  rats;
+//        itemMap = items;
+//        ratMap =  rats;
+        this.mapX = mapX;
+        this.mapY = mapY;
+
+
     }
+
+    public Board() {
+
+    }
+
+    public void start(Stage primaryStage) {
+        Pane root = buildGUI();
+        Scene scene = new Scene(root, 800, 800);
+        drawBoard();
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private static Pane buildGUI() {
+        // Create top-level panel that will hold all GUI nodes.
+        BorderPane root = new BorderPane();
+
+        // Create the canvas that we will draw on.
+        // We store this as a global variable so other methods can access it.
+        canvas = new Canvas(800, 800);
+        root.setCenter(canvas);
+
+        return root;
+    }
+
+    public void drawBoard() {
+        // Get the Graphic Context of the canvas. This is what we draw on.
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        // Clear canvas
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        // Set the background to gray.
+        gc.setFill(Color.GRAY);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        Image tileImage = new Image("tile.png");
+        for (int x = 0; x < mapX; x++) {
+            for (int y = 0; y < mapY; x++) {
+                gc.drawImage(tileImage, x, 2);
+            }
+        }
+
+    }
+
 
     /**
      * Function to add an item to the itemMap
@@ -28,28 +100,24 @@ public class Board {
      * @param item the item object
      */
     public static void addItemToMap(int x, int y, Item item) {
-        itemMap[x][y] = item;
+        items.add(item);
     }
 
-    /**
-     * Function to add a male rat to the mRatMap
-     * @param x x coordinate of the rat
-     * @param y y coordinate of the rat
-     * @param rat the rat object
-     */
-    public void addMRatToMap(int x, int y, Rat rat) {
-        ratMap[x][y] = rat;
-    }
+//    /**
+//     * Function to add a male rat to the mRatMap
+//     * @param x x coordinate of the rat
+//     * @param y y coordinate of the rat
+//     * @param rat the rat object
+//     */
+//    public void addMRatToMap(int x, int y, Rat rat) {
+//        ratMap[x][y] = rat;
+//    }
 
     public void removeItemFromMap() {
 
     }
 
-    public void removeMRatFromMap() {
-
-    }
-
-    public void removeFRatFromMap() {
+    public void removeRatFromMap() {
 
     }
 
@@ -57,11 +125,11 @@ public class Board {
         return tileMap;
     }
 
-    public Item[][] getItemMap() {
-        return itemMap;
-    }
+//    public Item getItemMap() {
+//        return itemMap;
+//    }
 
-    public Rat[][] getmRatMap() {
-        return ratMap;
-    }
+//    public Rat[][] getRatMap() {
+//        return ratMap;
+//    }
 }
