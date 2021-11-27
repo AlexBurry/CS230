@@ -1,8 +1,6 @@
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 /**
@@ -11,19 +9,17 @@ import java.util.Objects;
  * @version 0.1
  * @since 0.1
  */
-
-
 public class Tile {
-    private String type;
-    private int[][] location;
+    private final String type;
+    private final int xValue;
+    private final int yValue;
     private Boolean traversable;
-    private Boolean isRatVisible;
-    //private Rectangle r;
-    private static int width = 40;
-    private static int height = 40;
+    private final Boolean isRatVisible;
 
     public Tile(String type, int x, int y, Canvas canvas) {
         this.type = type;
+        this.xValue = x;
+        this.yValue = y;
         traversable = Objects.equals(this.type, "p") || Objects.equals(this.type, "t");
         isRatVisible = Objects.equals(this.type, "p");
         draw(x, y, canvas);
@@ -33,28 +29,33 @@ public class Tile {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         switch (type) {
             case "g":
-                Image tileImage = new Image("rat.png");
-                gc.drawImage(tileImage, x, y);
+                Image grassImage = new Image("grasstile.png");
+                gc.drawImage(grassImage, x * 60, y * 60);
                 break;
             case "p":
-
+                Image pathImage = new Image("tile.png");
+                gc.drawImage(pathImage, x * 60, y * 60);
+                //TODO: Add path image
                 break;
             case "t":
-          ;
+                Image tunnelImage = new Image("rat.png");
+                gc.drawImage(tunnelImage, x * 60, y * 60);
+                //TODO: Add tunnel image
+                break;
         }
     }
 
-    public int[][] getLocation() {
-        return location;
+    public int[] getLocation() {
+        return new int[]{xValue, yValue};
     }
 
     public Boolean getTraversable() {
         return traversable;
     }
 
-//    public Boolean setIsTraversable() {
-//
-//    }
+    public void setTraversable() {
+        traversable = !traversable;
+    }
 
     public Boolean getIsRatVisible() {
         return isRatVisible;

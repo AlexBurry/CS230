@@ -12,26 +12,26 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Represents the board.
  * @author Alex
+ * @author Trafford
  * @version 0.1
  * @since 0.1
  */
 public class Board extends Application{
-    private Tile[][] tileMap;
+    private final Tile[][] tileMap;
+    private final String[][] tempTileMap;
     private static ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
     private static Canvas canvas;
-    private int mapX;
-    private int mapY;
+    private final int mapX;
+    private final int mapY;
     private final int GAME_WIDTH = 1200;
     private final int GAME_HEIGHT = 800;
-
 
     /**
      * Constructor function for board
@@ -39,18 +39,13 @@ public class Board extends Application{
      //* @param items item map in 2D array
      //* @param rats male rat map in 2D array
      */
-    public Board(Tile[][] tiles, /*Item[][] items, Rat[][] rats,*/ int mapX, int mapY) {
-        tileMap = tiles;
+    public Board(String[][] tiles, /*String[][] items, String[][] rats,*/ int mapX, int mapY) {
+        tempTileMap = tiles;
 //        itemMap = items;
 //        ratMap =  rats;
         this.mapX = mapX;
         this.mapY = mapY;
-
-
-    }
-
-    public Board() {
-
+        tileMap = new Tile[this.mapX][this.mapY];
     }
 
     public void start(Stage primaryStage) {
@@ -76,31 +71,19 @@ public class Board extends Application{
     public void drawBoard() {
         // Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        Image tileImage = new Image("grasstile.png");
-        Image ratImage = new Image("rat.png");
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-
-        // Set the background to gray.
+        // Set the background to black.
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-
+        //Read in a 2d array of strings of tile types then turn it into a 2d array of Tile objects
         for (int x = 0; x < mapX; x++) {
             for (int y = 0; y < mapY; y++) {
-                gc.drawImage(tileImage, x * 60, y * 60);
-                Random obj = new Random();
-                int r = obj.nextInt(4);
-                if(r == 1){
-                    gc.drawImage(ratImage, x * 60, y * 60);
-                }
-                //gc.rotate(obj.nextInt(360));
+                tileMap[x][y] = new Tile(tempTileMap[x][y], x, y, canvas);
             }
         }
-
     }
-
 
     /**
      * Function to add an item to the itemMap

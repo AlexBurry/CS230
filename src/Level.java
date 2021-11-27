@@ -27,7 +27,7 @@ public class Level {
     private static Board levelBoard;
     private Canvas canvas;
 
-    public Level (Tile[][] tiles, int mapX, int mapY) {
+    public Level (String[][] tiles, int mapX, int mapY) {
         launch();
         levelBoard = new Board(tiles, mapX, mapY);
         buildGUI();
