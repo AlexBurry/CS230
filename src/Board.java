@@ -9,9 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -79,6 +77,7 @@ public class Board extends Application{
         // Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Image tileImage = new Image("grasstile.png");
+        Image ratImage = new Image("rat.png");
         // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -92,7 +91,11 @@ public class Board extends Application{
             for (int y = 0; y < mapY; y++) {
                 gc.drawImage(tileImage, x * 60, y * 60);
                 Random obj = new Random();
-                gc.rotate(obj.nextInt(360));
+                int r = obj.nextInt(4);
+                if(r == 1){
+                    gc.drawImage(ratImage, x * 60, y * 60);
+                }
+                //gc.rotate(obj.nextInt(360));
             }
         }
 
