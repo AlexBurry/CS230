@@ -1,0 +1,10 @@
+Trafford, 6, 5621
+Alex, 5, 4428
+Rex, 6, 5325
+Jack, 2, 1742
+Iggy, 4, 3675
+Joe, 3, 2744
+Marcus, 5, 4234
+Dom, 4, 3945
+Michael, 1, 966
+Josh, 5, 4502
