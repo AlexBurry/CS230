@@ -83,6 +83,13 @@ public class Board extends Application{
                 tileMap[x][y] = new Tile(tempTileMap[x][y], x, y, canvas);
             }
         }
+        Image pathImage = new Image("tunneltile.png");
+        Image pathImage2 = new Image("pathtile.png");
+        gc.drawImage(pathImage, 1 * 60, 1 * 60);
+        gc.drawImage(pathImage, 1 * 60, 2 * 60);
+        gc.drawImage(pathImage2, 2 * 60, 1 * 60);
+        gc.drawImage(pathImage, 3 * 60, 1 * 60);
+        gc.drawImage(pathImage2, 4 * 60, 1 * 60);
     }
 
     /**

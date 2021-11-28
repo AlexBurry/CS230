@@ -33,7 +33,7 @@ public class Tile {
                 gc.drawImage(grassImage, x * 60, y * 60);
                 break;
             case "p":
-                Image pathImage = new Image("tile.png");
+                Image pathImage = new Image("pathtile.png");
                 gc.drawImage(pathImage, x * 60, y * 60);
                 //TODO: Add path image
                 break;
