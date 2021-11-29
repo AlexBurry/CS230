@@ -31,7 +31,7 @@ public class Board extends Application{
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
-    private final int GAME_HEIGHT = 800;
+    private final int GAME_HEIGHT = 780;
     private Level instance;
 
     /**

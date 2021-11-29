@@ -16,7 +16,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         Canvas canvas = new Canvas(1200, 800);
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Rats: DLC-less Edition");
+        primaryStage.setTitle("Rats: Steampunk Edition");
         primaryStage.getIcons().add(new Image("raticon.png"));
 
         String[][] tilemap = new String[40][40];
@@ -27,6 +27,7 @@ public class App extends Application {
         }
 
         Board testBoard = new Board(tilemap, 40, 40);
+
         //testBoard.addItemToMap(4,4,new SexChangeItem(4,4));
         testBoard.start(primaryStage);
     }
