@@ -133,6 +133,11 @@ public class Board extends Application{
         return tileMap;
     }
 
+    public void addRat(int x, int y, Rat rat) {
+        rats.add(rat);
+        instance.reDrawBoard();
+    }
+
 //    public Item getItemMap() {
 //        return itemMap;
 //    }
