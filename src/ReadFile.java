@@ -45,16 +45,11 @@ public class ReadFile {
 
     private String[][] readMap(Scanner in) {
         String[][] tilemap = new String[mapX][mapY];
-//        String curLine = in.nextLine();
-//        Scanner token = new Scanner(String.valueOf(curLine));
-        int count = 0;
+
         for (int y = 0; y < mapY; y++) {
             for (int x = 0; x < mapX; x++) {
-                count++;
                 if (in.hasNext()) {
                     tilemap[x][y] = in.next();
-                    //System.out.println(tilemap[x][y]);
-
                 }
             }
         }
