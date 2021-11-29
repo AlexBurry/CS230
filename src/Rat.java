@@ -12,7 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Rat {
 
-    private boolean sex;
+    private char sex;
     private boolean isBaby;
     private boolean isDeath;
     private boolean alive;
@@ -29,8 +29,10 @@ public class Rat {
 
 
 
-    public Rat(boolean sex, boolean isBaby, boolean isDeathRat, boolean alive, boolean isSterile) {
-        this.sex = sex;
+    public Rat(char sex, boolean isBaby, boolean isDeathRat, boolean alive, boolean isSterile) {
+        if (sex == 'f' || sex == 'm') {
+            this.sex = sex;
+        }
         this.isBaby = isBaby;
         this.isDeath = isDeathRat;
         this.alive = alive;
@@ -44,7 +46,7 @@ public class Rat {
         currently imgWidth and imgHeight has no use.
          */
     public void setImage(String filename){
-        sprite = new Image("rat.png");
+        sprite = new Image("spriteRat.png");
     }
 
     public Image getSprite() {

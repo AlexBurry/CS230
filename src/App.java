@@ -30,7 +30,7 @@ public class App extends Application {
 
         Board testBoard = new Board(tilemap, 40, 40);
         //testBoard.addItemToMap(4,4,new SexChangeItem(4,4));
-        testBoard.addRat(new Rat(false, false, false,true, false));
+        testBoard.addRat(new Rat('f', false, false,true, false));
         testBoard.start(primaryStage);
 
 //        Level newLevel = new ReadFile("testlevel.txt", primaryStage).newLevel();

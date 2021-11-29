@@ -92,6 +92,7 @@ public class Board extends Application{
 
         for (Rat rt: rats) {
             gc.drawImage(rt.getSprite(),1 * 60,4 * 60);
+            gc.drawImage(rt.getSprite(),2 * 60,4 * 60);
         }
 
 
@@ -110,7 +111,6 @@ public class Board extends Application{
      * @param item the item object
      */
     public void addItemToMap(int x, int y, Item item) {
-
         items.add(item);
         //instance.reDrawBoard();
 
