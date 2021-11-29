@@ -63,5 +63,18 @@ public class Rat {
     public String toString() {
         return "";
     }
+
+    public void initiateSexChange(char gender){
+        if(!isBaby){
+            if(gender == 'm'){
+
+            }
+            else{
+
+            }
+        }
+
+
+    }
     
 }
