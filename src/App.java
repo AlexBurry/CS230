@@ -33,9 +33,12 @@ public class App extends Application {
 //        testBoard.addRat(new Rat(false, false, false,true, false));
 //        testBoard.start(primaryStage);
 
-        Level newLevel = new ReadFile("testlevel.txt", primaryStage).newLevel();
-        newLevel.getLevelBoard().addItemToMap(2,1,new SexChangeItem(2,1));
-
+        Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
+        Item newItem = new SexChangeItem(2,1);
+        Item newItem2 = new SexChangeItem(2,2);
+        newLevel.getLevelBoard().addItemToMap(2,1,newItem);
+        newLevel.getLevelBoard().addItemToMap(2,2,newItem2);
+        newLevel.getLevelBoard().removeItemFromMap(2,1,newItem);
     }
 
     public static void main(String[] args) {
