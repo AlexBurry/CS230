@@ -35,12 +35,10 @@ public class Tile {
             case "p":
                 Image pathImage = new Image("pathtile.png");
                 gc.drawImage(pathImage, x * 60, y * 60);
-                //TODO: Add path image
                 break;
             case "t":
-                Image tunnelImage = new Image("rat.png");
+                Image tunnelImage = new Image("tunneltile.png");
                 gc.drawImage(tunnelImage, x * 60, y * 60);
-                //TODO: Add tunnel image
                 break;
         }
     }

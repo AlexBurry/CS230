@@ -2,9 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+
 public class ReadFile {
     private int mapX;
     private int mapY;
+    private static Level level;
 
     public ReadFile(String levelFile) throws FileNotFoundException {
         File inputFile = new File(levelFile);
@@ -19,7 +21,7 @@ public class ReadFile {
 
         mapX = mapSize(in);
         mapY = mapSize(in);
-
+        level = new Level(mapX, mapY, readMap(in));
         //Tile[][] tilemap = readMap(in);
         //new Level(tilemap, mapX, mapY);
     }
@@ -28,19 +30,17 @@ public class ReadFile {
         return Integer.parseInt(in.next());
     }
 
-//    private Tile[][] readMap(Scanner in) {
-//        Tile[][] tilemap = new Tile[mapX][mapY];
-//        String curLine = in.nextLine();
-//        Scanner token = new Scanner(String.valueOf(curLine));
-//        for (int y = 0; y < mapY; y++) {
-//            for (int x = 0; y < mapX; x++) {
-//                while (in.hasNext()) {
-//                    tilemap[x][y] = new Tile(in.next(), 40, 40);
-//                }
-//            }
-//        }
-//        return tilemap;
-//    }
+    private String[][] readMap(Scanner in) {
+        String[][] tilemap = new String[mapX][mapY];
+        String curLine = in.nextLine();
+        Scanner token = new Scanner(String.valueOf(curLine));
+        for (int x = 0; x < mapX; x++) {
+            for (int y = 0; y < mapX; y++) {
+                tilemap[x][y] = in.next();
+            }
+        }
+        return tilemap;
+    }
 
 //    private String readTimeLimit() {
 //

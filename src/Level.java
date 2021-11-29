@@ -1,10 +1,12 @@
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import static javafx.application.Application.launch;
 
-public class Level {
+public class Level extends Application{
     private float timeRemaining;
     private int currentScore;
     private int allowedTime;
@@ -28,12 +30,16 @@ public class Level {
     private static Level instance;
     private Canvas canvas;
 
-    public Level (String[][] tiles, int mapX, int mapY) {
+    public Level (int mapX, int mapY, String[][] tiles) {
         launch();
         levelBoard = new Board(tiles, mapX, mapY);
         buildGUI();
         instance = this;
         levelBoard.drawBoard();
+    }
+
+    public void start(Stage primaryStage) {
+        Pane root = buildGUI();
     }
 
     private static Pane buildGUI() {
