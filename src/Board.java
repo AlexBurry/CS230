@@ -80,8 +80,8 @@ public class Board extends Application{
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         //Read in a 2d array of strings of tile types then turn it into a 2d array of Tile objects
-        for (int x = 0; x < mapX; x++) {
-            for (int y = 0; y < mapY; y++) {
+        for (int y = 0; y < mapY; y++) {
+            for (int x = 0; x < mapX; x++) {
                 tileMap[x][y] = new Tile(tempTileMap[x][y], x, y, canvas);
             }
         }
@@ -95,12 +95,8 @@ public class Board extends Application{
         }
 
 
-        gc.drawImage(new Image("drainTile.png"),4 * 60,6 * 60);
-        gc.drawImage(new Image("drainTile.png"),4 * 60,7 * 60);
-        gc.drawImage(new Image("drainTile.png"),3 * 60,6 * 60);
-        gc.drawImage(new Image("metalPathTile.png"),2 * 60,6 * 60);
-        gc.drawImage(new Image("metalPathTile.png"),2 * 60,7 * 60);
-        gc.drawImage(new Image("NoEntry.png"),2 * 60,7 * 60);
+
+
     }
 
     /**
@@ -112,7 +108,7 @@ public class Board extends Application{
     public void addItemToMap(int x, int y, Item item) {
 
         items.add(item);
-        //instance.reDrawBoard();
+        this.drawBoard();
 
     }
 

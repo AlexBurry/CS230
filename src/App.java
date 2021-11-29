@@ -29,12 +29,13 @@ public class App extends Application {
 //        }
 //
 //        Board testBoard = new Board(tilemap, 40, 40);
-//        //testBoard.addItemToMap(4,4,new SexChangeItem(4,4));
+//        testBoard.addItemToMap(4,4,new SexChangeItem(4,4));
 //        testBoard.addRat(new Rat(false, false, false,true, false));
 //        testBoard.start(primaryStage);
 
         Level newLevel = new ReadFile("testlevel.txt", primaryStage).newLevel();
-        System.out.print("test");
+        newLevel.getLevelBoard().addItemToMap(2,1,new SexChangeItem(2,1));
+
     }
 
     public static void main(String[] args) {
