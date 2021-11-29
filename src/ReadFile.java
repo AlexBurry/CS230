@@ -43,11 +43,11 @@ public class ReadFile {
         String[][] tilemap = new String[mapX][mapY];
 //        String curLine = in.nextLine();
 //        Scanner token = new Scanner(String.valueOf(curLine));
-        for (int x = 0; x < mapX; x++) {
-            for (int y = 0; y < mapY; y++) {
-                //tilemap[x][y] = in.next();
+        for (int x = 0; x < mapX - 1; x++) {
+            for (int y = 0; y < mapY - 1; y++) {
                 if (in.hasNext()) {
-                    System.out.println(x + " " + y + " " + in.next());
+                    tilemap[x][y] = in.next();
+                    System.out.println(tilemap[x][y]);
                 }
             }
         }
