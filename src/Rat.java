@@ -44,9 +44,11 @@ public class Rat {
         currently imgWidth and imgHeight has no use.
          */
     public void setImage(String filename){
-        sprite = new Image(filename);
-        imgWidth = sprite.getWidth();
-        imgHeight = sprite.getHeight();
+        sprite = new Image("rat.png");
+    }
+
+    public Image getSprite() {
+        return sprite = new Image("spriteRat.png");
     }
 
     public void setPosition(double x, double y){

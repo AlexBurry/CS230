@@ -90,6 +90,11 @@ public class Board extends Application{
             gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
         }
 
+        for (Rat rt: rats) {
+            gc.drawImage(rt.getSprite(),1 * 60,4 * 60);
+        }
+
+
         gc.drawImage(new Image("drainTile.png"),4 * 60,6 * 60);
         gc.drawImage(new Image("drainTile.png"),4 * 60,7 * 60);
         gc.drawImage(new Image("drainTile.png"),3 * 60,6 * 60);
@@ -107,7 +112,7 @@ public class Board extends Application{
     public void addItemToMap(int x, int y, Item item) {
 
         items.add(item);
-        instance.reDrawBoard();
+        //instance.reDrawBoard();
 
     }
 
@@ -133,10 +138,11 @@ public class Board extends Application{
         return tileMap;
     }
 
-    public void addRat(int x, int y, Rat rat) {
+    public void addRat(Rat rat) {
         rats.add(rat);
-        instance.reDrawBoard();
+        //instance.reDrawBoard();
     }
+
 
 //    public Item getItemMap() {
 //        return itemMap;

@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 
 public class App extends Application {
 
+
+
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         Canvas canvas = new Canvas(1200, 800);
@@ -28,7 +30,7 @@ public class App extends Application {
 
         Board testBoard = new Board(tilemap, 40, 40);
         //testBoard.addItemToMap(4,4,new SexChangeItem(4,4));
-        testBoard.addRat();
+        testBoard.addRat(new Rat(false, false, false,true, false));
         testBoard.start(primaryStage);
 
 //        Level newLevel = new ReadFile("testlevel.txt", primaryStage).newLevel();
