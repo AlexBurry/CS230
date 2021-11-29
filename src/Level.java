@@ -32,6 +32,7 @@ public class Level {
         launch();
         levelBoard = new Board(tiles, mapX, mapY);
         buildGUI();
+        instance = this;
         levelBoard.drawBoard();
     }
 
@@ -47,9 +48,6 @@ public class Level {
         return root;
     }
 
-    public void setLevelInstance(Level level){
-        instance = level;
-    }
 
 //    public void tick() {
 //        // Here we move the player right one cell and teleport
