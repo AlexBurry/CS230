@@ -31,7 +31,7 @@ public class Board extends Application{
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
-    private final int GAME_HEIGHT = 800;
+    private final int GAME_HEIGHT = 780;
     private Level instance;
 
     /**
@@ -90,6 +90,12 @@ public class Board extends Application{
             gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
         }
 
+        gc.drawImage(new Image("drainTile.png"),4 * 60,6 * 60);
+        gc.drawImage(new Image("drainTile.png"),4 * 60,7 * 60);
+        gc.drawImage(new Image("drainTile.png"),3 * 60,6 * 60);
+        gc.drawImage(new Image("metalPathTile.png"),2 * 60,6 * 60);
+        gc.drawImage(new Image("metalPathTile.png"),2 * 60,7 * 60);
+        gc.drawImage(new Image("NoEntry.png"),2 * 60,7 * 60);
     }
 
     /**

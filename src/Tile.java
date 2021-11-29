@@ -29,7 +29,7 @@ public class Tile {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         switch (type) {
             case "g":
-                Image grassImage = new Image("grasstile.png");
+                Image grassImage = new Image("metalTile.png");
                 gc.drawImage(grassImage, x * 60, y * 60);
                 break;
             case "p":
