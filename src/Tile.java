@@ -27,20 +27,25 @@ public class Tile {
 
     public void draw(int x, int y, Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        switch (type) {
-            case "g":
-                Image grassImage = new Image("metalTile.png");
-                gc.drawImage(grassImage, x * 60, y * 60);
-                break;
-            case "p":
-                Image pathImage = new Image("pathtile.png");
-                gc.drawImage(pathImage, x * 60, y * 60);
-                break;
-            case "t":
-                Image tunnelImage = new Image("tunneltile.png");
-                gc.drawImage(tunnelImage, x * 60, y * 60);
-                break;
+        if(type != null){
+            switch (type) {
+                case "w":
+                    Image grassImage = new Image("metalTile.png");
+                    gc.drawImage(grassImage, x * 60, y * 60);
+                    break;
+                case "p":
+                    Image pathImage = new Image("metalPathTile.png");
+                    gc.drawImage(pathImage, x * 60, y * 60);
+                    break;
+                case "t":
+                    Image tunnelImage = new Image("drainTile.png");
+                    gc.drawImage(tunnelImage, x * 60, y * 60);
+                    break;
+
+
+            }
         }
+
     }
 
     public int[] getLocation() {

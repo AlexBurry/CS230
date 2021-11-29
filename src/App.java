@@ -20,6 +20,7 @@ public class App extends Application {
         primaryStage.setResizable(false);
         primaryStage.setTitle("Rats: DLC-less Edition");
         primaryStage.getIcons().add(new Image("raticon.png"));
+//<<<<<<< HEAD
 
         String[][] tilemap = new String[40][40];
         for (int x = 0; x < 40; x++) {
@@ -35,6 +36,16 @@ public class App extends Application {
 
 //        Level newLevel = new ReadFile("testlevel.txt", primaryStage).newLevel();
 //        System.out.print("test");
+//=======
+//        testBoard.addRat(new Rat(false, false, false,true, false));
+
+        Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
+        Item newItem = new SexChangeItem(2,1);
+        Item newItem2 = new SexChangeItem(2,2);
+        newLevel.getLevelBoard().addItemToMap(2,1,newItem);
+        newLevel.getLevelBoard().addItemToMap(2,2,newItem2);
+        newLevel.getLevelBoard().removeItemFromMap(2,1,newItem);
+//>>>>>>> 735c8f3709e99b8a1dc512a621a9bdf2595573db
     }
 
     public static void main(String[] args) {

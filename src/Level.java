@@ -32,17 +32,13 @@ public class Level {
 
     public Level (int mapX, int mapY, String[][] tiles, Stage primaryStage) {
         levelBoard = new Board(tiles, mapX, mapY);
-        instance = this;
+
         levelBoard.start(primaryStage);
         levelBoard.drawBoard();
     }
 
     public Board getLevelBoard(){
         return levelBoard;
-    }
-
-    public void reDrawBoard(){
-        levelBoard.drawBoard();
     }
 
     public static Level getInstance(){

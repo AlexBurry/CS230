@@ -21,7 +21,7 @@ public class ReadFile {
             System.out.println("Cannot open " + levelFile);
             System.exit(0);
         }
-        in = new Scanner(inputFile).useDelimiter(",| ");
+        in = new Scanner(inputFile).useDelimiter(",|\r\n| ");
     }
 
     /**
@@ -29,8 +29,12 @@ public class ReadFile {
      * @return new, fresh level
      */
     public Level newLevel() {
-        mapX = mapSize(in);
-        mapY = mapSize(in);
+
+        Scanner scan = new Scanner(in.nextLine()).useDelimiter(",|\r\n| ");
+
+        mapX = mapSize(scan);
+        mapY = mapSize(scan);
+        scan.close();
         return new Level(mapX, mapY, readMap(in), primaryStage);
 
     }
@@ -41,13 +45,11 @@ public class ReadFile {
 
     private String[][] readMap(Scanner in) {
         String[][] tilemap = new String[mapX][mapY];
-//        String curLine = in.nextLine();
-//        Scanner token = new Scanner(String.valueOf(curLine));
-        for (int x = 0; x < mapX; x++) {
-            for (int y = 0; y < mapY; y++) {
-                //tilemap[x][y] = in.next();
+
+        for (int y = 0; y < mapY; y++) {
+            for (int x = 0; x < mapX; x++) {
                 if (in.hasNext()) {
-                    System.out.println(x + " " + y + " " + in.next());
+                    tilemap[x][y] = in.next();
                 }
             }
         }

@@ -12,7 +12,7 @@ public class SexChangeItem extends Item {
     private int sex = 0; // default to male
 
     public SexChangeItem(int xPos, int yPos){
-        sprite = new Image("raticon.png");
+        sprite = new Image("NoEntry.png");
         this.xPos = xPos;
         this.yPos = yPos;
     }
