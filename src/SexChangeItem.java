@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 /**
  * Change the sex of a rat
  * @author Trafford
@@ -8,6 +10,12 @@
 public class SexChangeItem extends Item {
 
     private int sex = 0; // default to male
+
+    public SexChangeItem(int xPos, int yPos){
+        sprite = new Image("raticon.png");
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
 
     @Override
     public void draw(int x, int y) {

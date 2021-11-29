@@ -32,6 +32,7 @@ public class Board extends Application{
     private final int mapY;
     private final int GAME_WIDTH = 1200;
     private final int GAME_HEIGHT = 800;
+    private Level instance;
 
     /**
      * Constructor function for board
@@ -46,6 +47,7 @@ public class Board extends Application{
         this.mapX = mapX;
         this.mapY = mapY;
         tileMap = new Tile[this.mapX][this.mapY];
+        instance = Level.getInstance();
     }
 
     public void start(Stage primaryStage) {
@@ -84,6 +86,10 @@ public class Board extends Application{
             }
         }
 
+        for (Item it: items) {
+            gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
+        }
+
     }
 
     /**
@@ -92,9 +98,10 @@ public class Board extends Application{
      * @param y y coordinate of the item
      * @param item the item object
      */
-    public static void addItemToMap(int x, int y, Item item) {
+    public void addItemToMap(int x, int y, Item item) {
 
         items.add(item);
+        instance.reDrawBoard();
 
     }
 

@@ -26,7 +26,7 @@ public class Level extends Application{
     private int numberOfPoison;
     private int numberOfNoEntry;
     private final int MAX_ITEM_NUMBER = 4;
-    private static Board levelBoard;
+    private Board levelBoard;
     private static Level instance;
     private Canvas canvas;
 
@@ -54,6 +54,17 @@ public class Level extends Application{
         return root;
     }
 
+    public Board getLevelBoard(){
+        return levelBoard;
+    }
+
+    public void reDrawBoard(){
+        levelBoard.drawBoard();
+    }
+
+    public static Level getInstance(){
+        return instance;
+    }
 
 //    public void tick() {
 //        // Here we move the player right one cell and teleport

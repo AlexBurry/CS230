@@ -9,8 +9,9 @@ import javafx.scene.image.Image;
  */
 public class Item {
 
-    private Image sprite;
-
+    protected Image sprite;
+    protected int xPos;
+    protected int yPos;
 
     /**
      * 
@@ -20,7 +21,7 @@ public class Item {
      */
 
     public void draw(int x, int y){
-        Board.addItemToMap(x,y,this);
+        Level.getInstance().getLevelBoard().addItemToMap(x,y,this);
     }
 
 
@@ -34,6 +35,18 @@ public class Item {
     }
 
 
+    public Image getImage(){
+        return sprite;
+    }
+
+    public int getX(){
+        return xPos;
+    }
+
+    public int getY(){
+        return yPos;
+    }
+
     /**
      * * Implements a solution to delete that item,
      * this is where methods are called before it "dies".
@@ -42,14 +55,6 @@ public class Item {
 
     }
 
-    /**
-     * Adds an item to the item array in the Board class.
-     * @param x x coordinate
-     * @param y y coordinate
-     */
-    //for now, this does nothing. But we need to make sure adding it is actually possible.
-    protected void tryPlaceItemOnLocation(int x, int y){
-        Board.addItemToMap(x,y,this);
-    };
+
 
 }

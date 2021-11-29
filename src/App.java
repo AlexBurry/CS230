@@ -27,6 +27,7 @@ public class App extends Application {
         }
 
         Board testBoard = new Board(tilemap, 40, 40);
+        //testBoard.addItemToMap(4,4,new SexChangeItem(4,4));
         testBoard.start(primaryStage);
     }
 
