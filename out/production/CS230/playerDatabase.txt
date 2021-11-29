@@ -9,4 +9,3 @@ Dom,1,4,3945
 Michael,1,1,966
 Josh,1,5,4502
 Lexyren,1,1,0
-Tom,1,1,0
