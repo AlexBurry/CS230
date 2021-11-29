@@ -83,13 +83,7 @@ public class Board extends Application{
                 tileMap[x][y] = new Tile(tempTileMap[x][y], x, y, canvas);
             }
         }
-        Image pathImage = new Image("tunneltile.png");
-        Image pathImage2 = new Image("pathtile.png");
-        gc.drawImage(pathImage, 1 * 60, 1 * 60);
-        gc.drawImage(pathImage, 1 * 60, 2 * 60);
-        gc.drawImage(pathImage2, 2 * 60, 1 * 60);
-        gc.drawImage(pathImage, 3 * 60, 1 * 60);
-        gc.drawImage(pathImage2, 4 * 60, 1 * 60);
+
     }
 
     /**
@@ -99,7 +93,9 @@ public class Board extends Application{
      * @param item the item object
      */
     public static void addItemToMap(int x, int y, Item item) {
+
         items.add(item);
+
     }
 
 //    /**

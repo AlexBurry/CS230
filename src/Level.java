@@ -25,6 +25,7 @@ public class Level {
     private int numberOfNoEntry;
     private final int MAX_ITEM_NUMBER = 4;
     private static Board levelBoard;
+    private static Level instance;
     private Canvas canvas;
 
     public Level (String[][] tiles, int mapX, int mapY) {
@@ -46,7 +47,9 @@ public class Level {
         return root;
     }
 
-
+    public void setLevelInstance(Level level){
+        instance = level;
+    }
 
 //    public void tick() {
 //        // Here we move the player right one cell and teleport

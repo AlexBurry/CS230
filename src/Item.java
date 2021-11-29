@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  * @version 0.1
  * @since 0.1
  */
-public abstract class Item {
+public class Item {
 
     private Image sprite;
 
@@ -18,8 +18,10 @@ public abstract class Item {
      * @param x The coordinates which will point to a tile location.
      * @param y
      */
-    
-    public abstract void draw(int x, int y);
+
+    public void draw(int x, int y){
+        Board.addItemToMap(x,y,this);
+    }
 
 
 
@@ -36,7 +38,9 @@ public abstract class Item {
      * * Implements a solution to delete that item,
      * this is where methods are called before it "dies".
      */
-    public abstract void deleteItem();
+    public void deleteItem(){
+
+    }
 
     /**
      * Adds an item to the item array in the Board class.
