@@ -1,3 +1,5 @@
+import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -6,11 +8,13 @@ import java.util.Scanner;
 public class ReadFile {
     private int mapX;
     private int mapY;
-    private static Level level;
+    private final Stage primaryStage;
+    private Scanner in;
 
-    public ReadFile(String levelFile) throws FileNotFoundException {
+    public ReadFile(String levelFile, Stage primaryStage) throws FileNotFoundException {
+        this.primaryStage = primaryStage;
         File inputFile = new File(levelFile);
-        Scanner in = null;
+        this.in = null;
         try {
             in = new Scanner(inputFile);
         } catch (FileNotFoundException e) {
@@ -18,12 +22,17 @@ public class ReadFile {
             System.exit(0);
         }
         in = new Scanner(inputFile).useDelimiter(",| ");
+    }
 
+    /**
+     * Returns a new level object for generation
+     * @return new, fresh level
+     */
+    public Level newLevel() {
         mapX = mapSize(in);
         mapY = mapSize(in);
-        level = new Level(mapX, mapY, readMap(in));
-        //Tile[][] tilemap = readMap(in);
-        //new Level(tilemap, mapX, mapY);
+        return new Level(mapX, mapY, readMap(in), primaryStage);
+
     }
 
     private int mapSize(Scanner in) {
@@ -32,11 +41,14 @@ public class ReadFile {
 
     private String[][] readMap(Scanner in) {
         String[][] tilemap = new String[mapX][mapY];
-        String curLine = in.nextLine();
-        Scanner token = new Scanner(String.valueOf(curLine));
+//        String curLine = in.nextLine();
+//        Scanner token = new Scanner(String.valueOf(curLine));
         for (int x = 0; x < mapX; x++) {
-            for (int y = 0; y < mapX; y++) {
-                tilemap[x][y] = in.next();
+            for (int y = 0; y < mapY; y++) {
+                //tilemap[x][y] = in.next();
+                if (in.hasNext()) {
+                    System.out.println(x + " " + y + " " + in.next());
+                }
             }
         }
         return tilemap;

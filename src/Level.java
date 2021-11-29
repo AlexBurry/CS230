@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 import static javafx.application.Application.launch;
 
-public class Level extends Application{
+public class Level {
     private float timeRemaining;
     private int currentScore;
     private int allowedTime;
@@ -30,28 +30,11 @@ public class Level extends Application{
     private static Level instance;
     private Canvas canvas;
 
-    public Level (int mapX, int mapY, String[][] tiles) {
-        launch();
+    public Level (int mapX, int mapY, String[][] tiles, Stage primaryStage) {
         levelBoard = new Board(tiles, mapX, mapY);
-        buildGUI();
         instance = this;
+        levelBoard.start(primaryStage);
         levelBoard.drawBoard();
-    }
-
-    public void start(Stage primaryStage) {
-        Pane root = buildGUI();
-    }
-
-    private static Pane buildGUI() {
-        // Create top-level panel that will hold all GUI nodes.
-        BorderPane root = new BorderPane();
-
-        // Create the canvas that we will draw on.
-        // We store this as a global variable so other methods can access it.
-        Canvas canvas = new Canvas(800, 800);
-        root.setCenter(canvas);
-
-        return root;
     }
 
     public Board getLevelBoard(){
@@ -80,13 +63,4 @@ public class Level extends Application{
 //    public Board constructBoard(Tile[][] tiles, Item[][] items, Rat[][] mRats, Rat[][] fRats) {
 //        return new Board(tiles, items, mRats, fRats);
 //    }
-
-
-//    public void checkCollisions() {
-//        Rat[][] mRatMap = levelBoard.getRatMap();
-//        Item[][] itemMap = levelBoard.getItemMap();
-//
-//    }
-
-
 }

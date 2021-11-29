@@ -1,6 +1,6 @@
 4,5,
-G G P G
-G G P G
-G G T G
-P P T G
-G G P G
+g g p g
+g g p g
+g g t g
+p p t g
+g g p g
