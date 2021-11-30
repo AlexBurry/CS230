@@ -1,5 +1,6 @@
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -75,6 +76,8 @@ public class Rat {
     public void move() {
         int newxPos = xPos;
         int newyPos = yPos;
+
+
         if (currentDirection == Directions.EAST) {
             newxPos += 1;
         } else if (currentDirection == Directions.WEST) {
@@ -91,6 +94,18 @@ public class Rat {
         } else {
             currentDirection = Directions.values()[new Random().nextInt(Directions.values().length)];
         }
+    }
+
+    public void checkCollision(){
+        for (Item it: instance.getLevelBoard().getItems()) {
+            if(it.getX() == xPos && it.getY() == yPos){
+                System.out.println("COLLISION");
+            }
+        }
+    }
+
+    public void listOfItems() {
+        System.out.println( instance.getLevelBoard().getItems());
     }
 
     private boolean isTraversable(int x, int y) {

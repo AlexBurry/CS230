@@ -59,6 +59,7 @@ public class Level {
         for (Rat rt: levelBoard.getRats()) {
             levelBoard.redrawTile(rt.getX(),rt.getY());
             rt.move();
+            rt.checkCollision();
         }
 
         levelBoard.drawRats();

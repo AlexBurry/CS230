@@ -87,7 +87,6 @@ public class App extends Application {
             //newLevel.getLevelBoard().addItem(new SexChangeItem(2,4));
             newLevel.getLevelBoard().addItem(new BombItem(2,4));
 
-
         } else {
             JOptionPane.showMessageDialog(null, "Invalid Username!", "Try Again!", JOptionPane.INFORMATION_MESSAGE);
         }
