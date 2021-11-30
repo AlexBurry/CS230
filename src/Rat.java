@@ -25,10 +25,13 @@ public class Rat {
     private Image sprite;
     private double imgWidth;
     private double imgHeight;
+    private Level instance;
 
     private Vector position;
     private Vector velocity;
 
+    private int xPos;
+    private int yPos;
 
     public Rat(char sex, boolean isBaby, boolean isDeathRat, boolean alive, boolean isSterile) {
         if (sex == 'f' || sex == 'm') {
@@ -41,6 +44,14 @@ public class Rat {
 
         position = new Vector(0, 0);
         velocity = new Vector(0, 0);
+    }
+
+    public int getX() {
+        return xPos;
+    }
+
+    public int getY() {
+        return yPos;
     }
 
     /*
@@ -61,6 +72,11 @@ public class Rat {
 
     public void draw(int x, int y) {
 
+    }
+
+    // kill rat method
+    public void deleteRat(){
+        instance.getLevelBoard().removeRatFromMap(this);
     }
 
     @Override

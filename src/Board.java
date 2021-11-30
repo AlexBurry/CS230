@@ -122,8 +122,12 @@ public class Board extends Application{
         }
     }
 
-    public void removeRatFromMap() {
-
+    public void removeRatFromMap(Rat rat) {
+        if(rats.contains(rat)){
+            System.out.println("here");
+            rats.remove(rat);
+            drawBoard();
+        }
     }
 
     public Tile[][] getTileMap() {
