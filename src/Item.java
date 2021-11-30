@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  * @version 0.1
  * @since 0.1
  */
-public class Item {
+public class Item implements Tick {
 
     protected Image sprite;
     protected int xPos;
@@ -63,5 +63,8 @@ public class Item {
     }
 
 
+    @Override
+    public void tickEvent() {
 
+    }
 }

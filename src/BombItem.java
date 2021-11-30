@@ -9,9 +9,15 @@ import java.util.ArrayList;
  * @version 0.1
  * @since 0.1
  */
-public class BombItem extends Item{
+public class BombItem extends Item implements Tick{
 
-    private final int TIMER = 4;
+    private  int TIMER = 4;
+
+    @Override
+    public void tickEvent() {
+        TIMER -= 1;
+        System.out.println("listening");
+    }
 
     private enum checkDir{
         North,

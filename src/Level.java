@@ -4,6 +4,7 @@ import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Level class
@@ -20,6 +21,7 @@ public class Level {
     private Inventory levelInv;
     private static Level instance;
     private final int TICKRATE = 1000;
+    private List<Tick> listeners = new ArrayList<>();
 
     /**
      * Level constructor for a new Level
@@ -30,6 +32,7 @@ public class Level {
      */
     public Level (int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
                   int allowedTime, int lossCondition, Stage primaryStage) {
+
         this.ALLOWED_TIME = allowedTime;
         timeLeft = this.ALLOWED_TIME;
         this.lossCondition = lossCondition;
@@ -44,18 +47,28 @@ public class Level {
         tickTimeline.play(); //can be used to pause the game
     }
 
+
+    public void addListener(Tick toAdd) {
+        listeners.add(toAdd);
+    }
+
     /**
      * Tick method for the game runtime, updates board every second/tick
      */
-    public void tick() {
+    public void tick() { //TODO: figure out order through trial and error
         for (Rat rt: levelBoard.getRats()) {
             levelBoard.redrawTile(rt.getX(),rt.getY());
             rt.move();
         }
+
         levelBoard.drawRats();
         checkLossCondition();
         timeLeft = timeLeft - 1;
         System.out.println(timeLeft);
+
+        for (Tick t : listeners) {
+            t.tickEvent();
+        }
     }
 
     /**

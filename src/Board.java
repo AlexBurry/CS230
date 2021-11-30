@@ -102,6 +102,10 @@ public class Board extends Application{
      * @param item the item object
      */
     public void addItem(Item item) {
+
+        if (item.getClass() == BombItem.class) {
+            instance.addListener(item);
+        }
         items.add(item);
         this.drawItems();
     }

@@ -29,47 +29,6 @@ public class App extends Application {
         primaryStage.show();
     }
 
-    /*
-        ORIGINAL CODE FROM START
-
-        Canvas canvas = new Canvas(1200, 800);
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("Rats: DLC-less Edition");
-        primaryStage.getIcons().add(new Image("raticon.png"));
-        //<<<<<<< HEAD
-
-        String[][] tilemap = new String[40][40];
-        for (int x = 0; x < 40; x++) {
-            for (int y = 0; y < 40; y++) {
-                tilemap[x][y] = "g";
-            }
-        }
-
-        // Older Code
-        Board testBoard = new Board(tilemap, 40, 40);
-        //testBoard.addItemToMap(4,4,new SexChangeItem(4,4));
-        testBoard.addRat(new Rat('f', false, false,true, false));
-        testBoard.start(primaryStage);
-
-        Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
-        Item newItem = new SexChangeItem(2,1);
-        Item newItem2 = new SexChangeItem(2,2);
-        newLevel.getLevelBoard().addItemToMap(2,1,newItem);
-        newLevel.getLevelBoard().addItemToMap(2,2,newItem2);
-        newLevel.getLevelBoard().removeItemFromMap(2,1,newItem);
-
-        // Newer Code
-        //Board testBoard = new Board(tilemap, 40, 40);
-        //testBoard.addItemToMap(4,4,new SexChangeItem(4,4));
-        //testBoard.addRat(new Rat('f', false, false,true, false));
-        //testBoard.start(primaryStage);
-
-        //Level newLevel = new ReadFile("testlevel.txt", primaryStage).newLevel();
-        //System.out.print("test");
-        //testBoard.addRat(new Rat(false, false, false,true, false));
-        Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
-     */
-
     // Opens the Level, need to create new Menu or revamp old Menu.
     /**
      * This method creates a login "form" using a GridPane Layout
@@ -135,6 +94,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+
+
+
         launch(args);
     }
 }
