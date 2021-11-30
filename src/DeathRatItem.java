@@ -8,9 +8,18 @@ public class DeathRatItem extends Item{
     private DeathRat deathRat; //the deathrat object.
     Runnable makeRat = () -> spawnDeathRat();
 
+
+    public DeathRatItem (int x, int y){
+        this.xPos = x;
+        this.yPos = y;
+        waitToSpawnRat();
+    }
+
+    //checks the killcount and deletes the ratItem if necessary.
     public void checkKillCount(){
         if(killCount >= 5){
             deleteItem();
+            //TODO: Kill deathRat rat from the deathrat class.
         }
     }
 
@@ -23,7 +32,7 @@ public class DeathRatItem extends Item{
 
     //spawns a deathRat with the same coordinates.
     private void spawnDeathRat(){
-        deathRat = new DeathRat('m',false,true,true,true);
+        this.deathRat = new DeathRat('m',false,true,true,true);
     }
 
 }
