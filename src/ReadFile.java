@@ -21,7 +21,7 @@ public class ReadFile {
             System.out.println("Cannot open " + levelFile);
             System.exit(0);
         }
-        in = new Scanner(inputFile).useDelimiter(",|\r\n| ");
+        in = new Scanner(inputFile).useDelimiter(";|\r\n| ");
     }
 
     /**
@@ -37,15 +37,6 @@ public class ReadFile {
 //            ;
 //        }
 
-
-//        Scanner scan = new Scanner(in.nextLine()).useDelimiter(";|\r\n| ");
-//        mapX = mapSize(scan);
-//        mapY = mapSize(scan);
-//        scan.close();
-//
-//
-//        //in.nextLine();
-//        String[][] map =readMap(in);
         String[][] map = readMap(in);
         ArrayList<String> rats = readSpawnRatLocations(in);
         ArrayList<String> items = readItemSpawnRates(in);

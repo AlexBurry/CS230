@@ -41,11 +41,8 @@ public class Tile {
                     Image tunnelImage = new Image("drainTile.png");
                     gc.drawImage(tunnelImage, x * 60, y * 60);
                     break;
-
-
             }
         }
-
     }
 
     public int[] getLocation() {

@@ -94,6 +94,7 @@ public class Board extends Application{
             gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
         }
     }
+
     public void drawItems() {
         for (Item it: items) {
             gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
