@@ -124,7 +124,7 @@ public class App extends Application {
             Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
 
 
-            newLevel.getLevelBoard().addRat(new Rat('f', false, false,true, false, 2, 5));
+            newLevel.getLevelBoard().addRat(new Rat('f', false,true, false, 2, 5, 3));
             newLevel.getLevelBoard().addItemToMap(new SexChangeItem(4,4));
 
 

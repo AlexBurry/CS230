@@ -91,9 +91,7 @@ public class Board extends Application{
 
     public void drawRats() {
         for (Rat rt: rats) {
-            //Rat.draw - implement
-            gc.drawImage(rt.getSprite(),2 * 60,5 * 60);
-
+            gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
         }
     }
     public void drawItems() {
