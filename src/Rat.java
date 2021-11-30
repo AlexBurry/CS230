@@ -41,6 +41,7 @@ public class Rat {
 
     //baby rat..
     public Rat(char sex, int xPos, int yPos){
+        currentDirection = Directions.NORTH;
         this.sex = sex;
         this.xPos = xPos;
         this.yPos = yPos;
