@@ -55,6 +55,7 @@ public class Board extends Application{
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
         drawBoard();
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 
