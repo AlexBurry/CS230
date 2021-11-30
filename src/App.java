@@ -95,7 +95,7 @@ public class App extends Application {
 
         enterBtn.setOnAction(a -> {
             try {
-                buildMap(primaryStage, inputField);
+                buildLevel(primaryStage, inputField);
             } catch (FileNotFoundException e) {
                 System.out.println("Failed To Build Map!");
             }
@@ -112,7 +112,7 @@ public class App extends Application {
      * @param inputField
      * @throws FileNotFoundException
      */
-    public void buildMap(Stage primaryStage, TextField inputField) throws FileNotFoundException {
+    public void buildLevel(Stage primaryStage, TextField inputField) throws FileNotFoundException {
         if (!inputField.getText().isEmpty()) {
             p = new Profile(inputField.getText());
             primaryStage.setTitle("Rats: DLC-less Edition");
