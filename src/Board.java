@@ -25,8 +25,8 @@ import java.util.Random;
 public class Board extends Application{
     private final String[][] tempTileMap;
     private final Tile[][] tileMap;
-    private static ArrayList<Item> items = new ArrayList<>();
-    private static ArrayList<Rat> rats = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Rat> rats = new ArrayList<>();
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
@@ -47,7 +47,7 @@ public class Board extends Application{
         tempTileMap = tiles;
         for (String rt : rats) {
             System.out.println(rt);
-            Board.rats.add(new Rat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
+            this.rats.add(new Rat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
                     Character.getNumericValue(rt.charAt(4))));
         }
         instance = Level.getInstance();
