@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 /**
  * The main gas node of a gas item. Controls gas dissipation
  * @author Trafford
@@ -7,16 +9,10 @@
  */
 public class GasItem extends Item{
 
-    @Override
-    public void draw(int x, int y) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void deleteItem() {
-        // TODO Auto-generated method stub
-        
+    public GasItem (int x, int y){
+        this.xPos = x;
+        this.yPos = y;
+        this.sprite = new Image("NoEntry.png");
     }
 
 

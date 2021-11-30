@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 /**
  * Steralize rats, removing their ability to reproduce, permanently.
  * @author Trafford
@@ -7,16 +9,10 @@
  */
 public class SteralizeItem extends Item{
 
-    @Override
-    public void draw(int x, int y) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void deleteItem() {
-        // TODO Auto-generated method stub
-        
+    public SteralizeItem (int x, int y){
+        this.xPos = x;
+        this.yPos = y;
+        this.sprite = new Image("NoEntry.png");
     }
 
 
