@@ -33,18 +33,11 @@ public class ReadFile {
         mapX = mapSize(scan);
         mapY = mapSize(scan);
         scan.close();
-//        while (in.hasNextLine()) {
-//            ;
-//        }
 
         String[][] map = readMap(in);
-        ArrayList<String> rats = readSpawnRatLocations(in);
+        in.nextLine();
+        ArrayList<String> rats = readSpawnRatLocations(new Scanner(in.nextLine()));
         ArrayList<String> items = readItemSpawnRates(in);
-//        //mapScan.close();
-//
-//        //Scanner ratScan = new Scanner(in.nextLine()).useDelimiter(";");
-//        //ArrayList<String> rats = readSpawnRatLocations(in);
-//        //ratScan.close();
 
         return new Level(mapX, mapY, map, rats, items, primaryStage); //in can never be closed... oops. - alex
     }
@@ -68,6 +61,7 @@ public class ReadFile {
 
     private ArrayList<String> readSpawnRatLocations(Scanner ratScan) {
         ArrayList<String> rats = new ArrayList<>();
+        ratScan.useDelimiter(";");
         while (ratScan.hasNext()) {
             rats.add(ratScan.next());
         }
