@@ -16,7 +16,6 @@ import javafx.scene.canvas.GraphicsContext;
 public class Rat {
 
     private char sex;
-    private boolean isBaby;
     private boolean isDeathRat;
     private boolean alive;
     private boolean isSterile;
@@ -51,7 +50,7 @@ public class Rat {
         instance = Level.getInstance();
     }
 
-    public Rat(char sex, boolean isBaby, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos) {
+    public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, int speed) {
         currentDirection = Directions.NORTH;
 
         if (sex == 'f' || sex == 'm') {
@@ -59,7 +58,6 @@ public class Rat {
         }
         this.xPos = xPos;
         this.yPos = yPos;
-        this.isBaby = isBaby;
         this.isDeathRat = isDeathRat;
         this.alive = alive;
         this.isSterile = isSterile;
@@ -79,12 +77,9 @@ public class Rat {
        int newxPos = xPos;
        int newyPos = yPos;
         if(currentDirection == Directions.EAST) {
-            // Do something. Write your logic
-
             newxPos += 1;
         } else if(currentDirection == Directions.WEST) {
             newxPos -= 1;
-            // Do something else
         } else if(currentDirection == Directions.NORTH) {
             newyPos -= 1;
         } else {
@@ -94,6 +89,13 @@ public class Rat {
             xPos = newxPos;
             yPos = newyPos;
         }
+        /*
+        if (isTraversable(newxPos+1, newyPos)){
+            xPos = newxPos;
+            yPos = newyPos;
+        }
+
+         */
     }
 
     private boolean isTraversable(int x, int y){

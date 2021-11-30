@@ -87,7 +87,6 @@ public class Board extends Application{
 
         for (Rat rt: rats) {
             gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
-
         }
 
         for (Item it: items) {
