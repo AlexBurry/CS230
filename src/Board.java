@@ -46,7 +46,6 @@ public class Board extends Application{
         tileMap = new Tile[this.mapX][this.mapY];
         tempTileMap = tiles;
         for (String rt : rats) {
-            System.out.println(rt);
             this.rats.add(new Rat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
                     Character.getNumericValue(rt.charAt(4))));
         }
@@ -129,6 +128,7 @@ public class Board extends Application{
     }
 
     public void removeRat(Rat rat) {
+        System.out.println("removing rat");
         if(rats.contains(rat)){
             rats.remove(rat);
             drawBoard();

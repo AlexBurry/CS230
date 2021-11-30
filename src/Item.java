@@ -14,6 +14,10 @@ public class Item {
     protected int yPos;
     protected Level instance;
 
+    protected Item(){
+        setInstance();
+    }
+
     /**
      * 
      * Draws the item to a tile location

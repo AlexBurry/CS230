@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 /**
  * Poison the rat and kill it
  * @author Trafford
@@ -7,16 +9,10 @@
  */
 public class PoisonItem extends Item{
 
-    @Override
-    public void draw(int x, int y) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void deleteItem() {
-        // TODO Auto-generated method stub
-        
+    public PoisonItem (int x, int y){
+        this.xPos = x;
+        this.yPos = y;
+        this.sprite = new Image("NoEntry.png");
     }
     
 }
