@@ -15,6 +15,8 @@ public class Level {
     private float timeRemaining;
     private int currentScore;
     private int allowedTime;
+    private int timeLeft;
+    private int lossCondition;
     private int bombSpawnRate;
     private int mSexChangeSpawnRate;
     private int fSexChangeSpawnRate;
@@ -33,8 +35,6 @@ public class Level {
     private final int MAX_ITEM_NUMBER = 4;
     private Board levelBoard;
     private static Level instance;
-    private Canvas canvas;
-    private Timeline tickTimeline;
     private final int TICKRATE = 1000;
 
     /**
@@ -44,14 +44,17 @@ public class Level {
      * @param tiles 2D array of the tile map as strings
      * @param primaryStage primary stage scene
      */
-    public Level (int mapX, int mapY, String[][] tiles, ArrayList<String> items, ArrayList<String> rats,
-                  /*int allowedTime, int lossCondition*/ Stage primaryStage) {
+    public Level (int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> items,
+                  int allowedTime, int lossCondition, Stage primaryStage) {
+        this.allowedTime = allowedTime;
+        timeLeft = this.allowedTime;
+        this.lossCondition = lossCondition;
         levelBoard = new Board(tiles, items, rats, mapX, mapY);
         levelBoard.start(primaryStage);
         levelBoard.drawBoard();
 
         //game tick system
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
+        Timeline tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play(); //can be used to pause the game
         instance = this;
@@ -61,11 +64,13 @@ public class Level {
      * Tick method for the game runtime, updates board every second/tick
      */
     public void tick() {
-        System.out.println("tick");
+        //System.out.println("tick");
         for (Rat rt: levelBoard.getRatMap()) {
             rt.move();
-            levelBoard.drawBoard();
+            levelBoard.drawRats();
         }
+        decreaseTime();
+        System.out.println(timeLeft);
 
     }
 
@@ -84,4 +89,16 @@ public class Level {
     public static Level getInstance(){
         return instance;
     }
+
+    public void decreaseTime() {
+        timeLeft = timeLeft - 1;
+    }
+
+    //public int
+
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
+
 }

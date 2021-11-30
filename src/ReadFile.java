@@ -37,9 +37,11 @@ public class ReadFile {
         String[][] map = readMap(in);
         in.nextLine();
         ArrayList<String> rats = readSpawnRatLocations(new Scanner(in.nextLine()));
-        ArrayList<String> items = readItemSpawnRates(in);
+        ArrayList<String> items = readItemSpawnRates(new Scanner(in.nextLine()));
+        int allowedTime = readTimeLimit(new Scanner(in.nextLine()));
+        int lossCondition = readLossCondition(in);
 
-        return new Level(mapX, mapY, map, rats, items, primaryStage); //in can never be closed... oops. - alex
+        return new Level(mapX, mapY, map, rats, items, allowedTime, lossCondition, primaryStage); //in can never be closed... oops. - alex
     }
 
     private int mapSize(Scanner in) {
@@ -48,7 +50,6 @@ public class ReadFile {
 
     private String[][] readMap(Scanner in) {
         String[][] tilemap = new String[mapX][mapY];
-
         for (int y = 0; y < mapY; y++) {
             for (int x = 0; x < mapX; x++) {
                 if (in.hasNext()) {
@@ -70,19 +71,19 @@ public class ReadFile {
 
     private ArrayList<String> readItemSpawnRates(Scanner itemScan) {
         ArrayList<String> items = new ArrayList<>();
-
+        itemScan.useDelimiter(";");
         while (itemScan.hasNext()) {
             items.add(itemScan.next());
         }
         return items;
     }
 
-//    private String readTimeLimit() {
-//
-//    }
-//
-//    private String readLossCondition() {
-//
-//    }
+    private int readTimeLimit(Scanner in) {
+        return Integer.parseInt(in.next());
+    }
+
+    private int readLossCondition(Scanner in) {
+        return Integer.parseInt(in.next());
+    }
 //
 }
