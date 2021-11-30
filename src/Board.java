@@ -139,4 +139,8 @@ public class Board extends Application{
         return rats;
     }
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
 }
