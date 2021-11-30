@@ -22,7 +22,7 @@ public class Item {
      */
 
     public void draw(int x, int y){
-        Level.getInstance().getLevelBoard().addItemToMap(x,y,this);
+        Level.getInstance().getLevelBoard().addItemToMap(this);
     }
 
     protected void setInstance(){
