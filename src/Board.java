@@ -95,6 +95,7 @@ public class Board extends Application{
         }
 
     }
+    
 
     /**
      * Function to add an item to the itemMap
@@ -114,9 +115,8 @@ public class Board extends Application{
         this.drawBoard();
     }
 
-    public void removeItemFromMap(int x, int y, Item item) {
+    public void removeItemFromMap(Item item) {
         if(items.contains(item)){
-            System.out.println("here");
             items.remove(item);
             drawBoard();
         }

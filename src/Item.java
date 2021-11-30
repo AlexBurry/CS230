@@ -55,7 +55,7 @@ public class Item {
      * this is where methods are called before it "dies".
      */
     public void deleteItem(){
-        instance.getLevelBoard().removeItemFromMap(xPos,yPos,this);
+        instance.getLevelBoard().removeItemFromMap(this);
     }
 
 
