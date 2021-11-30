@@ -30,7 +30,7 @@ public class Rat {
     private int xPos;
     private int yPos;
 
-    public enum Directions{
+    public enum Directions {
         EAST,
         WEST,
         NORTH,
@@ -40,7 +40,7 @@ public class Rat {
     private Directions currentDirection;
 
     //baby rat..
-    public Rat(char sex, int xPos, int yPos){
+    public Rat(char sex, int xPos, int yPos) {
         currentDirection = Directions.NORTH;
         this.sex = sex;
         this.xPos = xPos;
@@ -76,13 +76,13 @@ public class Rat {
     }
 
     public void move() {
-       int newxPos = xPos;
-       int newyPos = yPos;
-        if(currentDirection == Directions.EAST) {
+        int newxPos = xPos;
+        int newyPos = yPos;
+        if (currentDirection == Directions.EAST) {
             newxPos += 1;
-        } else if(currentDirection == Directions.WEST) {
+        } else if (currentDirection == Directions.WEST) {
             newxPos -= 1;
-        } else if(currentDirection == Directions.NORTH) {
+        } else if (currentDirection == Directions.NORTH) {
             newyPos -= 1;
         } else {
             newyPos += 1;
@@ -90,14 +90,16 @@ public class Rat {
         if (isTraversable(newxPos, newyPos)) {
             xPos = newxPos;
             yPos = newyPos;
+
         } else {
-                currentDirection = Directions.values()[new Random().nextInt(Directions.values().length)];
+            currentDirection = Directions.values()[new Random().nextInt(Directions.values().length)];
         }
     }
 
-    private boolean isTraversable(int x, int y){
-         return instance.getLevelBoard().getTileMap()[x][y].getTraversable();
+    private boolean isTraversable(int x, int y) {
+        return instance.getLevelBoard().getTileMap()[x][y].getTraversable();
     }
+
     /*
     sets and gets the width and height of the image.
     currently imgWidth and imgHeight has no use.
@@ -119,7 +121,7 @@ public class Rat {
     }
 
     // kill rat method
-    public void deleteRat(){
+    public void deleteRat() {
         instance.getLevelBoard().removeRatFromMap(this);
     }
 

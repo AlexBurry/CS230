@@ -22,24 +22,24 @@ public class Tile {
         this.yValue = y;
         traversable = Objects.equals(this.type, "p") || Objects.equals(this.type, "t");
         isRatVisible = Objects.equals(this.type, "p");
-        draw(x, y, canvas);
+        draw(canvas);
     }
 
-    public void draw(int x, int y, Canvas canvas) {
+    public void draw(Canvas canvas) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         if(type != null){
             switch (type) {
                 case "w":
                     Image grassImage = new Image("metalTile.png");
-                    gc.drawImage(grassImage, x * 60, y * 60);
+                    gc.drawImage(grassImage, xValue * 60, yValue * 60);
                     break;
                 case "p":
                     Image pathImage = new Image("metalPathTile.png");
-                    gc.drawImage(pathImage, x * 60, y * 60);
+                    gc.drawImage(pathImage, xValue * 60, yValue * 60);
                     break;
                 case "t":
                     Image tunnelImage = new Image("drainTile.png");
-                    gc.drawImage(tunnelImage, x * 60, y * 60);
+                    gc.drawImage(tunnelImage, xValue * 60, yValue * 60);
                     break;
             }
         }
