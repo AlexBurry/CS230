@@ -152,4 +152,12 @@ public class Board extends Application{
     public ArrayList<Rat> getRatMap() {
         return rats;
     }
+
+    public void redrawTile(int x, int y) {
+        Tile tile = tileMap[x][y];
+        tile.draw(canvas);
+        drawItems();
+
+    }
+
 }

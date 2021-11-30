@@ -1,7 +1,6 @@
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.ArrayList;
@@ -74,8 +73,11 @@ public class Level {
     public void tick() {
         //System.out.println("tick");
         for (Rat rt: levelBoard.getRatMap()) {
+            levelBoard.redrawTile(rt.getX(),rt.getY());
             rt.move();
             levelBoard.drawRats();
+
+
         }
         decreaseTime();
         System.out.println(timeLeft);
