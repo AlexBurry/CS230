@@ -1,5 +1,6 @@
 import javafx.scene.image.Image;
 
+import java.util.Random;
 import java.util.Vector;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -40,6 +41,7 @@ public class Rat {
 
     //baby rat..
     public Rat(char sex, int xPos, int yPos){
+        currentDirection = Directions.NORTH;
         this.sex = sex;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -88,14 +90,9 @@ public class Rat {
         if (isTraversable(newxPos, newyPos)) {
             xPos = newxPos;
             yPos = newyPos;
+        } else {
+                currentDirection = Directions.values()[new Random().nextInt(Directions.values().length)];
         }
-        /*
-        if (isTraversable(newxPos+1, newyPos)){
-            xPos = newxPos;
-            yPos = newyPos;
-        }
-
-         */
     }
 
     private boolean isTraversable(int x, int y){

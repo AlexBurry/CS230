@@ -49,15 +49,23 @@ public class Level {
         this.allowedTime = allowedTime;
         timeLeft = this.allowedTime;
         this.lossCondition = lossCondition;
+        instance = this;
+
         levelBoard = new Board(tiles, items, rats, mapX, mapY);
         levelBoard.start(primaryStage);
+
+        for (String ratsString:rats) {
+            System.out.println(ratsString);
+            levelBoard.addRat(new Rat(ratsString.charAt(0),Character.getNumericValue(ratsString.charAt(2)),Character.getNumericValue(ratsString.charAt(4))));
+        }
+        
         levelBoard.drawBoard();
 
         //game tick system
         Timeline tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play(); //can be used to pause the game
-        instance = this;
+
     }
 
     /**
