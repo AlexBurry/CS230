@@ -17,7 +17,7 @@ public class Rat {
 
     private char sex;
     private boolean isBaby;
-    private boolean isDeath;
+    private boolean isDeathRat;
     private boolean alive;
     private boolean isSterile;
     private int speed;
@@ -26,9 +26,6 @@ public class Rat {
     private double imgWidth;
     private double imgHeight;
     private Level instance;
-
-    private Vector position;
-    private Vector velocity;
 
     private int xPos;
     private int yPos;
@@ -42,6 +39,18 @@ public class Rat {
 
     private Directions currentDirection;
 
+    //baby rat..
+    public Rat(char sex, int xPos, int yPos){
+        this.sex = sex;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        speed = 2;
+        alive = true;
+        isDeathRat = false;
+        isSterile = false;
+        instance = Level.getInstance();
+    }
+
     public Rat(char sex, boolean isBaby, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos) {
         currentDirection = Directions.NORTH;
 
@@ -51,12 +60,11 @@ public class Rat {
         this.xPos = xPos;
         this.yPos = yPos;
         this.isBaby = isBaby;
-        this.isDeath = isDeathRat;
+        this.isDeathRat = isDeathRat;
         this.alive = alive;
         this.isSterile = isSterile;
+        instance = Level.getInstance();
 
-        position = new Vector(0, 0);
-        velocity = new Vector(0, 0);
     }
 
     public int getX() {
@@ -68,19 +76,29 @@ public class Rat {
     }
 
     public void move() {
+       int newxPos = xPos;
+       int newyPos = yPos;
         if(currentDirection == Directions.EAST) {
             // Do something. Write your logic
+
+            newxPos += 1;
         } else if(currentDirection == Directions.WEST) {
+            newxPos -= 1;
             // Do something else
         } else if(currentDirection == Directions.NORTH) {
-            yPos -= 1;
+            newyPos -= 1;
         } else {
-            /* Do Something. Write logic for
-             * the remaining constant SOUTH
-             */
+            newyPos += 1;
+        }
+        if (isTraversable(newxPos, newyPos)) {
+            xPos = newxPos;
+            yPos = newyPos;
         }
     }
 
+    private boolean isTraversable(int x, int y){
+         return instance.getLevelBoard().getTileMap()[x][y].getTraversable();
+    }
     /*
     sets and gets the width and height of the image.
     currently imgWidth and imgHeight has no use.

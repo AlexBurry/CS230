@@ -54,6 +54,7 @@ public class Level {
         tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play(); //can be used to pause the game
+        instance = this;
     }
 
     /**

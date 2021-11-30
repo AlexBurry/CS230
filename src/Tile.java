@@ -63,4 +63,8 @@ public class Tile {
     public Boolean getIsRatVisible() {
         return isRatVisible;
     }
+
+    public String getTileType() {
+        return type;
+    }
 }
