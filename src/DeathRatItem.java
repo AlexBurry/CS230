@@ -19,8 +19,7 @@ public class DeathRatItem extends Item{
     public void checkKillCount(){
         if(killCount >= 5){
             deleteItem();
-            //TODO: Kill deathRat rat from the deathrat class.
-
+            deathRat.deleteRat();
         }
     }
 
