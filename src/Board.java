@@ -26,7 +26,7 @@ public class Board extends Application{
     private final Tile[][] tileMap;
     private final String[][] tempTileMap;
     private static ArrayList<Item> items = new ArrayList<>();
-    private ArrayList<Rat> rats = new ArrayList<>();
+    private static ArrayList<Rat> rats = new ArrayList<>();
     private static Canvas canvas;
     private final int mapX;
     private final int mapY;
@@ -40,10 +40,10 @@ public class Board extends Application{
      //* @param items item map in 2D array
      //* @param rats male rat map in 2D array
      */
-    public Board(String[][] tiles, /*String[][] items, String[][] rats,*/ int mapX, int mapY) {
+    public Board(String[][] tiles, /*ArrayList<String> items, ArrayList<String> rats,*/ int mapX, int mapY) {
         tempTileMap = tiles;
-//        itemMap = items;
-//        ratMap =  rats;
+//        this.items = items;
+//        this.rats =  rats;
         this.mapX = mapX;
         this.mapY = mapY;
         tileMap = new Tile[this.mapX][this.mapY];
@@ -55,6 +55,7 @@ public class Board extends Application{
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
         drawBoard();
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 
@@ -71,11 +72,8 @@ public class Board extends Application{
     }
 
     public void drawBoard() {
-        // Get the Graphic Context of the canvas. This is what we draw on.
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        // Clear canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        // Set the background to black.
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -86,52 +84,49 @@ public class Board extends Application{
             }
         }
 
+
+        for (Rat rt: rats) {
+            gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
+
+        }
+
         for (Item it: items) {
             gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
         }
 
-        for (Rat rt: rats) {
-            gc.drawImage(rt.getSprite(),1 * 60,4 * 60);
-        }
-
-
-
-
     }
+    
 
     /**
      * Function to add an item to the itemMap
-     * @param x x coordinate of the item
-     * @param y y coordinate of the item
      * @param item the item object
      */
-    public void addItemToMap(int x, int y, Item item) {
-
+    public void addItemToMap(Item item) {
         items.add(item);
         this.drawBoard();
-
     }
 
-//    /**
-//     * Function to add a male rat to the mRatMap
-//     * @param x x coordinate of the rat
-//     * @param y y coordinate of the rat
-//     * @param rat the rat object
-//     */
-//    public void addMRatToMap(int x, int y, Rat rat) {
-//        ratMap[x][y] = rat;
-//    }
+    /**
+     * Function to add a male rat to the mRatMap
+     * @param rat the rat object
+     */
+    public void addMRatToMap(Rat rat) {
+        rats.add(rat);
+        this.drawBoard();
+    }
 
-    public void removeItemFromMap(int x, int y, Item item) {
+    public void removeItemFromMap(Item item) {
         if(items.contains(item)){
-            System.out.println("here");
             items.remove(item);
             drawBoard();
         }
     }
 
-    public void removeRatFromMap() {
-
+    public void removeRatFromMap(Rat rat) {
+        if(rats.contains(rat)){
+            rats.remove(rat);
+            drawBoard();
+        }
     }
 
     public Tile[][] getTileMap() {
@@ -148,7 +143,7 @@ public class Board extends Application{
 //        return itemMap;
 //    }
 
-//    public Rat[][] getRatMap() {
-//        return ratMap;
-//    }
+    public ArrayList<Rat> getRatMap() {
+        return rats;
+    }
 }

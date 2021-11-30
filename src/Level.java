@@ -1,11 +1,16 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import java.util.ArrayList;
 
-import static javafx.application.Application.launch;
-
+/**
+ * Level class
+ * @author Alex
+ * @version 0.1
+ */
 public class Level {
     private float timeRemaining;
     private int currentScore;
@@ -29,34 +34,54 @@ public class Level {
     private Board levelBoard;
     private static Level instance;
     private Canvas canvas;
+    private Timeline tickTimeline;
+    private final int TICKRATE = 1000;
 
-    public Level (int mapX, int mapY, String[][] tiles, Stage primaryStage) {
-        levelBoard = new Board(tiles, mapX, mapY);
-
+    /**
+     * Level constructor for a new Level
+     * @param mapX Width of map
+     * @param mapY Height of map
+     * @param tiles 2D array of the tile map as strings
+     * @param primaryStage primary stage scene
+     */
+    public Level (int mapX, int mapY, String[][] tiles, /*ArrayList<String> items, ArrayList<String> rats,
+                  int allowedTime, int lossCondition*/ Stage primaryStage) {
+        levelBoard = new Board(tiles, /*items, rats, */ mapX, mapY);
         levelBoard.start(primaryStage);
         levelBoard.drawBoard();
+
+        //game tick system
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
+        tickTimeline.setCycleCount(Animation.INDEFINITE);
+        tickTimeline.play(); //can be used to pause the game
+        instance = this;
     }
 
+    /**
+     * Tick method for the game runtime, updates board every second/tick
+     */
+    public void tick() {
+        System.out.println("tick");
+        for (Rat rt: levelBoard.getRatMap()) {
+            rt.move();
+            levelBoard.drawBoard();
+        }
+
+    }
+
+    /**
+     * Getter for the Board object
+     * @return Board object
+     */
     public Board getLevelBoard(){
         return levelBoard;
     }
 
+    /**
+     * Idk
+     * @return Instance of this Level object
+     */
     public static Level getInstance(){
         return instance;
     }
-
-//    public void tick() {
-//        // Here we move the player right one cell and teleport
-//        // them back to the left side when they reach the right side.
-//        playerX = playerX + 1;
-//        if (playerX > 11) {
-//            playerX = 0;
-//        }
-//        // We then redraw the whole canvas.
-//        drawGame();
-//    }
-
-//    public Board constructBoard(Tile[][] tiles, Item[][] items, Rat[][] mRats, Rat[][] fRats) {
-//        return new Board(tiles, items, mRats, fRats);
-//    }
 }

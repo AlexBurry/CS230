@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-
 public class ReadFile {
     private int mapX;
     private int mapY;
@@ -29,14 +28,11 @@ public class ReadFile {
      * @return new, fresh level
      */
     public Level newLevel() {
-
         Scanner scan = new Scanner(in.nextLine()).useDelimiter(",|\r\n| ");
-
         mapX = mapSize(scan);
         mapY = mapSize(scan);
         scan.close();
-        return new Level(mapX, mapY, readMap(in), primaryStage);
-
+        return new Level(mapX, mapY, readMap(in), primaryStage); //in can never be closed... oops. - alex
     }
 
     private int mapSize(Scanner in) {
@@ -69,14 +65,6 @@ public class ReadFile {
 //    }
 //
 //    private String readSpawnRatLocations() {
-//
-//    }
-
-//    private String readSaveItemLocations() {
-//
-//    }
-
-//    private String readSaveRatLocations() {
 //
 //    }
 }

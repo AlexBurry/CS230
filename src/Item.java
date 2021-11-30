@@ -12,6 +12,7 @@ public class Item {
     protected Image sprite;
     protected int xPos;
     protected int yPos;
+    protected Level instance;
 
     /**
      * 
@@ -21,10 +22,12 @@ public class Item {
      */
 
     public void draw(int x, int y){
-        Level.getInstance().getLevelBoard().addItemToMap(x,y,this);
+        Level.getInstance().getLevelBoard().addItemToMap(this);
     }
 
-
+    protected void setInstance(){
+        instance = Level.getInstance();
+    }
 
     /**
      * * Sets the current sprite of the item. Used for changing its appearance.
@@ -52,7 +55,7 @@ public class Item {
      * this is where methods are called before it "dies".
      */
     public void deleteItem(){
-
+        instance.getLevelBoard().removeItemFromMap(this);
     }
 
 
