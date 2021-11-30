@@ -4,6 +4,7 @@ import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Level class
@@ -43,45 +44,58 @@ public class Level {
      * @param tiles 2D array of the tile map as strings
      * @param primaryStage primary stage scene
      */
-    public Level (int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> items,
+    public Level (int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
                   int allowedTime, int lossCondition, Stage primaryStage) {
         this.allowedTime = allowedTime;
         timeLeft = this.allowedTime;
         this.lossCondition = lossCondition;
         instance = this;
-
-        levelBoard = new Board(tiles, items, rats, mapX, mapY);
+        setItemRespawnTimers(itemsRespawnRate);
+        levelBoard = new Board(tiles, rats, mapX, mapY);
         levelBoard.start(primaryStage);
-
-        for (String ratsString:rats) {
-            System.out.println(ratsString);
-            levelBoard.addRat(new Rat(ratsString.charAt(0),Character.getNumericValue(ratsString.charAt(2)),Character.getNumericValue(ratsString.charAt(4))));
-        }
-        
-        levelBoard.drawBoard();
 
         //game tick system
         Timeline tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play(); //can be used to pause the game
+    }
 
+    private void setItemRespawnTimers(ArrayList<String> itemsRespawnRate) {
+        for (String iRR : itemsRespawnRate) {
+            Scanner token = new Scanner(String.valueOf(iRR));
+            token.useDelimiter(",");
+            String[] values = new String[2];
+            int i = 0;
+            while (token.hasNext()) {
+                values[i] = token.next();
+                i++;
+            }
+            switch (values[0]) {
+                case "b" -> bombSpawnRate = Integer.parseInt(values[1]);
+                case "g" -> gasSpawnRate = Integer.parseInt(values[1]);
+                case "s" -> sterilisationSpawnRate = Integer.parseInt(values[1]);
+                case "p" -> poisonSpawnRate = Integer.parseInt(values[1]);
+                case "m" -> mSexChangeSpawnRate = Integer.parseInt(values[1]);
+                case "f" -> fSexChangeSpawnRate = Integer.parseInt(values[1]);
+                case "n" -> noEntrySpawnRate = Integer.parseInt(values[1]);
+                case "d" -> deathRatSpawnRate = Integer.parseInt(values[1]);
+                default -> System.out.println("Invalid item char. Check level file.");
+            }
+        }
     }
 
     /**
      * Tick method for the game runtime, updates board every second/tick
      */
     public void tick() {
-        //System.out.println("tick");
-        for (Rat rt: levelBoard.getRatMap()) {
+        for (Rat rt: levelBoard.getRats()) {
             levelBoard.redrawTile(rt.getX(),rt.getY());
             rt.move();
-            levelBoard.drawRats();
-
-
         }
-        decreaseTime();
+        levelBoard.drawRats();
+        checkLossCondition();
+        timeLeft = timeLeft - 1;
         System.out.println(timeLeft);
-
     }
 
     /**
@@ -100,15 +114,13 @@ public class Level {
         return instance;
     }
 
-    public void decreaseTime() {
-        timeLeft = timeLeft - 1;
+    public void checkLossCondition() {
+        if (levelBoard.getRats().size() >= lossCondition) {
+            System.out.println("Game over");
+        }
     }
-
-    //public int
 
     public int getTimeLeft() {
         return timeLeft;
     }
-
-
 }

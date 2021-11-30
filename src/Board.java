@@ -24,8 +24,6 @@ import java.util.Random;
  */
 public class Board extends Application{
     private final String[][] tempTileMap;
-    private final ArrayList<String> tempRats;
-    private final ArrayList<String> tempItems;
     private final Tile[][] tileMap;
     private static ArrayList<Item> items = new ArrayList<>();
     private static ArrayList<Rat> rats = new ArrayList<>();
@@ -35,21 +33,23 @@ public class Board extends Application{
     private final int GAME_HEIGHT = 780;
     private Level instance;
     private final Canvas canvas= new Canvas(GAME_WIDTH, GAME_HEIGHT);
-    GraphicsContext gc = canvas.getGraphicsContext2D();
+    private final GraphicsContext gc = canvas.getGraphicsContext2D();
 
     /**
      * Constructor function for board
      * @param tiles tile map in 2D array
-     //* @param items item map in 2D array
-     //* @param rats male rat map in 2D array
+     * @param rats rats in an Array List
      */
-    public Board(String[][] tiles, ArrayList<String> items, ArrayList<String> rats, int mapX, int mapY) {
-        tempTileMap = tiles;
-        tempItems = items;
-        tempRats =  rats;
+    public Board(String[][] tiles, ArrayList<String> rats, int mapX, int mapY) {
         this.mapX = mapX;
         this.mapY = mapY;
         tileMap = new Tile[this.mapX][this.mapY];
+        tempTileMap = tiles;
+        for (String rt : rats) {
+            System.out.println(rt);
+            Board.rats.add(new Rat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
+                    Character.getNumericValue(rt.charAt(4))));
+        }
         instance = Level.getInstance();
     }
 
@@ -63,11 +63,7 @@ public class Board extends Application{
     }
 
     private Pane buildGUI() {
-        // Create top-level panel that will hold all GUI nodes.
         BorderPane root = new BorderPane();
-
-        // Create the canvas that we will draw on.
-        // We store this as a global variable so other methods can access it.
         root.setCenter(canvas);
 
         return root;
@@ -101,36 +97,19 @@ public class Board extends Application{
         }
 
     }
-    
 
     /**
-     * Function to add an item to the itemMap
+     * Function to add an item to the item list and board
      * @param item the item object
      */
-    public void addItemToMap(Item item) {
+    public void addItem(Item item) {
         items.add(item);
-        this.drawBoard();
+        this.drawItems();
     }
 
-    /**
-     * Function to add a male rat to the mRatMap
-     * @param rat the rat object
-     */
-    public void addMRatToMap(Rat rat) {
-        rats.add(rat);
-        this.drawBoard();
-    }
-
-    public void removeItemFromMap(Item item) {
+    public void removeItem(Item item) {
         if(items.contains(item)){
             items.remove(item);
-            drawBoard();
-        }
-    }
-
-    public void removeRatFromMap(Rat rat) {
-        if(rats.contains(rat)){
-            rats.remove(rat);
             drawBoard();
         }
     }
@@ -139,25 +118,25 @@ public class Board extends Application{
         return tileMap;
     }
 
-    public void addRat(Rat rat) {
-        rats.add(rat);
-        //instance.reDrawBoard();
-    }
-
-
-//    public Item getItemMap() {
-//        return itemMap;
-//    }
-
-    public ArrayList<Rat> getRatMap() {
-        return rats;
-    }
-
     public void redrawTile(int x, int y) {
         Tile tile = tileMap[x][y];
         tile.draw(canvas);
         drawItems();
+    }
 
+    public void addRat(Rat rat) {
+        rats.add(rat);
+    }
+
+    public void removeRat(Rat rat) {
+        if(rats.contains(rat)){
+            rats.remove(rat);
+            drawBoard();
+        }
+    }
+
+    public ArrayList<Rat> getRats() {
+        return rats;
     }
 
 }

@@ -1,9 +1,6 @@
 import javafx.scene.image.Image;
 
 import java.util.Random;
-import java.util.Vector;
-
-import javafx.scene.canvas.GraphicsContext;
 
 /**
  * The main rat class. Covers all basic features of Rats.
@@ -122,7 +119,7 @@ public class Rat {
 
     // kill rat method
     public void deleteRat() {
-        instance.getLevelBoard().removeRatFromMap(this);
+        instance.getLevelBoard().removeRat(this);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class Item {
      */
 
     public void draw(int x, int y){
-        Level.getInstance().getLevelBoard().addItemToMap(this);
+        Level.getInstance().getLevelBoard().addItem(this);
     }
 
     protected void setInstance(){
@@ -55,7 +55,7 @@ public class Item {
      * this is where methods are called before it "dies".
      */
     public void deleteItem(){
-        instance.getLevelBoard().removeItemFromMap(this);
+        instance.getLevelBoard().removeItem(this);
     }
 
 
