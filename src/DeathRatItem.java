@@ -33,7 +33,7 @@ public class DeathRatItem extends Item{
 
     //spawns a deathRat with the same coordinates.
     private void spawnDeathRat(){
-        this.deathRat = new DeathRat('m',false,true,true,true);
+        this.deathRat = new DeathRat('m',false,true,true,true, xPos, yPos);
     }
 
 }

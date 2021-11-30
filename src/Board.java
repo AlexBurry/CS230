@@ -86,7 +86,7 @@ public class Board extends Application{
 
 
         for (Rat rt: rats) {
-            gc.drawImage(rt.getSprite(),2 * 60,5 * 60);
+            gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
 
         }
 
@@ -124,7 +124,6 @@ public class Board extends Application{
 
     public void removeRatFromMap(Rat rat) {
         if(rats.contains(rat)){
-            System.out.println("here");
             rats.remove(rat);
             drawBoard();
         }
@@ -144,7 +143,7 @@ public class Board extends Application{
 //        return itemMap;
 //    }
 
-//    public Rat[][] getRatMap() {
-//        return ratMap;
-//    }
+    public ArrayList<Rat> getRatMap() {
+        return rats;
+    }
 }

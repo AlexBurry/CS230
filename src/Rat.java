@@ -33,10 +33,23 @@ public class Rat {
     private int xPos;
     private int yPos;
 
-    public Rat(char sex, boolean isBaby, boolean isDeathRat, boolean alive, boolean isSterile) {
+    public enum Directions{
+        EAST,
+        WEST,
+        NORTH,
+        SOUTH
+    }
+
+    private Directions currentDirection;
+
+    public Rat(char sex, boolean isBaby, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos) {
+        currentDirection = Directions.NORTH;
+
         if (sex == 'f' || sex == 'm') {
             this.sex = sex;
         }
+        this.xPos = xPos;
+        this.yPos = yPos;
         this.isBaby = isBaby;
         this.isDeath = isDeathRat;
         this.alive = alive;
@@ -52,6 +65,20 @@ public class Rat {
 
     public int getY() {
         return yPos;
+    }
+
+    public void move() {
+        if(currentDirection == Directions.EAST) {
+            // Do something. Write your logic
+        } else if(currentDirection == Directions.WEST) {
+            // Do something else
+        } else if(currentDirection == Directions.NORTH) {
+            yPos -= 1;
+        } else {
+            /* Do Something. Write logic for
+             * the remaining constant SOUTH
+             */
+        }
     }
 
     /*

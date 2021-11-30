@@ -61,7 +61,11 @@ public class Level {
      */
     public void tick() {
         System.out.println("tick");
-        levelBoard.drawBoard();
+        for (Rat rt: levelBoard.getRatMap()) {
+            rt.move();
+            levelBoard.drawBoard();
+        }
+
     }
 
     /**
