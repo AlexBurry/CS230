@@ -12,3 +12,5 @@ w w p w w w p w w t w w w w t w w w p w
 w w p p p p p p t t w w w w t w w w p w
 w w p w w w w w w t t p p p p p p p p w
 w w w w w w w w w w w w w w w w w w w w
+m,3,4;f2,5;
+p,10;k,15

@@ -2,6 +2,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReadFile {
@@ -32,7 +33,29 @@ public class ReadFile {
         mapX = mapSize(scan);
         mapY = mapSize(scan);
         scan.close();
-        return new Level(mapX, mapY, readMap(in), primaryStage); //in can never be closed... oops. - alex
+//        while (in.hasNextLine()) {
+//            ;
+//        }
+
+
+//        Scanner scan = new Scanner(in.nextLine()).useDelimiter(";|\r\n| ");
+//        mapX = mapSize(scan);
+//        mapY = mapSize(scan);
+//        scan.close();
+//
+//
+//        //in.nextLine();
+//        String[][] map =readMap(in);
+        String[][] map = readMap(in);
+        ArrayList<String> rats = readSpawnRatLocations(in);
+        ArrayList<String> items = readItemSpawnRates(in);
+//        //mapScan.close();
+//
+//        //Scanner ratScan = new Scanner(in.nextLine()).useDelimiter(";");
+//        //ArrayList<String> rats = readSpawnRatLocations(in);
+//        //ratScan.close();
+
+        return new Level(mapX, mapY, map, rats, items, primaryStage); //in can never be closed... oops. - alex
     }
 
     private int mapSize(Scanner in) {
@@ -52,6 +75,23 @@ public class ReadFile {
         return tilemap;
     }
 
+    private ArrayList<String> readSpawnRatLocations(Scanner ratScan) {
+        ArrayList<String> rats = new ArrayList<>();
+        while (ratScan.hasNext()) {
+            rats.add(ratScan.next());
+        }
+        return rats;
+    }
+
+    private ArrayList<String> readItemSpawnRates(Scanner itemScan) {
+        ArrayList<String> items = new ArrayList<>();
+
+        while (itemScan.hasNext()) {
+            items.add(itemScan.next());
+        }
+        return items;
+    }
+
 //    private String readTimeLimit() {
 //
 //    }
@@ -60,11 +100,4 @@ public class ReadFile {
 //
 //    }
 //
-//    private String readItemSpawnRates() {
-//
-//    }
-//
-//    private String readSpawnRatLocations() {
-//
-//    }
 }

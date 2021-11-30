@@ -44,9 +44,9 @@ public class Level {
      * @param tiles 2D array of the tile map as strings
      * @param primaryStage primary stage scene
      */
-    public Level (int mapX, int mapY, String[][] tiles, /*ArrayList<String> items, ArrayList<String> rats,
-                  int allowedTime, int lossCondition*/ Stage primaryStage) {
-        levelBoard = new Board(tiles, /*items, rats, */ mapX, mapY);
+    public Level (int mapX, int mapY, String[][] tiles, ArrayList<String> items, ArrayList<String> rats,
+                  /*int allowedTime, int lossCondition*/ Stage primaryStage) {
+        levelBoard = new Board(tiles, items, rats, mapX, mapY);
         levelBoard.start(primaryStage);
         levelBoard.drawBoard();
 

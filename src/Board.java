@@ -23,16 +23,19 @@ import java.util.Random;
  * @since 0.1
  */
 public class Board extends Application{
-    private final Tile[][] tileMap;
     private final String[][] tempTileMap;
+    private final ArrayList<String> tempRats;
+    private final ArrayList<String> tempItems;
+    private final Tile[][] tileMap;
     private static ArrayList<Item> items = new ArrayList<>();
     private static ArrayList<Rat> rats = new ArrayList<>();
-    private static Canvas canvas;
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
     private final int GAME_HEIGHT = 780;
     private Level instance;
+    private final Canvas canvas= new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    GraphicsContext gc = canvas.getGraphicsContext2D();
 
     /**
      * Constructor function for board
@@ -40,10 +43,10 @@ public class Board extends Application{
      //* @param items item map in 2D array
      //* @param rats male rat map in 2D array
      */
-    public Board(String[][] tiles, /*ArrayList<String> items, ArrayList<String> rats,*/ int mapX, int mapY) {
+    public Board(String[][] tiles, ArrayList<String> items, ArrayList<String> rats, int mapX, int mapY) {
         tempTileMap = tiles;
-//        this.items = items;
-//        this.rats =  rats;
+        tempItems = items;
+        tempRats =  rats;
         this.mapX = mapX;
         this.mapY = mapY;
         tileMap = new Tile[this.mapX][this.mapY];
@@ -65,14 +68,12 @@ public class Board extends Application{
 
         // Create the canvas that we will draw on.
         // We store this as a global variable so other methods can access it.
-        canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
         root.setCenter(canvas);
 
         return root;
     }
 
     public void drawBoard() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -84,12 +85,18 @@ public class Board extends Application{
             }
         }
 
+        drawRats();
+        drawItems();
+    }
 
+    public void drawRats() {
         for (Rat rt: rats) {
-            gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
+            //Rat.draw - implement
+            gc.drawImage(rt.getSprite(),2 * 60,5 * 60);
 
         }
-
+    }
+    public void drawItems() {
         for (Item it: items) {
             gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
         }
