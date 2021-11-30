@@ -118,7 +118,7 @@ public class App extends Application {
 
         if (!inputField.getText().isEmpty() || skip) {
             if(skip){p = new Profile("test");}else{p = new Profile(inputField.getText());}
-            primaryStage.setTitle("Rats: DLC-less Edition");
+            primaryStage.setTitle("Rats: Steampunk Edition");
             primaryStage.getIcons().add(new Image("raticon.png"));
 
             Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
