@@ -75,10 +75,11 @@ public class Level {
         for (Rat rt: levelBoard.getRatMap()) {
             levelBoard.redrawTile(rt.getX(),rt.getY());
             rt.move();
-            levelBoard.drawRats();
+
 
 
         }
+        levelBoard.drawRats();
         decreaseTime();
         System.out.println(timeLeft);
 
