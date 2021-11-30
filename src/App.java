@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 public class App extends Application {
 
     Profile p;
+    boolean skip = true;
 
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
@@ -80,6 +81,7 @@ public class App extends Application {
     public Pane buildLoginUI(Stage primaryStage) {
         GridPane gPane = new GridPane();
 
+
         Label userLbl = new Label("Enter Username!");
         TextField inputField = new TextField("");
         Button enterBtn = new Button("Enter");
@@ -113,12 +115,19 @@ public class App extends Application {
      * @throws FileNotFoundException
      */
     public void buildLevel(Stage primaryStage, TextField inputField) throws FileNotFoundException {
-        if (!inputField.getText().isEmpty()) {
-            p = new Profile(inputField.getText());
+
+        if (!inputField.getText().isEmpty() || skip) {
+            if(skip){p = new Profile("test");}else{p = new Profile(inputField.getText());}
             primaryStage.setTitle("Rats: DLC-less Edition");
             primaryStage.getIcons().add(new Image("raticon.png"));
 
             Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
+
+
+            newLevel.getLevelBoard().addRat(new Rat('f', false, false,true, false));
+            newLevel.getLevelBoard().addItemToMap(new SexChangeItem(4,4));
+
+
         } else {
             JOptionPane.showMessageDialog(null, "Invalid Username!", "Try Again!", JOptionPane.INFORMATION_MESSAGE);
         }

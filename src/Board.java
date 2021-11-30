@@ -84,14 +84,16 @@ public class Board extends Application{
             }
         }
 
+
+        for (Rat rt: rats) {
+            gc.drawImage(rt.getSprite(),2 * 60,5 * 60);
+
+        }
+
         for (Item it: items) {
             gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
         }
 
-        for (Rat rt: rats) {
-            gc.drawImage(rt.getSprite(),1 * 60,4 * 60);
-            gc.drawImage(rt.getSprite(),2 * 60,4 * 60);
-        }
     }
 
     /**
