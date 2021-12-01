@@ -3,10 +3,9 @@ package ItemClasses;
 import Game.Level;
 import javafx.scene.image.Image;
 
-import java.lang.management.GarbageCollectorMXBean;
 
 /**
- * Represents the fundamental functions of an ItemClasses.Item object.
+ * Represents the fundamental functions of an Item object.
  * Cannot be instantiated itself.
  *
  * @author Trafford

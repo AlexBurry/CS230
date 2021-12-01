@@ -1,8 +1,7 @@
 package ItemClasses;
 
-import Game.Tick;
+import Game.ITickHandler;
 import Game.Tile;
-import Game.Level;
 import RatClasses.Rat;
 import javafx.scene.image.Image;
 
@@ -16,13 +15,13 @@ import java.util.ArrayList;
  * @see Item
  * @since 01/12/21
  */
-public class BombItem extends Item implements Tick {
+public class BombItem extends Item implements ITickHandler {
 
     private int timer = 4; //The countdown period
     private ArrayList<Tile> bombZone; //The tiles to detonate on
 
     /**
-     * This class is a listener of the Game.Tick event.
+     * This class is a listener of the ITickHandler event.
      * It will countdown every tick (default: 1s)
      */
     @Override
@@ -155,7 +154,7 @@ public class BombItem extends Item implements Tick {
             killRat.deleteRat();
         }
 
-        getLocalInstance().markListenerForRemoval(this); //Stop listening so that we dont call Game.Tick on a dead object
+        getLocalInstance().markListenerForRemoval(this); //Stop listening so that we dont call Tick on a dead object
         deleteItem();
 
     }

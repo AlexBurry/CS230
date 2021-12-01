@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 
 /**
  * This class creates the HBox which stores items icons
- * and allows the player to drag and drop them onto the Game.Board.
+ * and allows the player to drag and drop them onto the Board.
  *
  * @author Dominik
  * @version 1.0

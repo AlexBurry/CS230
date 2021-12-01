@@ -25,11 +25,11 @@ public class Level {
     private Inventory levelInv;
     private static Level instance;
     private final int TICKRATE = 1000;
-    private List<Tick> listeners = new ArrayList<>();
-    private ArrayList<Tick> nullListeners = new ArrayList<>();
+    private List<ITickHandler> listeners = new ArrayList<>();
+    private ArrayList<ITickHandler> nullListeners = new ArrayList<>();
 
     /**
-     * Game.Level constructor for a new Game.Level
+     * Level constructor for a new Level
      * @param mapX Width of map
      * @param mapY Height of map
      * @param tiles 2D array of the tile map as strings
@@ -53,27 +53,27 @@ public class Level {
     }
 
 
-    public void addListener(Tick toAdd) {
+    public void addListener(ITickHandler toAdd) {
         listeners.add(toAdd);
 
     }
 
-    public List<Tick> getListeners(){
+    public List<ITickHandler> getListeners(){
         return listeners;
     }
 
-    public void markListenerForRemoval(Tick toAdd) {
+    public void markListenerForRemoval(ITickHandler toAdd) {
         nullListeners.add(toAdd);
     }
 
     /**
-     * Game.Tick method for the game runtime, updates board every second/tick
+     * ITickHandler method for the game runtime, updates board every second/tick
      */
     public void tick() { //TODO: figure out order through trial and error
-        for (Tick t : nullListeners){
+        for (ITickHandler t : nullListeners){
             listeners.remove(t);
         }
-        for (Tick t : listeners) {
+        for (ITickHandler t : listeners) {
             t.tickEvent();
         }
 
@@ -90,8 +90,8 @@ public class Level {
     }
 
     /**
-     * Getter for the Game.Board object
-     * @return Game.Board object
+     * Getter for the Board object
+     * @return Board object
      */
     public Board getLevelBoard() {
         return levelBoard;
@@ -103,7 +103,7 @@ public class Level {
 
     /**
      * Idk
-     * @return Instance of this Game.Level object
+     * @return Instance of this Level object
      */
     public static Level getInstance(){
         return instance;

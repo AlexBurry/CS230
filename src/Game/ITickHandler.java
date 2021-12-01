@@ -1,5 +1,5 @@
 package Game;
 
-public interface Tick{
+public interface ITickHandler {
     void tickEvent();
 }

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @author Trafford
  * @version 1.0
  * @see Item
- * Represents the ItemClasses.Item behind a death rat. Follows it around the board.
+ * Represents the Item behind a death rat. Follows it around the board.
  * Keeps track of kills, Handles deletion.
  * @since 01/12/21
  */
@@ -23,7 +23,7 @@ public class DeathRatItem extends Item {
 
 
     /**
-     * Constructs an ItemClasses.Item of type Death RatClasses.Rat. NOT the same as RatClasses.DeathRat of type RatClasses.Rat.
+     * Constructs an Item of type Death Rat. NOT the same as DeathRat of type Rat.
      * Immediately calls wait function on instantiation.
      *
      * @param x

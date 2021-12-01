@@ -4,7 +4,7 @@ package RatClasses;
 import Game.Level;
 import ItemClasses.DeathRatItem;
 import ItemClasses.Item;
-import Game.Tick;
+import Game.ITickHandler;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.Random;
  * @since 0.1
  */
 
-public class Rat implements Tick {
+public class Rat implements ITickHandler {
 
     private char sex;
     private boolean isDeathRat;
@@ -106,7 +106,7 @@ public class Rat implements Tick {
 
     /**
      * This is an event listener.
-     * Called every x seconds by the Game.Level class
+     * Called every x seconds by the Level class
      */
     @Override
     public void tickEvent() {

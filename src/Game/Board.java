@@ -77,7 +77,7 @@ public class Board extends Application{
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        //Read in a 2d array of strings of tile types then turn it into a 2d array of Game.Tile objects
+        //Read in a 2d array of strings of tile types then turn it into a 2d array of Tile objects
         for (int y = 0; y < mapY; y++) {
             for (int x = 0; x < mapX; x++) {
                 tileMap[x][y] = new Tile(tempTileMap[x][y], x, y, canvas);
@@ -113,7 +113,7 @@ public class Board extends Application{
 
         if (item.getClass() == BombItem.class) {
 
-            instance.addListener((Tick) item);
+            instance.addListener((ITickHandler) item);
         }
         items.add(item);
         this.drawItems();

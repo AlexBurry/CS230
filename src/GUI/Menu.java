@@ -49,7 +49,7 @@ public class Menu {
         BorderPane menuPane = new BorderPane();
 
         Label playLbl = presetLabel("Play", font, 72);
-        Label highScoreLbl = presetLabel("Game.Profile", font, 36);
+        Label highScoreLbl = presetLabel("Profile", font, 36);
         Label exitLbl = presetLabel("Exit", font, 36);
 
         playLbl.setOnMouseClicked(mouseEvent -> buildLoginUI());
@@ -67,7 +67,7 @@ public class Menu {
         menuPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Scene scene = new Scene(menuPane, 400, 400);
-        presetStage(primaryStage, "Sprites/raticon.png", "Rats: GUI.Menu", scene);
+        presetStage(primaryStage, "Sprites/raticon.png", "Rats: Menu", scene);
     }
 
     /**
@@ -105,7 +105,7 @@ public class Menu {
     }
 
     /**
-     * This method creates the Game.Level if the user
+     * This method creates the Level if the user
      * entered an acceptable username.
      *
      * @param primaryStage
