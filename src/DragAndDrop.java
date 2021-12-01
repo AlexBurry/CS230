@@ -41,10 +41,11 @@ public class DragAndDrop {
         HBox toolBar = new HBox();
         toolBar.setPadding(new Insets(10, 10, 10, 10));
         toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        ImageView draggableItem = new ImageView();
-        draggableItem.setImage(noEntryIcon);
-        dragCode(draggableItem);
-        toolBar.getChildren().add(draggableItem);
+
+//        ImageView draggableItem = new ImageView();
+//        draggableItem.setImage(noEntryIcon);
+//        dragCode(draggableItem);
+//        toolBar.getChildren().add(draggableItem);
 
         selectedItem = Item.itemType.DeathRat;
         ImageView draggableItem3 = new ImageView();
@@ -52,40 +53,40 @@ public class DragAndDrop {
         dragCode(draggableItem3);
         toolBar.getChildren().add(draggableItem3);
 
-        selectedItem = Item.itemType.Poison;
-        ImageView draggableItem4 = new ImageView();
-        draggableItem4.setImage(new Image("PoisonTrap.png"));
-        dragCode(draggableItem4);
-        toolBar.getChildren().add(draggableItem4);
-
-        selectedItem = Item.itemType.MSex;
-        ImageView draggableItem5 = new ImageView();
-        draggableItem5.setImage(new Image("femaleMaleSexChange.png"));
-        dragCode(draggableItem5);
-        toolBar.getChildren().add(draggableItem5);
-
-        selectedItem = Item.itemType.FSex;
-        ImageView draggableItem6 = new ImageView();
-        draggableItem6.setImage(new Image("maleFemaleSexChange.png"));
-        dragCode(draggableItem6);
-        toolBar.getChildren().add(draggableItem6);
-
-        selectedItem = Item.itemType.Sterilise;
-        ImageView draggableItem7 = new ImageView();
-        draggableItem7.setImage(new Image("DeathRat.png"));
-        dragCode(draggableItem7);
-        toolBar.getChildren().add(draggableItem7);
-
-        selectedItem = Item.itemType.Bomb;
-        ImageView draggableItem8 = new ImageView();
-        draggableItem8.setImage(new Image("Bomb4.png"));
-        dragCode(draggableItem8);
-        toolBar.getChildren().add(draggableItem8);
+//        selectedItem = Item.itemType.Poison;
+//        ImageView draggableItem4 = new ImageView();
+//        draggableItem4.setImage(new Image("PoisonTrap.png"));
+//        dragCode(draggableItem4);
+//        toolBar.getChildren().add(draggableItem4);
+//
+//        selectedItem = Item.itemType.MSex;
+//        ImageView draggableItem5 = new ImageView();
+//        draggableItem5.setImage(new Image("femaleMaleSexChange.png"));
+//        dragCode(draggableItem5);
+//        toolBar.getChildren().add(draggableItem5);
+//
+//        selectedItem = Item.itemType.FSex;
+//        ImageView draggableItem6 = new ImageView();
+//        draggableItem6.setImage(new Image("maleFemaleSexChange.png"));
+//        dragCode(draggableItem6);
+//        toolBar.getChildren().add(draggableItem6);
+//
+//        selectedItem = Item.itemType.Sterilise;
+//        ImageView draggableItem7 = new ImageView();
+//        draggableItem7.setImage(new Image("DeathRat.png"));
+//        dragCode(draggableItem7);
+//        toolBar.getChildren().add(draggableItem7);
+//
+//        selectedItem = Item.itemType.Bomb;
+//        ImageView draggableItem8 = new ImageView();
+//        draggableItem8.setImage(new Image("Bomb4.png"));
+//        dragCode(draggableItem8);
+//        toolBar.getChildren().add(draggableItem8);
 
         return toolBar;
     }
 
-    // Currently only draws it on top of the map.
+
     public void canvasDragDroppedOccurred(DragEvent event) {
         int tileSize = 60;
 
@@ -95,9 +96,9 @@ public class DragAndDrop {
         int tileMapX = (int) (x / tileSize);
         int tileMapY = (int) (y / tileSize);
 
-        String s = String.format("You dropped at (%f, %f) relative to the canvas.", x, y);
-        System.out.println(s);
-        System.out.println(tileMapX + ", " + tileMapY);
+        //String s = String.format("You dropped at (%f, %f) relative to the canvas.", x, y);
+        //System.out.println(s);
+        //System.out.println(tileMapX + ", " + tileMapY);
 
         if (tileMap[tileMapX][tileMapY].getTileType().equalsIgnoreCase("P")) {
             if (!noItemPresent(tileMapX, tileMapY)) {

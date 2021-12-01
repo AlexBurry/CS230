@@ -53,6 +53,7 @@ public class Rat implements Tick{
         isSterile = false;
         instance = Level.getInstance();
         instance.addListener(this);
+        this.sprite = new Image("babyRat.png");
     }
 
     public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, int speed) {
@@ -68,6 +69,7 @@ public class Rat implements Tick{
         this.isSterile = isSterile;
         instance = Level.getInstance();
         instance.addListener(this);
+        this.sprite = new Image("ratMale.png");
 
     }
 
@@ -132,7 +134,11 @@ public class Rat implements Tick{
                     case MSex -> System.out.println("Male Sex Change");
                     case FSex -> System.out.println("Female Sex Change");
                     case NoEntry -> System.out.println("No Entry");
-                    case DeathRat -> System.out.println("Death Rat");
+                    case DeathRat -> {
+                        DeathRatItem a = (DeathRatItem) it;
+                        a.incrementKills();
+                        deleteRat();
+                    }
                 }
             }
         }
@@ -155,11 +161,11 @@ public class Rat implements Tick{
     currently imgWidth and imgHeight has no use.
      */
     public void setImage(String filename) {
-        sprite = new Image("ratMale.png");
+        sprite = new Image(filename);
     }
 
     public Image getSprite() {
-        return sprite = new Image("ratMale.png");
+        return sprite;
     }
 
     public void setPosition(double x, double y) {
