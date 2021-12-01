@@ -1,6 +1,7 @@
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -37,6 +38,26 @@ public class Rat implements Tick{
         WEST,
         NORTH,
         SOUTH
+    }
+
+    private enum DirectionsWhenFaceNorth {
+        WEST,
+        EAST
+    }
+
+    private enum DirectionsWhenFaceWest {
+        NORTH,
+        SOUTH,
+    }
+
+    public enum DirectionsWhenFaceEAST {
+        NORTH,
+        SOUTH
+    }
+
+    public enum DirectionWhenFaceSouth {
+        WEST,
+        EAST
     }
 
     private Directions currentDirection;
@@ -109,9 +130,13 @@ public class Rat implements Tick{
         if (isTraversable(newxPos, newyPos)) {
             xPos = newxPos;
             yPos = newyPos;
-
         } else {
+            Directions oldDirection = currentDirection;
             currentDirection = Directions.values()[new Random().nextInt(Directions.values().length)];
+           /* while (currentDirection == oldDirection) {
+                currentDirection = Directions.values()[new Random().nextInt(DirectionsWhenFaceNorth.values().length)];
+                System.out.println(Arrays.toString(DirectionsWhenFaceNorth.values()));
+            }*/
         }
     }
 
@@ -155,7 +180,7 @@ public class Rat implements Tick{
     private boolean isTraversable(int x, int y) {
         return instance.getLevelBoard().getTileMap()[x][y].getTraversable();
     }
-
+    
     /*
     sets and gets the width and height of the image.
     currently imgWidth and imgHeight has no use.
@@ -165,7 +190,12 @@ public class Rat implements Tick{
     }
 
     public Image getSprite() {
-        return sprite;
+        if (sex == 'm') {
+            return sprite = new Image("ratMale.png");
+        }
+        else{
+            return sprite = new Image("ratFemale.png");
+        }
     }
 
     public void setPosition(double x, double y) {
