@@ -64,7 +64,7 @@ public class MainSceneController {
     @FXML
     void startGame(ActionEvent event) {
         System.out.println("Start Game");
-        // GOTO Level 1
+        // GOTO Game.Level 1
     }
 
     @FXML
