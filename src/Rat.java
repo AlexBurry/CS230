@@ -100,8 +100,12 @@ public class Rat implements Tick{
      */
     @Override
     public void tickEvent() {
+
         instance.getLevelBoard().redrawTile(xPos,yPos,true);
         move();
+        if(instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType() == "t"){
+            instance.getLevelBoard().redrawTile(xPos,yPos,false);
+        }
         checkCollision();
     }
 
@@ -138,6 +142,8 @@ public class Rat implements Tick{
                 System.out.println(Arrays.toString(DirectionsWhenFaceNorth.values()));
             }*/
         }
+
+
     }
 
     /**
@@ -160,9 +166,12 @@ public class Rat implements Tick{
                     case FSex -> System.out.println("Female Sex Change");
                     case NoEntry -> System.out.println("No Entry");
                     case DeathRat -> {
-                        DeathRatItem a = (DeathRatItem) it;
-                        a.incrementKills();
-                        deleteRat();
+                        if(!this.isDeathRat){
+                            DeathRatItem a = (DeathRatItem) it;
+                            a.incrementKills();
+                            deleteRat();
+                        }
+
                     }
                 }
             }
@@ -177,7 +186,7 @@ public class Rat implements Tick{
         System.out.println( instance.getLevelBoard().getItems());
     }
 
-    private boolean isTraversable(int x, int y) {
+    public boolean isTraversable(int x, int y) {
         return instance.getLevelBoard().getTileMap()[x][y].getTraversable();
     }
 
@@ -201,8 +210,9 @@ public class Rat implements Tick{
         }
     }
 
-    public void setPosition(double x, double y) {
-        //position.set(x,y);
+    public void setPosition(int x, int y) {
+        xPos = x;
+        yPos = y;
     }
 
     public void draw(int x, int y) {
@@ -212,6 +222,14 @@ public class Rat implements Tick{
     // kill rat method
     public void deleteRat() {
         instance.getLevelBoard().removeRat(this);
+    }
+
+    public Directions getCurrentDirection(){
+        return currentDirection;
+    }
+
+    public void setCurrentDirection(Directions currentDirection) {
+        this.currentDirection = currentDirection;
     }
 
     @Override

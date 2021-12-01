@@ -151,7 +151,6 @@ public class Board extends Application{
     }
 
     public void removeRat(Rat rat) {
-        System.out.println("removing rat");
         if(rats.contains(rat)){
             rats.remove(rat);
             drawBoard();

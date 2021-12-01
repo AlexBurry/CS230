@@ -4,6 +4,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author Trafford
+ * Represents the Item behind a death rat. Follows it around the board.
+ */
 public class DeathRatItem extends Item implements Tick{
 
     private int killCount = 0; //the amount of rats it has killed.
@@ -46,7 +50,7 @@ public class DeathRatItem extends Item implements Tick{
     //spawns a deathRat with the same coordinates.
     private void spawnDeathRat(){
         this.deathRat = new DeathRat('m',true,true,true, getX(), getY(), 3);
-        System.out.println("waited");
+        this.deathRat.setItem(this); // give this class to the death rat, so it can reference it.
         this.setImage(new Image("DeathRat.png")); //make it invisible.
         getLocalInstance().addListener(this);
 
@@ -58,6 +62,6 @@ public class DeathRatItem extends Item implements Tick{
         getLocalInstance().getLevelBoard().redrawTile(getX(),getY(),false);
         this.setX(deathRat.getX());
         this.setY(deathRat.getY());
-        System.out.println("Rat at: " + deathRat.getX() + ":" + deathRat.getY() + " item at: " + this.getX() + ":" + this.getY());
+
     }
 }
