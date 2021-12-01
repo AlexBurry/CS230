@@ -117,6 +117,7 @@ public class Rat implements ITickHandler {
             instance.getLevelBoard().redrawTile(xPos,yPos,false);
         }
         checkCollision();
+        checkRatCollision();
     }
 
     public int getX() {
@@ -193,6 +194,17 @@ public class Rat implements ITickHandler {
 
         for (Item it : itemsToDeleteOnCollision){
             it.deleteItem();
+        }
+    }
+
+    public void checkRatCollision() {
+        ArrayList<Rat> existingRats = instance.getLevelBoard().getRats();
+        for (Rat rt: existingRats) {
+            if(rt != this){
+                if(rt.getX() == xPos && rt.getY() == yPos){
+                    System.out.println("RAT COLLISION");
+                }
+            }
         }
     }
 
