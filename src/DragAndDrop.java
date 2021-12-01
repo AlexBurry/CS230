@@ -47,6 +47,12 @@ public class DragAndDrop {
         dragCode(draggableItem);
         toolBar.getChildren().add(draggableItem);
 
+        selectedItem = Item.itemType.DeathRat;
+        ImageView draggableItem2 = new ImageView();
+        draggableItem2.setImage(new Image("DeathRat.png"));
+        dragCode(draggableItem2);
+        toolBar.getChildren().add(draggableItem2);
+
         return toolBar;
     }
 

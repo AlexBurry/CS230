@@ -155,11 +155,11 @@ public class Rat implements Tick{
     currently imgWidth and imgHeight has no use.
      */
     public void setImage(String filename) {
-        sprite = new Image("spriteRat.png");
+        sprite = new Image("ratMale.png");
     }
 
     public Image getSprite() {
-        return sprite = new Image("spriteRat.png");
+        return sprite = new Image("ratMale.png");
     }
 
     public void setPosition(double x, double y) {

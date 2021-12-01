@@ -15,7 +15,7 @@ public class DeathRatItem extends Item{
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(new Image("Bomb4.png"));
+        this.setImage(new Image("DeathRat.png"));
         this.setMyItemType(itemType.DeathRat);
         waitToSpawnRat();
     }
