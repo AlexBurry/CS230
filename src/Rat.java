@@ -111,6 +111,10 @@ public class Rat implements Tick{
         }
     }
 
+    /**
+     * @author Trafford (made for Items)
+     *
+     */
     public void checkCollision(){
         for (Item it: instance.getLevelBoard().getItems()) {
             if(it.getX() == xPos && it.getY() == yPos){

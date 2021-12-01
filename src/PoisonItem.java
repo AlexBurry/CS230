@@ -14,5 +14,7 @@ public class PoisonItem extends Item{
         this.yPos = y;
         this.sprite = new Image("NoEntry.png");
     }
+
+
     
 }

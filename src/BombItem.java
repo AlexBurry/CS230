@@ -52,6 +52,8 @@ public class BombItem extends Item implements Tick{
 
     }
 
+
+
     private ArrayList<Tile> getBombZone(){
         ArrayList<Tile> allTiles = instance.getLevelBoard().getTraversableTiles();
         ArrayList<Tile> tilesChecked = new ArrayList<>();
@@ -119,6 +121,7 @@ public class BombItem extends Item implements Tick{
                 }
             }
         }
+
 
         //Without this, we are changing the collection as we iterate on it.
         for (Rat killRat:toKill) {

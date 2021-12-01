@@ -24,12 +24,13 @@ public class DragAndDrop {
     private Image noEntryIcon;
     private Canvas canvas;
     private Tile[][] tileMap;
+    private Level instance;
 
     /*
     Used to track what type of item you're currently selecting. This should
     be changed whenever you click on a new item in the inventory.
      */
-    private enum itemType{
+    private enum itemType {
         Bomb,
         Gas,
         Sterilisation,
@@ -47,6 +48,7 @@ public class DragAndDrop {
         this.canvas = canvas;
         this.tileMap = tileMap;
         selectedItem = itemType.NoEntry; //Default to NoEntry for now.
+        instance = Level.getInstance();
     }
 
     // Not scaled to all items yet.
@@ -77,27 +79,45 @@ public class DragAndDrop {
         System.out.println(tileMapX + ", " + tileMapY);
 
         if (tileMap[tileMapX][tileMapY].getTileType().equalsIgnoreCase("P")) {
-            convertAndCreate(tileMapX,tileMapY); //-> replaces the need for drawing on canvas
+            if (!noItemPresent(tileMapX, tileMapY)) {
+                convertAndCreate(tileMapX, tileMapY);
+            } else {
+                System.out.println("There is already an item here!");
+            }
+
         } else {
             System.out.println("You Can Only Place Items On Path Tiles!");
         }
     }
 
     /**
+     * Checks to see if there is an item at a location before placement
+     *
+     * @param x xPosition
+     * @param y yPosition
+     * @return true or false.
+     */
+    private boolean noItemPresent(int x, int y) {
+        //this works by checking every item for a match of the predicate item where item.x = x etc
+        return instance.getLevelBoard().getItems().stream().anyMatch(item -> item.getX() == x && item.getY() == y);
+    }
+
+    /**
      * converts draggableItems into real Items and creates their class.
+     *
      * @param x the xPos of the item relative to the board
      * @param y the yPos of the item relative to the board
      */
-    public void convertAndCreate(int x,int y){
-        switch (selectedItem){
-            case Bomb -> new BombItem(x,y);
-            case Gas -> new GasItem(x,y);
-            case Sterilisation -> new SteralizeItem(x,y);
-            case MSexChange -> new SexChangeItem(x,y);
-            case FSexChange -> new SexChangeItem(x,y);
-            case Poison -> new PoisonItem(x,y);
-            case DeathRat -> new DeathRatItem(x,y);
-            case NoEntry -> new NoEntryItem(x,y);
+    public void convertAndCreate(int x, int y) {
+        switch (selectedItem) {
+            case Bomb -> new BombItem(x, y);
+            case Gas -> new GasItem(x, y);
+            case Sterilisation -> new SteralizeItem(x, y);
+            case MSexChange -> new SexChangeItem(x, y);
+            case FSexChange -> new SexChangeItem(x, y);
+            case Poison -> new PoisonItem(x, y);
+            case DeathRat -> new DeathRatItem(x, y);
+            case NoEntry -> new NoEntryItem(x, y);
         }
     }
 
