@@ -1,7 +1,6 @@
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -30,10 +29,10 @@ public class DragAndDrop {
     private Item.itemType selectedItem;
 
     public DragAndDrop(Canvas canvas, Tile[][] tileMap) {
-        noEntryIcon = new Image("PoisonTrap.png");
+        noEntryIcon = new Image("NoEntry.png");
         this.canvas = canvas;
         this.tileMap = tileMap;
-        selectedItem = Item.itemType.Poison; //Default to NoEntry for now.
+        selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
         instance = Level.getInstance();
     }
 
@@ -48,16 +47,46 @@ public class DragAndDrop {
         toolBar.getChildren().add(draggableItem);
 
         selectedItem = Item.itemType.DeathRat;
-        ImageView draggableItem2 = new ImageView();
-        draggableItem2.setImage(new Image("DeathRat.png"));
-        dragCode(draggableItem2);
-        toolBar.getChildren().add(draggableItem2);
+        ImageView draggableItem3 = new ImageView();
+        draggableItem3.setImage(new Image("DeathRat.png"));
+        dragCode(draggableItem3);
+        toolBar.getChildren().add(draggableItem3);
+
+        selectedItem = Item.itemType.Poison;
+        ImageView draggableItem4 = new ImageView();
+        draggableItem4.setImage(new Image("PoisonTrap.png"));
+        dragCode(draggableItem4);
+        toolBar.getChildren().add(draggableItem4);
+
+        selectedItem = Item.itemType.MSex;
+        ImageView draggableItem5 = new ImageView();
+        draggableItem5.setImage(new Image("femaleMaleSexChange.png"));
+        dragCode(draggableItem5);
+        toolBar.getChildren().add(draggableItem5);
+
+        selectedItem = Item.itemType.FSex;
+        ImageView draggableItem6 = new ImageView();
+        draggableItem6.setImage(new Image("maleFemaleSexChange.png"));
+        dragCode(draggableItem6);
+        toolBar.getChildren().add(draggableItem6);
+
+        selectedItem = Item.itemType.Sterilise;
+        ImageView draggableItem7 = new ImageView();
+        draggableItem7.setImage(new Image("DeathRat.png"));
+        dragCode(draggableItem7);
+        toolBar.getChildren().add(draggableItem7);
+
+        selectedItem = Item.itemType.Bomb;
+        ImageView draggableItem8 = new ImageView();
+        draggableItem8.setImage(new Image("Bomb4.png"));
+        dragCode(draggableItem8);
+        toolBar.getChildren().add(draggableItem8);
 
         return toolBar;
     }
 
     // Currently only draws it on top of the map.
-    public void canvasDragDroppedOccured(DragEvent event) {
+    public void canvasDragDroppedOccurred(DragEvent event) {
         int tileSize = 60;
 
         double x = event.getX();
@@ -133,7 +162,7 @@ public class DragAndDrop {
         });
         canvas.setOnDragDropped(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                canvasDragDroppedOccured(event);
+                canvasDragDroppedOccurred(event);
                 event.consume();
             }
         });
