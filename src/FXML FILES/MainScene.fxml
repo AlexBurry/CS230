@@ -16,7 +16,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Play">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#startGame" text="Level 1" />
+                  <MenuItem mnemonicParsing="false" onAction="#startGame" text="Game.Level 1" />
                   <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem mnemonicParsing="false" onAction="#exitGame" text="Exit" />
             </items>
