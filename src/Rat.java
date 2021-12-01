@@ -232,6 +232,7 @@ public class Rat implements Tick{
     public void deleteRat() {
         instance.markListenerForRemoval(this);
         instance.getLevelBoard().removeRat(this);
+        instance.increaseScore(5);
     }
 
     public Directions getCurrentDirection(){

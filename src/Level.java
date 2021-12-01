@@ -39,6 +39,7 @@ public class Level {
         this.ALLOWED_TIME = allowedTime;
         timeLeft = this.ALLOWED_TIME;
         this.lossCondition = lossCondition;
+        currentScore = 0;
         instance = this;
         levelInv = new Inventory(itemsRespawnRate);
         levelBoard = new Board(tiles, rats, mapX, mapY);
@@ -75,16 +76,16 @@ public class Level {
             t.tickEvent();
         }
 
-
-
-
         levelBoard.drawRats();
         levelBoard.drawItems();
         checkLossCondition();
         timeLeft = timeLeft - 1;
         System.out.println(timeLeft);
+    }
 
-
+    public void increaseScore(int pointsToAdd) {
+        currentScore = currentScore + pointsToAdd;
+        System.out.println(currentScore);
     }
 
     /**
@@ -110,6 +111,18 @@ public class Level {
     public void checkLossCondition() {
         if (levelBoard.getRats().size() >= lossCondition) {
             System.out.println("Game over");
+            System.exit(0);
+        }
+        if (timeLeft == 0) {
+            System.out.println("Game over");
+            System.exit(0);
+        }
+        ArrayList<Rat> properRats = levelBoard.getRats();
+        properRats.removeIf(rat -> rat.getClass() == DeathRat.class);
+        if (properRats.size() == 0) {
+            currentScore = currentScore + timeLeft;
+            System.out.println("Game won: " + currentScore);
+            System.exit(0);
         }
     }
 
