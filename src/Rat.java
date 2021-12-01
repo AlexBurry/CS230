@@ -28,12 +28,7 @@ public class Rat implements Tick{
     private int xPos;
     private int yPos;
 
-    @Override
-    public void tickEvent() {
-        instance.getLevelBoard().redrawTile(xPos,yPos);
-        move();
-        checkCollision();
-    }
+
 
     public enum Directions {
         EAST,
@@ -70,7 +65,19 @@ public class Rat implements Tick{
         this.alive = alive;
         this.isSterile = isSterile;
         instance = Level.getInstance();
+        instance.addListener(this);
 
+    }
+
+    /**
+     * This is an event listener.
+     * Called every x seconds by the Level class
+     */
+    @Override
+    public void tickEvent() {
+        instance.getLevelBoard().redrawTile(xPos,yPos);
+        move();
+        checkCollision();
     }
 
     public int getX() {
