@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  * @version 0.1
  * @since 0.1
  */
-public class Item implements Tick {
+public abstract class Item{
 
     protected Image sprite;
     protected int xPos;
@@ -16,17 +16,12 @@ public class Item implements Tick {
 
     protected Item(){
         setInstance();
+        addToBoard();
     }
 
-    /**
-     * 
-     * Draws the item to a tile location
-     * @param x The coordinates which will point to a tile location.
-     * @param y
-     */
 
-    public void draw(int x, int y){
-        Level.getInstance().getLevelBoard().addItem(this);
+    public void addToBoard(){
+        instance.getLevelBoard().addItem(this);
     }
 
     protected void setInstance(){
@@ -63,8 +58,5 @@ public class Item implements Tick {
     }
 
 
-    @Override
-    public void tickEvent() {
 
-    }
 }

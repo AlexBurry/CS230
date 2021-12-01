@@ -113,7 +113,8 @@ public class Board extends Application{
     public void addItem(Item item) {
 
         if (item.getClass() == BombItem.class) {
-            instance.addListener(item);
+
+            instance.addListener((Tick) item);
         }
         items.add(item);
         this.drawItems();

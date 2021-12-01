@@ -3,6 +3,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.net.http.WebSocket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +53,7 @@ public class Level {
 
     public void addListener(Tick toAdd) {
         listeners.add(toAdd);
+
     }
 
     public void markListenerForRemoval(Tick toAdd) {

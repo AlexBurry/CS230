@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 /**
  * Makes a tile collide with rats, not allowing them to 
  * move through it
@@ -10,6 +12,11 @@ public class NoEntryItem extends Item{
 
     private int healthPoints = 5;
 
+    public NoEntryItem (int x, int y){
+        this.xPos = x;
+        this.yPos = y;
+        this.sprite = new Image("NoEntry.png");
+    }
 
     
 }

@@ -25,10 +25,28 @@ public class DragAndDrop {
     private Canvas canvas;
     private Tile[][] tileMap;
 
+    /*
+    Used to track what type of item you're currently selecting. This should
+    be changed whenever you click on a new item in the inventory.
+     */
+    private enum itemType{
+        Bomb,
+        Gas,
+        Sterilisation,
+        MSexChange,
+        FSexChange,
+        Poison,
+        DeathRat,
+        NoEntry
+    }
+
+    private itemType selectedItem;
+
     public DragAndDrop(Canvas canvas, Tile[][] tileMap) {
         noEntryIcon = new Image("NoEntry.png");
         this.canvas = canvas;
         this.tileMap = tileMap;
+        selectedItem = itemType.NoEntry; //Default to NoEntry for now.
     }
 
     // Not scaled to all items yet.
@@ -36,10 +54,10 @@ public class DragAndDrop {
         HBox toolBar = new HBox();
         toolBar.setPadding(new Insets(10, 10, 10, 10));
         toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        ImageView item = new ImageView();
-        item.setImage(noEntryIcon);
-        dragCode(item);
-        toolBar.getChildren().add(item);
+        ImageView draggableItem = new ImageView();
+        draggableItem.setImage(noEntryIcon);
+        dragCode(draggableItem);
+        toolBar.getChildren().add(draggableItem);
 
         return toolBar;
     }
@@ -59,10 +77,27 @@ public class DragAndDrop {
         System.out.println(tileMapX + ", " + tileMapY);
 
         if (tileMap[tileMapX][tileMapY].getTileType().equalsIgnoreCase("P")) {
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-            gc.drawImage(noEntryIcon, tileMapX * tileSize, tileMapY * tileSize);
+            convertAndCreate(tileMapX,tileMapY); //-> replaces the need for drawing on canvas
         } else {
             System.out.println("You Can Only Place Items On Path Tiles!");
+        }
+    }
+
+    /**
+     * converts draggableItems into real Items and creates their class.
+     * @param x the xPos of the item relative to the board
+     * @param y the yPos of the item relative to the board
+     */
+    public void convertAndCreate(int x,int y){
+        switch (selectedItem){
+            case Bomb -> new BombItem(x,y);
+            case Gas -> new GasItem(x,y);
+            case Sterilisation -> new SteralizeItem(x,y);
+            case MSexChange -> new SexChangeItem(x,y);
+            case FSexChange -> new SexChangeItem(x,y);
+            case Poison -> new PoisonItem(x,y);
+            case DeathRat -> new DeathRatItem(x,y);
+            case NoEntry -> new NoEntryItem(x,y);
         }
     }
 

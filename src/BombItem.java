@@ -5,16 +5,17 @@ import java.util.ArrayList;
 /**
  * A bomb which explodes across several tiles.
  * @author Trafford
- * @author Jack
  * @version 0.1
  * @since 0.1
  */
 public class BombItem extends Item implements Tick{
 
-    private  int timer = 3;
+    private  int timer = 4;
+    private ArrayList<Tile> bombZone;
 
     @Override
     public void tickEvent() {
+
         countdown();
     }
 
@@ -34,7 +35,7 @@ public class BombItem extends Item implements Tick{
         this.sprite = new Image("Bomb4.png");
         directionToCheck = checkDir.North;
 
-
+        bombZone = getBombZone();
 
     }
 
@@ -42,13 +43,12 @@ public class BombItem extends Item implements Tick{
     private void countdown(){
 
        if(timer <= 0){
-           detonate(getBombZone());
+           detonate();
 
        }
        else{
            timer -= 1;
        }
-
 
     }
 
@@ -106,11 +106,11 @@ public class BombItem extends Item implements Tick{
 
     }
 
-    private void detonate(ArrayList<Tile> tilesToDetonateOn){
+    private void detonate(){
         ArrayList<Rat> rats = instance.getLevelBoard().getRats();
         ArrayList<Rat> toKill = new ArrayList<>();
 
-        for (Tile tile:tilesToDetonateOn) {
+        for (Tile tile:bombZone) {
             //TODO: Optimise and add VFX
             for (Rat rat:rats) { //for each rat on the entire board
                 if(rat.getX() == tile.getLocation()[0] && rat.getY() == tile.getLocation()[1]){
