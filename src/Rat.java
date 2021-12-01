@@ -100,7 +100,7 @@ public class Rat implements Tick{
      */
     @Override
     public void tickEvent() {
-        instance.getLevelBoard().redrawTile(xPos,yPos);
+        instance.getLevelBoard().redrawTile(xPos,yPos,true);
         move();
         checkCollision();
     }
@@ -180,7 +180,7 @@ public class Rat implements Tick{
     private boolean isTraversable(int x, int y) {
         return instance.getLevelBoard().getTileMap()[x][y].getTraversable();
     }
-    
+
     /*
     sets and gets the width and height of the image.
     currently imgWidth and imgHeight has no use.
@@ -190,6 +190,9 @@ public class Rat implements Tick{
     }
 
     public Image getSprite() {
+        if(isDeathRat){
+            return new Image("DeathRat.png");
+        }
         if (sex == 'm') {
             return sprite = new Image("ratMale.png");
         }

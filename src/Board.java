@@ -89,6 +89,7 @@ public class Board extends Application{
             }
         }
 
+        System.out.println("Drawing a rat");
         drawRats();
         drawItems();
     }
@@ -135,10 +136,14 @@ public class Board extends Application{
         return traversableTiles;
     }
 
-    public void redrawTile(int x, int y) {
+    public void redrawTile(int x, int y, boolean redrawItems) {
         Tile tile = tileMap[x][y];
         tile.draw(canvas);
-        drawItems();
+
+        if(redrawItems){
+            drawItems();
+        }
+
     }
 
     public void addRat(Rat rat) {

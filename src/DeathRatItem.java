@@ -47,13 +47,15 @@ public class DeathRatItem extends Item implements Tick{
     private void spawnDeathRat(){
         this.deathRat = new DeathRat('m',true,true,true, getX(), getY(), 3);
         System.out.println("waited");
-        this.setImage(new Image("")); //make it invisible.
+        this.setImage(new Image("DeathRat.png")); //make it invisible.
         getLocalInstance().addListener(this);
+
     }
 
     //on tick update
     @Override
     public void tickEvent() {
+        getLocalInstance().getLevelBoard().redrawTile(getX(),getY(),false);
         this.setX(deathRat.getX());
         this.setY(deathRat.getY());
         System.out.println("Rat at: " + deathRat.getX() + ":" + deathRat.getY() + " item at: " + this.getX() + ":" + this.getY());

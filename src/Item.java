@@ -14,6 +14,7 @@ public abstract class Item{
     private int yPos;
     private Level instance;
     private itemType myItemType;
+    private boolean drawMyself = true;
 
     public enum itemType {
         Poison,

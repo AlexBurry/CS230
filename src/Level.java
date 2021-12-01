@@ -56,6 +56,10 @@ public class Level {
 
     }
 
+    public List<Tick> getListeners(){
+        return listeners;
+    }
+
     public void markListenerForRemoval(Tick toAdd) {
         nullListeners.add(toAdd);
     }
@@ -75,6 +79,7 @@ public class Level {
 
 
         levelBoard.drawRats();
+        levelBoard.drawItems();
         checkLossCondition();
         timeLeft = timeLeft - 1;
         System.out.println(timeLeft);
