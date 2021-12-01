@@ -31,6 +31,14 @@ public class Menu {
         return lbl;
     }
 
+    public void presetStage(Stage primaryStage, String iconPath, String title, Scene scene) {
+        primaryStage.getIcons().add(new Image(iconPath));
+        primaryStage.setTitle(title);
+        primaryStage.setResizable(false);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
     public void buildMenu() {
         BorderPane menuPane = new BorderPane();
 
@@ -53,11 +61,7 @@ public class Menu {
         menuPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Scene scene = new Scene(menuPane, 400, 400);
-        primaryStage.getIcons().add(new Image("raticon.png"));
-        primaryStage.setTitle("Rats: Menu");
-        primaryStage.setResizable(false);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        presetStage(primaryStage, "raticon.png", "Rats: Menu", scene);
     }
 
     /**
@@ -91,11 +95,7 @@ public class Menu {
         });
 
         Scene scene = new Scene(gPane, 300, 150);
-        primaryStage.getIcons().add(new Image("raticon.png"));
-        primaryStage.setTitle("Rats: Login");
-        primaryStage.setScene(scene);
-        primaryStage.centerOnScreen();
-        primaryStage.show();
+        presetStage(primaryStage, "raticon.png", "Rats: Login", scene);
     }
 
     /**
