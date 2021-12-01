@@ -13,7 +13,7 @@ public class PoisonItem extends Item{
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(new Image("NoEntry.png"));
+        this.setImage(new Image("PoisonTrap.png"));
         this.setMyItemType(itemType.Poison);
 
     }

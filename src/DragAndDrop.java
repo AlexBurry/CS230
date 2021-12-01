@@ -30,10 +30,10 @@ public class DragAndDrop {
     private Item.itemType selectedItem;
 
     public DragAndDrop(Canvas canvas, Tile[][] tileMap) {
-        noEntryIcon = new Image("NoEntry.png");
+        noEntryIcon = new Image("PoisonTrap.png");
         this.canvas = canvas;
         this.tileMap = tileMap;
-        selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
+        selectedItem = Item.itemType.Poison; //Default to NoEntry for now.
         instance = Level.getInstance();
     }
 
