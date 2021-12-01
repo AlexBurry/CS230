@@ -10,9 +10,11 @@ import javafx.scene.image.Image;
 public class GasItem extends Item{
 
     public GasItem (int x, int y){
-        this.xPos = x;
-        this.yPos = y;
-        this.sprite = new Image("NoEntry.png");
+        super();
+        this.setX(x);
+        this.setY(y);
+        this.setImage(new Image("Bomb4.png"));
+        this.setMyItemType(itemType.Gas);
     }
 
 

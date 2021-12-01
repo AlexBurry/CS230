@@ -8,13 +8,14 @@ import javafx.scene.image.Image;
  * @since 0.1
  */
 public class SexChangeItem extends Item {
+    
 
-    private int sex = 0; // default to male
-
-    public SexChangeItem(int xPos, int yPos){
-        sprite = new Image("NoEntry.png");
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public SexChangeItem(int x, int y){
+        super();
+        this.setX(x);
+        this.setY(y);
+        this.setImage(new Image("Bomb4.png"));
+        this.setMyItemType(itemType.MSex);
     }
 
 

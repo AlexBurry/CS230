@@ -28,6 +28,8 @@ public class Rat implements Tick{
     private int xPos;
     private int yPos;
 
+    private ArrayList<Item> itemsToDeleteOnCollision = new ArrayList<>();
+
 
 
     public enum Directions {
@@ -113,13 +115,30 @@ public class Rat implements Tick{
 
     /**
      * @author Trafford (made for Items)
-     *
+     * Goes through each item on the board and checks if its at our location.
      */
     public void checkCollision(){
+
         for (Item it: instance.getLevelBoard().getItems()) {
             if(it.getX() == xPos && it.getY() == yPos){
-                System.out.println("COLLISION");
+                //Falls through cases to check if available.
+                switch (it.getMyItemType()){
+                    case Poison -> {
+                        itemsToDeleteOnCollision.add(it); //adds it to the array to be deleted after we have iterated
+                        deleteRat();
+                    }
+                    case Gas -> System.out.println("Gas");
+                    case Sterilise -> System.out.println("Sterilise");
+                    case MSex -> System.out.println("Male Sex Change");
+                    case FSex -> System.out.println("Female Sex Change");
+                    case NoEntry -> System.out.println("No Entry");
+                    case DeathRat -> System.out.println("Death Rat");
+                }
             }
+        }
+
+        for (Item it : itemsToDeleteOnCollision){
+            it.deleteItem();
         }
     }
 

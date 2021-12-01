@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -10,8 +12,11 @@ public class DeathRatItem extends Item{
 
 
     public DeathRatItem (int x, int y){
-        this.xPos = x;
-        this.yPos = y;
+        super();
+        this.setX(x);
+        this.setY(y);
+        this.setImage(new Image("Bomb4.png"));
+        this.setMyItemType(itemType.DeathRat);
         waitToSpawnRat();
     }
 
@@ -32,7 +37,7 @@ public class DeathRatItem extends Item{
 
     //spawns a deathRat with the same coordinates.
     private void spawnDeathRat(){
-        this.deathRat = new DeathRat('m',true,true,true, xPos, yPos, 3);
+        this.deathRat = new DeathRat('m',true,true,true, getX(), getY(), 3);
     }
 
 }

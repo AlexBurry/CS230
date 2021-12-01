@@ -30,12 +30,12 @@ public class BombItem extends Item implements Tick{
 
     public BombItem (int x, int y){
         super();
-        this.xPos = x;
-        this.yPos = y;
-        this.sprite = new Image("Bomb4.png");
-        directionToCheck = checkDir.North;
-
-        bombZone = getBombZone();
+        this.setX(x);
+        this.setY(y);
+        this.setImage(new Image("Bomb4.png"));
+        this.setMyItemType(itemType.Bomb);
+        this.directionToCheck = checkDir.North;
+        this.bombZone = getBombZone();
 
     }
 
@@ -55,9 +55,9 @@ public class BombItem extends Item implements Tick{
 
 
     private ArrayList<Tile> getBombZone(){
-        ArrayList<Tile> allTiles = instance.getLevelBoard().getTraversableTiles();
+        ArrayList<Tile> allTiles = getLocalInstance().getLevelBoard().getTraversableTiles();
         ArrayList<Tile> tilesChecked = new ArrayList<>();
-        Tile[][] localMap =  instance.getLevelBoard().getTileMap();
+        Tile[][] localMap =  getLocalInstance().getLevelBoard().getTileMap();
 
 
         //check if we've found all the tiles in every direction.
@@ -65,8 +65,8 @@ public class BombItem extends Item implements Tick{
         boolean foundAllTiles = false;
 
         //store the current pos as the items position.
-        int currentXPos = xPos;
-        int currentYPos = yPos;
+        int currentXPos = getX();
+        int currentYPos = getY();
 
         //First check the tile we are on.
         Tile firstTile = localMap[currentXPos][currentYPos];
@@ -97,8 +97,8 @@ public class BombItem extends Item implements Tick{
                     case East -> directionToCheck = checkDir.South;
                 }
                 //reset starting point so we check in relative directions from the center.
-                currentXPos = xPos;
-                currentYPos = yPos;
+                currentXPos = getX();
+                currentYPos = getY();
             }
 
         }
@@ -109,7 +109,7 @@ public class BombItem extends Item implements Tick{
     }
 
     private void detonate(){
-        ArrayList<Rat> rats = instance.getLevelBoard().getRats();
+        ArrayList<Rat> rats = getLocalInstance().getLevelBoard().getRats();
         ArrayList<Rat> toKill = new ArrayList<>();
 
         for (Tile tile:bombZone) {
@@ -128,7 +128,7 @@ public class BombItem extends Item implements Tick{
             killRat.deleteRat();
         }
 
-        instance.markListenerForRemoval(this);
+        getLocalInstance().markListenerForRemoval(this);
         deleteItem();
 
     }

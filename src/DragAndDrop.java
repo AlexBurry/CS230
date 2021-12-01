@@ -26,28 +26,14 @@ public class DragAndDrop {
     private Tile[][] tileMap;
     private Level instance;
 
-    /*
-    Used to track what type of item you're currently selecting. This should
-    be changed whenever you click on a new item in the inventory.
-     */
-    private enum itemType {
-        Bomb,
-        Gas,
-        Sterilisation,
-        MSexChange,
-        FSexChange,
-        Poison,
-        DeathRat,
-        NoEntry
-    }
 
-    private itemType selectedItem;
+    private Item.itemType selectedItem;
 
     public DragAndDrop(Canvas canvas, Tile[][] tileMap) {
         noEntryIcon = new Image("NoEntry.png");
         this.canvas = canvas;
         this.tileMap = tileMap;
-        selectedItem = itemType.NoEntry; //Default to NoEntry for now.
+        selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
         instance = Level.getInstance();
     }
 
@@ -112,9 +98,9 @@ public class DragAndDrop {
         switch (selectedItem) {
             case Bomb -> new BombItem(x, y);
             case Gas -> new GasItem(x, y);
-            case Sterilisation -> new SteralizeItem(x, y);
-            case MSexChange -> new SexChangeItem(x, y);
-            case FSexChange -> new SexChangeItem(x, y);
+            case Sterilise -> new SteralizeItem(x, y);
+            case MSex -> new SexChangeItem(x, y);
+            case FSex -> new SexChangeItem(x, y);
             case Poison -> new PoisonItem(x, y);
             case DeathRat -> new DeathRatItem(x, y);
             case NoEntry -> new NoEntryItem(x, y);
