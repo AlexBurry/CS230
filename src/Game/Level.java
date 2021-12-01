@@ -1,6 +1,8 @@
 package Game;
 
 import GUI.Inventory;
+import RatClasses.DeathRat;
+import RatClasses.Rat;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
