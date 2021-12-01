@@ -22,7 +22,7 @@ public class Level {
     private Board levelBoard;
     private Inventory levelInv;
     private static Level instance;
-    private final int TICKRATE = 400;
+    private final int TICKRATE = 500;
     private List<Tick> listeners = new ArrayList<>();
     private ArrayList<Tick> nullListeners = new ArrayList<>();
 
