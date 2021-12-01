@@ -1,8 +1,8 @@
 import javafx.scene.image.Image;
 
+//TODO: FINISH THIS CLASS
 /**
  * Steralize rats, removing their ability to reproduce, permanently.
- * @author Trafford
  * @author Jack
  * @version 0.1
  * @since 0.1
