@@ -22,6 +22,10 @@ public class Rat implements Tick{
     private int speed;
 
     private Image sprite;
+    private final Image maleRat = new Image ("ratMale.png");
+    private final Image femaleRat = new Image ("ratFemale.png");
+    private final Image deathRat = new Image ("DeathRat.png");
+
     private double imgWidth;
     private double imgHeight;
     private Level instance;
@@ -204,13 +208,14 @@ public class Rat implements Tick{
 
     public Image getSprite() {
         if(isDeathRat){
-            return new Image("DeathRat.png");
+            return deathRat;
         }
         if (sex == 'm') {
-            return sprite = new Image("ratMale.png");
+            return maleRat;
         }
-        else{
-            return sprite = new Image("ratFemale.png");
+        //if female
+        else {
+            return femaleRat;
         }
     }
 
