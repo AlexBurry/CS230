@@ -12,7 +12,7 @@ import java.util.Random;
  * @since 0.1
  */
 
-public class Rat {
+public class Rat implements Tick{
 
     private char sex;
     private boolean isDeathRat;
@@ -27,6 +27,13 @@ public class Rat {
 
     private int xPos;
     private int yPos;
+
+    @Override
+    public void tickEvent() {
+        instance.getLevelBoard().redrawTile(xPos,yPos);
+        move();
+        checkCollision();
+    }
 
     public enum Directions {
         EAST,
@@ -48,6 +55,7 @@ public class Rat {
         isDeathRat = false;
         isSterile = false;
         instance = Level.getInstance();
+        instance.addListener(this);
     }
 
     public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, int speed) {

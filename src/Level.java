@@ -22,6 +22,7 @@ public class Level {
     private static Level instance;
     private final int TICKRATE = 1000;
     private List<Tick> listeners = new ArrayList<>();
+    private ArrayList<Tick> nullListeners = new ArrayList<>();
 
     /**
      * Level constructor for a new Level
@@ -52,24 +53,30 @@ public class Level {
         listeners.add(toAdd);
     }
 
+    public void markListenerForRemoval(Tick toAdd) {
+        nullListeners.add(toAdd);
+    }
+
     /**
      * Tick method for the game runtime, updates board every second/tick
      */
     public void tick() { //TODO: figure out order through trial and error
-        for (Rat rt: levelBoard.getRats()) {
-            levelBoard.redrawTile(rt.getX(),rt.getY());
-            rt.move();
-            rt.checkCollision();
+        for (Tick t : nullListeners){
+            listeners.remove(t);
         }
+        for (Tick t : listeners) {
+            t.tickEvent();
+        }
+
+
+
 
         levelBoard.drawRats();
         checkLossCondition();
         timeLeft = timeLeft - 1;
         System.out.println(timeLeft);
 
-        for (Tick t : listeners) {
-            t.tickEvent();
-        }
+
     }
 
     /**

@@ -25,6 +25,7 @@ import java.util.Random;
 public class Board extends Application{
     private final String[][] tempTileMap;
     private final Tile[][] tileMap;
+    private ArrayList<Tile> traversableTiles = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
     private final int mapX;
@@ -77,6 +78,9 @@ public class Board extends Application{
         for (int y = 0; y < mapY; y++) {
             for (int x = 0; x < mapX; x++) {
                 tileMap[x][y] = new Tile(tempTileMap[x][y], x, y, canvas);
+                if(tileMap[x][y].getTraversable()){
+                    traversableTiles.add(tileMap[x][y]);
+                }
             }
         }
 
@@ -119,6 +123,10 @@ public class Board extends Application{
 
     public Tile[][] getTileMap() {
         return tileMap;
+    }
+
+    public ArrayList<Tile> getTraversableTiles(){
+        return traversableTiles;
     }
 
     public void redrawTile(int x, int y) {

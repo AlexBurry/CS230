@@ -11,12 +11,11 @@ import java.util.ArrayList;
  */
 public class BombItem extends Item implements Tick{
 
-    private  int TIMER = 4;
+    private  int timer = 3;
 
     @Override
     public void tickEvent() {
-        TIMER -= 1;
-        System.out.println("listening");
+        countdown();
     }
 
     private enum checkDir{
@@ -35,27 +34,27 @@ public class BombItem extends Item implements Tick{
         this.sprite = new Image("Bomb4.png");
         directionToCheck = checkDir.North;
 
-       // countdown();
+
 
     }
 
     //After a 4-second countdown, explode the bomb!
     private void countdown(){
-        int currentTime = instance.getTimeLeft() - 1; //Get the time left in the level
 
-        int explodeTime = currentTime - TIMER; //Get the time 4 seconds from now
+       if(timer <= 0){
+           detonate(getBombZone());
 
-        while(currentTime >= explodeTime){
+       }
+       else{
+           timer -= 1;
+       }
 
-            currentTime = instance.getTimeLeft(); //set the current time to the time left
-            //TODO: Change sprite every second
-        }
 
-        detonate(getBombZone());
     }
 
     private ArrayList<Tile> getBombZone(){
-        ArrayList<Tile> allTiles = new ArrayList<>();
+        ArrayList<Tile> allTiles = instance.getLevelBoard().getTraversableTiles();
+        ArrayList<Tile> tilesChecked = new ArrayList<>();
         Tile[][] localMap =  instance.getLevelBoard().getTileMap();
 
 
@@ -69,11 +68,11 @@ public class BombItem extends Item implements Tick{
 
         //First check the tile we are on.
         Tile firstTile = localMap[currentXPos][currentYPos];
-        if(firstTile != null && firstTile.getTraversable()){ //if the tile exists here, and is traversable:
-            allTiles.add(firstTile); //add it to our list.
+        if(allTiles.contains(firstTile)){
+            tilesChecked.add(firstTile);
         }
 
-        while(!foundAllTiles){ //while we havent checked all directions
+        while(!foundAllTiles){ //while we haven't checked all directions
             switch (directionToCheck){
                 case North -> currentYPos -= 1;
                 case South -> currentYPos += 1;
@@ -82,9 +81,10 @@ public class BombItem extends Item implements Tick{
             }
 
             Tile tempTile = localMap[currentXPos][currentYPos];
-            if(tempTile != null && tempTile.getTraversable()){ //if the tile exists here, and is traversable:
-                allTiles.add(tempTile); //add it to our list.
+            if(allTiles.contains(tempTile)){
+                tilesChecked.add(tempTile);
             }
+
             else{
                 //If it is null, or not traversable, then we should check a different direction from
                 //the starting point.
@@ -102,14 +102,14 @@ public class BombItem extends Item implements Tick{
         }
 
 
-        return allTiles;
+        return tilesChecked;
 
     }
 
     private void detonate(ArrayList<Tile> tilesToDetonateOn){
         ArrayList<Rat> rats = instance.getLevelBoard().getRats();
         ArrayList<Rat> toKill = new ArrayList<>();
-        System.out.println(rats.get(0));
+
         for (Tile tile:tilesToDetonateOn) {
             //TODO: Optimise and add VFX
             for (Rat rat:rats) { //for each rat on the entire board
@@ -124,6 +124,9 @@ public class BombItem extends Item implements Tick{
         for (Rat killRat:toKill) {
             killRat.deleteRat();
         }
+
+        instance.markListenerForRemoval(this);
+        deleteItem();
 
     }
 
