@@ -103,7 +103,7 @@ public class Rat implements Tick{
 
         instance.getLevelBoard().redrawTile(xPos,yPos,true);
         move();
-        if(instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType() == "t"){
+        if(instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")){
             instance.getLevelBoard().redrawTile(xPos,yPos,false);
         }
         checkCollision();
@@ -151,30 +151,34 @@ public class Rat implements Tick{
      * Goes through each item on the board and checks if its at our location.
      */
     public void checkCollision(){
-
-        for (Item it: instance.getLevelBoard().getItems()) {
-            if(it.getX() == xPos && it.getY() == yPos){
-                //Falls through cases to check if available.
-                switch (it.getMyItemType()){
-                    case Poison -> {
-                        itemsToDeleteOnCollision.add(it); //adds it to the array to be deleted after we have iterated
-                        deleteRat();
-                    }
-                    case Gas -> System.out.println("Gas");
-                    case Sterilise -> System.out.println("Sterilise");
-                    case MSex -> System.out.println("Male Sex Change");
-                    case FSex -> System.out.println("Female Sex Change");
-                    case NoEntry -> System.out.println("No Entry");
-                    case DeathRat -> {
-                        if(!this.isDeathRat){
-                            DeathRatItem a = (DeathRatItem) it;
-                            a.incrementKills();
+        ArrayList<Item> existingItems = instance.getLevelBoard().getItems();
+        for (Item it: existingItems) {
+            if(it != null){
+                if(it.getX() == xPos && it.getY() == yPos){
+                    //Falls through cases to check if available.
+                    switch (it.getMyItemType()){
+                        case Poison -> {
+                            itemsToDeleteOnCollision.add(it); //adds it to the array to be deleted after we have iterated
                             deleteRat();
                         }
+                        case Gas -> System.out.println("Gas");
+                        case Sterilise -> System.out.println("Sterilise");
+                        case MSex -> System.out.println("Male Sex Change");
+                        case FSex -> System.out.println("Female Sex Change");
+                        case NoEntry -> System.out.println("No Entry");
+                        case DeathRat -> {
+                            if(!this.isDeathRat){
+                                DeathRatItem a = (DeathRatItem) it;
+                                a.incrementKills();
+                                deleteRat();
+                            }
 
+                        }
                     }
                 }
             }
+            
+
         }
 
         for (Item it : itemsToDeleteOnCollision){
@@ -221,6 +225,7 @@ public class Rat implements Tick{
 
     // kill rat method
     public void deleteRat() {
+        instance.markListenerForRemoval(this);
         instance.getLevelBoard().removeRat(this);
     }
 

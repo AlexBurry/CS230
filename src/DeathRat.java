@@ -38,8 +38,7 @@ public class DeathRat extends Rat{
             setPosition(newxPos,newyPos);
 
             //for a death rat, we need to send the item along with it.
-            item.setX(newxPos);
-            item.setY(newyPos);
+            item.updatePos();
 
         } else {
             Directions oldDirection = getCurrentDirection();
