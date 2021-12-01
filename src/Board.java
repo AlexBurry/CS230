@@ -31,7 +31,7 @@ public class Board extends Application{
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
-    private final int GAME_HEIGHT = 780;
+    private final int GAME_HEIGHT = 854;
     private Level instance;
     private final Canvas canvas= new Canvas(GAME_WIDTH, GAME_HEIGHT);
     private final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -64,6 +64,11 @@ public class Board extends Application{
 
     private Pane buildGUI() {
         BorderPane root = new BorderPane();
+        root.setCenter(canvas);
+
+        DragAndDrop toolBar = new DragAndDrop(canvas, tileMap);
+        root.setTop(toolBar.makeToolBar());
+
         root.setCenter(canvas);
 
         return root;
