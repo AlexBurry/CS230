@@ -44,6 +44,7 @@ public class Menu {
         primaryStage.setTitle(title);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 

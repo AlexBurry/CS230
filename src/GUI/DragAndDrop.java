@@ -25,16 +25,21 @@ import javafx.scene.paint.Color;
  */
 public class DragAndDrop {
 
-    private Image noEntryIcon;
     private Canvas canvas;
     private Tile[][] tileMap;
     private Level instance;
 
-
     private Item.itemType selectedItem;
 
+    private ImageView noEntry = new ImageView();
+    private ImageView deathRat = new ImageView();
+    private ImageView poison = new ImageView();
+    private ImageView femaleSexChange = new ImageView();
+    private ImageView maleSexChange = new ImageView();
+    private ImageView sterilise = new ImageView();
+    private ImageView bomb = new ImageView();
+
     public DragAndDrop(Canvas canvas, Tile[][] tileMap) {
-        noEntryIcon = new Image("Sprites/NoEntry.png");
         this.canvas = canvas;
         this.tileMap = tileMap;
         selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
@@ -47,50 +52,62 @@ public class DragAndDrop {
         toolBar.setPadding(new Insets(10, 10, 10, 10));
         toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
-//        ImageView draggableItem = new ImageView();
-//        draggableItem.setImage(noEntryIcon);
-//        dragCode(draggableItem);
-//        toolBar.getChildren().add(draggableItem);
+        noEntry.setImage(new Image("Sprites/NoEntry.png"));
+        toolBar.getChildren().add(noEntry);
 
-        selectedItem = Item.itemType.DeathRat;
-        ImageView draggableItem3 = new ImageView();
-        draggableItem3.setImage(new Image("Sprites/DeathRat.png"));
-        dragCode(draggableItem3);
-        toolBar.getChildren().add(draggableItem3);
+        deathRat.setImage(new Image("Sprites/DeathRat.png"));
+        toolBar.getChildren().add(deathRat);
 
-//        selectedItem = ItemClasses.Item.itemType.Poison;
-//        ImageView draggableItem4 = new ImageView();
-//        draggableItem4.setImage(new Image("PoisonTrap.png"));
-//        dragCode(draggableItem4);
-//        toolBar.getChildren().add(draggableItem4);
-//
-//        selectedItem = ItemClasses.Item.itemType.MSex;
-//        ImageView draggableItem5 = new ImageView();
-//        draggableItem5.setImage(new Image("femaleMaleSexChange.png"));
-//        dragCode(draggableItem5);
-//        toolBar.getChildren().add(draggableItem5);
-//
-//        selectedItem = ItemClasses.Item.itemType.FSex;
-//        ImageView draggableItem6 = new ImageView();
-//        draggableItem6.setImage(new Image("maleFemaleSexChange.png"));
-//        dragCode(draggableItem6);
-//        toolBar.getChildren().add(draggableItem6);
-//
-//        selectedItem = ItemClasses.Item.itemType.Sterilise;
-//        ImageView draggableItem7 = new ImageView();
-//        draggableItem7.setImage(new Image("RatClasses.DeathRat.png"));
-//        dragCode(draggableItem7);
-//        toolBar.getChildren().add(draggableItem7);
-//
-//        selectedItem = ItemClasses.Item.itemType.Bomb;
-//        ImageView draggableItem8 = new ImageView();
-//        draggableItem8.setImage(new Image("Bomb4.png"));
-//        dragCode(draggableItem8);
-//        toolBar.getChildren().add(draggableItem8);
+        poison.setImage(new Image("Sprites/PoisonTrap.png"));
+        toolBar.getChildren().add(poison);
+
+        femaleSexChange.setImage(new Image("Sprites/femaleMaleSexChange.png"));
+        toolBar.getChildren().add(femaleSexChange);
+
+        maleSexChange.setImage(new Image("Sprites/maleFemaleSexChange.png"));
+        toolBar.getChildren().add(maleSexChange);
+
+        sterilise.setImage(new Image("Sprites/metalTile.png"));
+        toolBar.getChildren().add(sterilise);
+
+        bomb.setImage(new Image("Sprites/Bomb4.png"));
+        toolBar.getChildren().add(bomb);
+
+        toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
 
         return toolBar;
     }
 
+    public void itemMover(MouseEvent mouseEvent) {
+        double x = 0;
+        int firstSprite = 70;
+        int secondSprite = 60;
+
+        x = mouseEvent.getX();
+
+        if (x < firstSprite && x > 0) {
+            selectedItem = Item.itemType.NoEntry;
+            dragCode(noEntry);
+        } else if (x < firstSprite + secondSprite && x > firstSprite) {
+            selectedItem = Item.itemType.DeathRat;
+            dragCode(deathRat);
+        } else if (x < (firstSprite + (secondSprite * 2)) && x > (firstSprite + secondSprite)) {
+            selectedItem = Item.itemType.Poison;
+            dragCode(poison);
+        } else if (x < (firstSprite + (secondSprite * 3)) && x > (firstSprite + (secondSprite * 2))) {
+            selectedItem = Item.itemType.MSex;
+            dragCode(femaleSexChange);
+        } else if (x < (firstSprite + (secondSprite * 4)) && x > (firstSprite + (secondSprite * 3))) {
+            selectedItem = Item.itemType.FSex;
+            dragCode(maleSexChange);
+        } else if (x < (firstSprite + (secondSprite * 5)) && x > (firstSprite + (secondSprite * 4))) {
+            selectedItem = Item.itemType.Sterilise;
+            dragCode(sterilise);
+        } else if (x < (firstSprite + (secondSprite * 6)) && x > (firstSprite + (secondSprite * 5))) {
+            selectedItem = Item.itemType.Bomb;
+            dragCode(bomb);
+        }
+    }
 
     public void canvasDragDroppedOccurred(DragEvent event) {
         int tileSize = 60;
@@ -160,10 +177,8 @@ public class DragAndDrop {
         });
         canvas.setOnDragOver(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                if (event.getGestureSource() == item) {
-                    event.acceptTransferModes(TransferMode.ANY);
-                    event.consume();
-                }
+                event.acceptTransferModes(TransferMode.ANY);
+                event.consume();
             }
         });
         canvas.setOnDragDropped(new EventHandler<DragEvent>() {
