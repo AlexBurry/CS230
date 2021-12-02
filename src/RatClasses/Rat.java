@@ -174,8 +174,18 @@ public class Rat implements ITickHandler {
                         }
                         case Gas -> System.out.println("Gas");
                         case Sterilise -> System.out.println("Sterilise");
-                        case MSex -> System.out.println("Male Sex Change");
-                        case FSex -> System.out.println("Female Sex Change");
+                        case MSex -> {
+                            if (isDeathRat == false) {
+                                initiateSexChange('m');
+                                itemsToDeleteOnCollision.add(it);
+                            }
+                        }
+                        case FSex -> {
+                            if (isDeathRat == false) {
+                                initiateSexChange('f');
+                                itemsToDeleteOnCollision.add(it);
+                            }
+                        }
                         case NoEntry -> System.out.println("No Entry");
                         case DeathRat -> {
                             if(!this.isDeathRat){
@@ -269,11 +279,13 @@ public class Rat implements ITickHandler {
     public void initiateSexChange(char gender) {
         if (gender != sex) {
             if (gender == 'm') {
-                sex = 'f';
-            } else {
                 sex = 'm';
+            } else {
+                sex = 'f';
             }
         }
+
+
     }
 
 }

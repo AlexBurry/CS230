@@ -140,8 +140,8 @@ public class DragAndDrop {
             case Bomb -> new BombItem(x, y);
             case Gas -> new GasItem(x, y);
             case Sterilise -> new SteriliseItem(x, y);
-            case MSex -> new SexChangeItem(x, y);
-            case FSex -> new SexChangeItem(x, y);
+            case MSex -> new MFChange(x, y);
+            case FSex -> new FMChange(x, y);
             case Poison -> new PoisonItem(x, y);
             case DeathRat -> new DeathRatItem(x, y);
             case NoEntry -> new NoEntryItem(x, y);
