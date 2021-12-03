@@ -6,6 +6,7 @@ import Game.ReadFile;
 import ItemClasses.BombItem;
 import ItemClasses.MFChange;
 import ItemClasses.FMChange;
+import ItemClasses.SteriliseItem;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -125,7 +126,7 @@ public class Menu {
 
             // newLevel.getLevelBoard().addRat(new RatClasses.Rat('f', false,true, false, 2, 5, 3));
             //newLevel.getLevelBoard().addItem(new ItemClasses.SexChangeItem(2,4));
-            new FMChange(2,2);
+            new SteriliseItem(2,2);
 
         } else {
             JOptionPane.showMessageDialog(null, "Invalid Username!", "Try Again!", JOptionPane.INFORMATION_MESSAGE);

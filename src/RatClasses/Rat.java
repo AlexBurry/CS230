@@ -173,7 +173,7 @@ public class Rat implements ITickHandler {
                             deleteRat();
                         }
                         case Gas -> System.out.println("Gas");
-                        case Sterilise -> System.out.println("Sterilise");
+                        //case Sterilise -> System.out.println("Sterilise");
                         case MSex -> {
                             if (isDeathRat == false) {
                                 initiateSexChange('m');
@@ -261,6 +261,11 @@ public class Rat implements ITickHandler {
         instance.markListenerForRemoval(this);
         instance.getLevelBoard().removeRat(this);
         instance.increaseScore(5);
+    }
+
+    //sterilize rat method
+    public void sterilizeRat() {
+        isSterile = true;
     }
 
     public Directions getCurrentDirection(){

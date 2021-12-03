@@ -3,6 +3,7 @@ package Game;
 import GUI.DragAndDrop;
 import ItemClasses.BombItem;
 import ItemClasses.Item;
+import ItemClasses.SteriliseItem;
 import RatClasses.Rat;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -111,7 +112,7 @@ public class Board extends Application{
      */
     public void addItem(Item item) {
 
-        if (item.getClass() == BombItem.class) {
+        if (item.getClass() == BombItem.class || item.getClass() == SteriliseItem.class) {
 
             instance.addListener((ITickHandler) item);
         }
