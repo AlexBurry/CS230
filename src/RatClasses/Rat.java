@@ -239,7 +239,7 @@ public class Rat implements ITickHandler {
             if (r){
                 options.add(Directions.EAST);
             }
-        } else if(r){
+        } else if(r) {
             options.add(Directions.EAST);
         }
         System.out.println(options.size());
@@ -251,6 +251,9 @@ public class Rat implements ITickHandler {
                 int rand = new Random().nextInt(options.size());
                 currentDirection = options.get(rand);
             }
+        }
+        else{
+            currentDirection = options.get(0);
         }
     }
 
