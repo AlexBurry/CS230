@@ -1,6 +1,5 @@
 package ItemClasses;
 
-import Sprites.ImageRefs;
 import javafx.scene.image.Image;
 
 /**
@@ -16,7 +15,7 @@ public class GasItem extends Item{
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(ImageRefs.gasCenter);
+        this.setImage(new Image("Sprites/Bomb4.png"));
         this.setMyItemType(itemType.Gas);
     }
 

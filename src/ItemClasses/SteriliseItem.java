@@ -3,7 +3,6 @@ package ItemClasses;
 import Game.ITickHandler;
 import Game.Tile;
 import RatClasses.Rat;
-import Sprites.ImageRefs;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class SteriliseItem extends Item implements ITickHandler {
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(ImageRefs.steriliseImage);
+        this.setImage(new Image("Sprites/NoEntry.png"));
         this.setMyItemType(itemType.Sterilise);
         this.sterilizeZone = getSterilizeZone();
     }

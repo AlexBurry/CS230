@@ -1,6 +1,5 @@
 package ItemClasses;
 
-import Sprites.ImageRefs;
 import javafx.scene.image.Image;
 
 /**
@@ -17,7 +16,7 @@ public class FMChange extends Item {
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(ImageRefs.femaleToMaleSC);
+        this.setImage(new Image("Sprites/femaleMaleSexChange.png"));
         this.setMyItemType(itemType.FSex);
     }
 

@@ -2,7 +2,6 @@ package ItemClasses;
 
 import Game.Level;
 import javafx.scene.image.Image;
-import Sprites.ImageRefs;
 
 
 /**

@@ -1,6 +1,5 @@
 package ItemClasses;
 
-import Sprites.ImageRefs;
 import javafx.scene.image.Image;
 
 /**
@@ -22,7 +21,7 @@ public class PoisonItem extends Item{ //Poison is more of an electric trap in ou
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(ImageRefs.poisonImage);
+        this.setImage(new Image("Sprites/PoisonTrap.png"));
         this.setMyItemType(itemType.Poison);
 
     }

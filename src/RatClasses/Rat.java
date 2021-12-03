@@ -3,7 +3,6 @@ package RatClasses;
 
 import Game.Level;
 import Game.Tile;
-import Sprites.ImageRefs;
 import ItemClasses.DeathRatItem;
 import ItemClasses.Item;
 import Game.ITickHandler;
@@ -32,6 +31,9 @@ public class Rat implements ITickHandler {
     private Boolean isPregnant;
 
     private Image sprite;
+    private final Image maleRat = new Image("Sprites/ratMale.png");
+    private final Image femaleRat = new Image("Sprites/ratFemale.png");
+    private final Image deathRat = new Image("Sprites/DeathRat.png");
 
     private double imgWidth;
     private double imgHeight;
@@ -105,7 +107,7 @@ public class Rat implements ITickHandler {
         instance = Level.getInstance();
         instance.addListener(this);
         if(isDeathRat){
-            sprite = ImageRefs.deathRatUp;
+            sprite = new Image("Sprites/DeathRat.png");
         }
         else{
             changeSprite();
@@ -176,18 +178,18 @@ public class Rat implements ITickHandler {
     private void changeSprite(){
         if(sex == 'm'){
             switch (currentDirection){
-                case EAST -> sprite = ImageRefs.maleRatRight;
-                case WEST -> sprite = ImageRefs.maleRatLeft;
-                case NORTH -> sprite = ImageRefs.maleRatUp;
-                case SOUTH -> sprite = ImageRefs.maleRatDown;
+                case EAST -> sprite = new Image("Sprites/ratMale-Right.png");
+                case WEST -> sprite = new Image("Sprites/ratMale-Left.png");
+                case NORTH -> sprite = new Image("Sprites/ratMale.png");
+                case SOUTH -> sprite = new Image("Sprites/ratMale-Down.png");
             }
         }
         else{
             switch (currentDirection){
-                case EAST -> sprite = ImageRefs.femaleRatRight;
-                case WEST -> sprite = ImageRefs.femaleRatLeft;
-                case NORTH -> sprite = ImageRefs.femaleRatUp;
-                case SOUTH -> sprite = ImageRefs.femaleRatDown;
+                case EAST -> sprite = new Image("Sprites/ratFemale-Right.png");
+                case WEST -> sprite = new Image("Sprites/ratFemale-Left.png");
+                case NORTH -> sprite = new Image("Sprites/ratFemale.png");
+                case SOUTH -> sprite = new Image("Sprites/ratFemale-Down.png");
             }
         }
     }
@@ -347,8 +349,8 @@ public class Rat implements ITickHandler {
     sets and gets the width and height of the image.
     currently imgWidth and imgHeight has no use.
      */
-    public void setImage(Image newImage) {
-        sprite = newImage;
+    public void setImage(String filename) {
+        sprite = new Image(filename);
     }
 
     public Image getSprite() {
