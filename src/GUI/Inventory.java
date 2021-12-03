@@ -1,9 +1,16 @@
 package GUI;
 
+import Game.ITickHandler;
+import Game.Level;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Inventory {
+/**
+ * Inventory manager
+ * @author Alex
+ */
+public class Inventory implements ITickHandler {
     private int bombSpawnRate;
     private int mSexChangeSpawnRate;
     private int fSexChangeSpawnRate;
@@ -12,6 +19,14 @@ public class Inventory {
     private int sterilisationSpawnRate;
     private int noEntrySpawnRate;
     private int deathRatSpawnRate;
+    private int bombSpawnRateTimer;
+    private int mSexChangeSpawnRateTimer;
+    private int fSexChangeSpawnRateTimer;
+    private int gasSpawnRateTimer;
+    private int poisonSpawnRateTimer;
+    private int sterilisationSpawnRateTimer;
+    private int noEntrySpawnRateTimer;
+    private int deathRatSpawnRateTimer;
     private int numberOfBombs;
     private int numberOfMSexChange;
     private int numberOfFSexChange;
@@ -19,8 +34,13 @@ public class Inventory {
     private int numberOfSterilisation;
     private int numberOfPoison;
     private int numberOfNoEntry;
+    private int numberOfDeathRat;
     private final int MAX_ITEM_NUMBER = 4;
 
+    /**
+     * Constructor for inventory
+     * @param itemsRespawnRate ArrayList of all item respawn rate values as ints
+     */
     public Inventory(ArrayList<String> itemsRespawnRate) {
         setItemRespawnTimers(itemsRespawnRate);
         numberOfMSexChange = 0;
@@ -29,8 +49,22 @@ public class Inventory {
         numberOfSterilisation = 0;
         numberOfPoison = 0;
         numberOfNoEntry = 0;
+        bombSpawnRateTimer = bombSpawnRate;
+        mSexChangeSpawnRateTimer = mSexChangeSpawnRate;
+        fSexChangeSpawnRateTimer = fSexChangeSpawnRate;
+        gasSpawnRateTimer = gasSpawnRate;
+        poisonSpawnRateTimer = poisonSpawnRate;
+        sterilisationSpawnRateTimer = sterilisationSpawnRate;
+        noEntrySpawnRateTimer = noEntrySpawnRate;
+        deathRatSpawnRateTimer = deathRatSpawnRate;
+        Level INSTANCE = Level.getInstance();
+        INSTANCE.addListener(this);
     }
 
+    /**
+     * Setter for all item respawn rats
+     * @param itemsRespawnRate ArrayList of all item respawn rate values as ints
+     */
     private void setItemRespawnTimers(ArrayList<String> itemsRespawnRate) {
         for (String iRR : itemsRespawnRate) {
             Scanner token = new Scanner(String.valueOf(iRR));
@@ -55,14 +89,28 @@ public class Inventory {
         }
     }
 
-    public void respawnItems() {
-        //TODO: Implement
-
+    @Override
+    public void tickEvent() {
+        increaseNumberOfBombs();
+        increaseNumberOfMSexChange();
+        increaseNumberOfFSexChange();
+        increaseNumberOfGas();
+        increaseNumberOfSterilisation();
+        increaseNumberOfPoison();
+        increaseNumberOfNoEntry();
+        increaseNumberOfDeathRat();
     }
 
     public void increaseNumberOfBombs() {
         if (numberOfBombs != MAX_ITEM_NUMBER) {
-            numberOfBombs++;
+            if (bombSpawnRateTimer == 0) {
+                numberOfBombs++;
+                bombSpawnRateTimer = bombSpawnRate;
+                System.out.println("Added Bomb to Inv");
+            }
+            else {
+                bombSpawnRateTimer--;
+            }
         }
     }
 
@@ -74,7 +122,13 @@ public class Inventory {
 
     public void increaseNumberOfMSexChange() {
         if (numberOfMSexChange != MAX_ITEM_NUMBER) {
-            numberOfMSexChange++;
+            if (mSexChangeSpawnRateTimer == 0) {
+                numberOfMSexChange++;
+                mSexChangeSpawnRateTimer = mSexChangeSpawnRate;
+                System.out.println("Added Male Sex Change to Inv");
+            } else {
+                mSexChangeSpawnRateTimer--;
+            }
         }
     }
 
@@ -86,7 +140,13 @@ public class Inventory {
 
     public void increaseNumberOfFSexChange() {
         if (numberOfFSexChange != MAX_ITEM_NUMBER) {
-            numberOfFSexChange++;
+            if (fSexChangeSpawnRateTimer == 0) {
+                numberOfFSexChange++;
+                fSexChangeSpawnRateTimer = fSexChangeSpawnRate;
+                System.out.println("Added Female Sex Change to Inv");
+            } else {
+                fSexChangeSpawnRateTimer--;
+            }
         }
     }
 
@@ -98,7 +158,13 @@ public class Inventory {
 
     public void increaseNumberOfGas() {
         if (numberOfGas != MAX_ITEM_NUMBER) {
-            numberOfGas++;
+            if (gasSpawnRateTimer == 0) {
+                numberOfGas++;
+                gasSpawnRateTimer = gasSpawnRate;
+                System.out.println("Added Gas to Inv");
+            } else {
+                gasSpawnRateTimer--;
+            }
         }
     }
 
@@ -110,7 +176,13 @@ public class Inventory {
 
     public void increaseNumberOfSterilisation() {
         if (numberOfSterilisation != MAX_ITEM_NUMBER) {
-            numberOfSterilisation++;
+            if (sterilisationSpawnRateTimer == 0) {
+                numberOfSterilisation++;
+                sterilisationSpawnRateTimer = sterilisationSpawnRate;
+                System.out.println("Added Sterilisation to Inv");
+            } else {
+                sterilisationSpawnRateTimer--;
+            }
         }
     }
 
@@ -122,7 +194,13 @@ public class Inventory {
 
     public void increaseNumberOfPoison() {
         if (numberOfPoison != MAX_ITEM_NUMBER) {
-            numberOfPoison++;
+            if (poisonSpawnRateTimer == 0) {
+                numberOfPoison++;
+                poisonSpawnRateTimer = poisonSpawnRate;
+                System.out.println("Added Poison to Inv");
+            } else {
+                poisonSpawnRateTimer--;
+            }
         }
     }
 
@@ -134,7 +212,13 @@ public class Inventory {
 
     public void increaseNumberOfNoEntry() {
         if (numberOfNoEntry != MAX_ITEM_NUMBER) {
-            numberOfNoEntry++;
+            if (noEntrySpawnRateTimer== 0) {
+                numberOfNoEntry++;
+                noEntrySpawnRateTimer = noEntrySpawnRate;
+                System.out.println("Added No Entry Sign to Inv");
+            } else {
+                noEntrySpawnRateTimer--;
+            }
         }
     }
 
@@ -142,5 +226,55 @@ public class Inventory {
         if (numberOfNoEntry != 0) {
             numberOfNoEntry--;
         }
+    }
+
+    public void increaseNumberOfDeathRat() {
+        if (numberOfDeathRat != MAX_ITEM_NUMBER) {
+            if (deathRatSpawnRateTimer == 0) {
+                numberOfDeathRat++;
+                deathRatSpawnRateTimer = deathRatSpawnRate;
+                System.out.println("Added Death Rat to Inv");
+            } else {
+                deathRatSpawnRateTimer--;
+            }
+        }
+    }
+
+    public void decreaseNumberOfDeathRat() {
+        if (numberOfDeathRat != 0) {
+            numberOfDeathRat--;
+        }
+    }
+
+    public int getNumberOfBombs() {
+        return numberOfBombs;
+    }
+
+    public int getNumberOfMSexChange() {
+        return numberOfMSexChange;
+    }
+
+    public int getNumberOfFSexChange() {
+        return numberOfFSexChange;
+    }
+
+    public int getNumberOfGas() {
+        return numberOfGas;
+    }
+
+    public int getNumberOfSterilisation() {
+        return numberOfSterilisation;
+    }
+
+    public int getNumberOfPoison() {
+        return numberOfPoison;
+    }
+
+    public int getNumberOfNoEntry() {
+        return numberOfNoEntry;
+    }
+
+    public int getNumberOfDeathRat() {
+        return numberOfDeathRat;
     }
 }

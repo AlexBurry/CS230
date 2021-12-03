@@ -25,16 +25,21 @@ import javafx.scene.paint.Color;
  */
 public class DragAndDrop {
 
-    private Image noEntryIcon;
     private Canvas canvas;
     private Tile[][] tileMap;
     private Level instance;
 
-
     private Item.itemType selectedItem;
 
+    private ImageView noEntry = new ImageView();
+    private ImageView deathRat = new ImageView();
+    private ImageView poison = new ImageView();
+    private ImageView femaleSexChange = new ImageView();
+    private ImageView maleSexChange = new ImageView();
+    private ImageView sterilise = new ImageView();
+    private ImageView bomb = new ImageView();
+
     public DragAndDrop(Canvas canvas, Tile[][] tileMap) {
-        noEntryIcon = new Image("Sprites/NoEntry.png");
         this.canvas = canvas;
         this.tileMap = tileMap;
         selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
@@ -47,52 +52,64 @@ public class DragAndDrop {
         toolBar.setPadding(new Insets(10, 10, 10, 10));
         toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
-//        ImageView draggableItem = new ImageView();
-//        draggableItem.setImage(noEntryIcon);
-//        dragCode(draggableItem);
-//        toolBar.getChildren().add(draggableItem);
+        noEntry.setImage(new Image("Sprites/NoEntry.png"));
+        toolBar.getChildren().add(noEntry);
 
-        selectedItem = Item.itemType.DeathRat;
-        ImageView draggableItem3 = new ImageView();
-        draggableItem3.setImage(new Image("Sprites/DeathRat.png"));
-        dragCode(draggableItem3);
-        toolBar.getChildren().add(draggableItem3);
+        deathRat.setImage(new Image("Sprites/DeathRat.png"));
+        toolBar.getChildren().add(deathRat);
 
-//        selectedItem = ItemClasses.Item.itemType.Poison;
-//        ImageView draggableItem4 = new ImageView();
-//        draggableItem4.setImage(new Image("PoisonTrap.png"));
-//        dragCode(draggableItem4);
-//        toolBar.getChildren().add(draggableItem4);
-//
-//        selectedItem = ItemClasses.Item.itemType.MSex;
-//        ImageView draggableItem5 = new ImageView();
-//        draggableItem5.setImage(new Image("femaleMaleSexChange.png"));
-//        dragCode(draggableItem5);
-//        toolBar.getChildren().add(draggableItem5);
-//
-//        selectedItem = ItemClasses.Item.itemType.FSex;
-//        ImageView draggableItem6 = new ImageView();
-//        draggableItem6.setImage(new Image("maleFemaleSexChange.png"));
-//        dragCode(draggableItem6);
-//        toolBar.getChildren().add(draggableItem6);
-//
-//        selectedItem = ItemClasses.Item.itemType.Sterilise;
-//        ImageView draggableItem7 = new ImageView();
-//        draggableItem7.setImage(new Image("RatClasses.DeathRat.png"));
-//        dragCode(draggableItem7);
-//        toolBar.getChildren().add(draggableItem7);
-//
-//        selectedItem = ItemClasses.Item.itemType.Bomb;
-//        ImageView draggableItem8 = new ImageView();
-//        draggableItem8.setImage(new Image("Bomb4.png"));
-//        dragCode(draggableItem8);
-//        toolBar.getChildren().add(draggableItem8);
+        poison.setImage(new Image("Sprites/PoisonTrap.png"));
+        toolBar.getChildren().add(poison);
+
+        femaleSexChange.setImage(new Image("Sprites/femaleMaleSexChange.png"));
+        toolBar.getChildren().add(femaleSexChange);
+
+        maleSexChange.setImage(new Image("Sprites/maleFemaleSexChange.png"));
+        toolBar.getChildren().add(maleSexChange);
+
+        sterilise.setImage(new Image("Sprites/metalTile.png"));
+        toolBar.getChildren().add(sterilise);
+
+        bomb.setImage(new Image("Sprites/Bomb4.png"));
+        toolBar.getChildren().add(bomb);
+
+        toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
 
         return toolBar;
     }
 
+    public void itemMover(MouseEvent mouseEvent) {
+        double x = 0;
+        int firstSprite = 70;
+        int secondSprite = 60;
 
-    public void canvasDragDroppedOccurred(DragEvent event) {
+        x = mouseEvent.getX();
+
+        if (x < firstSprite && x > 0) {
+            selectedItem = Item.itemType.NoEntry;
+            dragCode(noEntry);
+        } else if (x < firstSprite + secondSprite && x > firstSprite) {
+            selectedItem = Item.itemType.DeathRat;
+            dragCode(deathRat);
+        } else if (x < (firstSprite + (secondSprite * 2)) && x > (firstSprite + secondSprite)) {
+            selectedItem = Item.itemType.Poison;
+            dragCode(poison);
+        } else if (x < (firstSprite + (secondSprite * 3)) && x > (firstSprite + (secondSprite * 2))) {
+            selectedItem = Item.itemType.MSex;
+            dragCode(femaleSexChange);
+        } else if (x < (firstSprite + (secondSprite * 4)) && x > (firstSprite + (secondSprite * 3))) {
+            selectedItem = Item.itemType.FSex;
+            dragCode(maleSexChange);
+        } else if (x < (firstSprite + (secondSprite * 5)) && x > (firstSprite + (secondSprite * 4))) {
+            selectedItem = Item.itemType.Sterilise;
+            dragCode(sterilise);
+        } else if (x < (firstSprite + (secondSprite * 6)) && x > (firstSprite + (secondSprite * 5))) {
+            selectedItem = Item.itemType.Bomb;
+            dragCode(bomb);
+        }
+    }
+
+    public void canvasDragDroppedOccurred(DragEvent event, ImageView item) {
         int tileSize = 60;
 
         double x = event.getX();
@@ -137,14 +154,70 @@ public class DragAndDrop {
      */
     public void convertAndCreate(int x, int y) {
         switch (selectedItem) {
-            case Bomb -> new BombItem(x, y);
-            case Gas -> new GasItem(x, y);
-            case Sterilise -> new SteriliseItem(x, y);
-            case MSex -> new MFChange(x, y);
-            case FSex -> new FMChange(x, y);
-            case Poison -> new PoisonItem(x, y);
-            case DeathRat -> new DeathRatItem(x, y);
-            case NoEntry -> new NoEntryItem(x, y);
+            case Bomb -> {
+                if(instance.getLevelInv().getNumberOfBombs() > 0) {
+                    instance.getLevelInv().decreaseNumberOfBombs();
+                    new BombItem(x, y);
+                } else {
+                    System.out.println("No Bombs left");
+                }
+            }
+            case Gas -> {
+                if(instance.getLevelInv().getNumberOfGas() > 0) {
+                    instance.getLevelInv().decreaseNumberOfGas();
+                    new GasItem(x, y);
+                } else {
+                    System.out.println("No Gas left");
+                }
+            }
+            case Sterilise -> {
+                if (instance.getLevelInv().getNumberOfSterilisation() > 0) {
+                    instance.getLevelInv().decreaseNumberOfSterilisation();
+                    new SteriliseItem(x, y);
+                } else {
+                    System.out.println("No Sterilise left");
+                }
+            }
+            case MSex -> {
+                if(instance.getLevelInv().getNumberOfMSexChange() > 0) {
+                    instance.getLevelInv().decreaseNumberOfMSexChange();
+                    new MFChange(x, y);
+                } else {
+                    System.out.println("No Male Sex Change left");
+                }
+            }
+            case FSex -> {
+                if(instance.getLevelInv().getNumberOfFSexChange() > 0) {
+                    instance.getLevelInv().decreaseNumberOfFSexChange();
+                    new FMChange(x, y);
+                } else {
+                    System.out.println("No Female Sex Change left");
+                }
+            }
+            case Poison -> {
+                if(instance.getLevelInv().getNumberOfPoison() > 0) {
+                    instance.getLevelInv().decreaseNumberOfPoison();
+                    new PoisonItem(x, y);
+                } else {
+                    System.out.println("No Poison left");
+                }
+            }
+            case DeathRat -> {
+                if(instance.getLevelInv().getNumberOfDeathRat() > 0) {
+                    instance.getLevelInv().decreaseNumberOfDeathRat();
+                    new DeathRatItem(x, y);
+                } else {
+                    System.out.println("No Death Rats left");
+                }
+            }
+            case NoEntry -> {
+                if(instance.getLevelInv().getNumberOfNoEntry() > 0) {
+                    instance.getLevelInv().decreaseNumberOfNoEntry();
+                    new NoEntryItem(x, y);
+                } else {
+                    System.out.println("No No Entry SIgn signs left");
+                }
+            }
         }
     }
 
@@ -160,15 +233,13 @@ public class DragAndDrop {
         });
         canvas.setOnDragOver(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                if (event.getGestureSource() == item) {
-                    event.acceptTransferModes(TransferMode.ANY);
-                    event.consume();
-                }
+                event.acceptTransferModes(TransferMode.ANY);
+                event.consume();
             }
         });
         canvas.setOnDragDropped(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                canvasDragDroppedOccurred(event);
+                canvasDragDroppedOccurred(event, item);
                 event.consume();
             }
         });
