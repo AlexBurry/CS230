@@ -269,4 +269,8 @@ public class Profile {
     public int getCurrentLevel() {
         return currentLevel;
     }
+
+    public int getHighestLevelUnlocked() {
+        return highestLevelUnlocked;
+    }
 }

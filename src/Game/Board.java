@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * @version 0.1
  * @since 0.1
  */
-public class Board extends Application{
+public class Board extends Application implements ITickHandler {
     private final String[][] tempTileMap;
     private final Tile[][] tileMap;
     private ArrayList<Tile> traversableTiles = new ArrayList<>();
@@ -30,10 +30,12 @@ public class Board extends Application{
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
-    private final int GAME_HEIGHT = 854;
+    private final int GAME_HEIGHT = 884;
     private Level instance;
     private final Canvas canvas= new Canvas(GAME_WIDTH, GAME_HEIGHT);
     private final GraphicsContext gc = canvas.getGraphicsContext2D();
+    private DragAndDrop toolBar;
+    private BorderPane root;
 
     /**
      * Constructor function for board
@@ -50,6 +52,7 @@ public class Board extends Application{
                     Character.getNumericValue(rt.charAt(4))));
         }
         instance = Level.getInstance();
+        instance.addListener(this);
     }
 
     public void start(Stage primaryStage) {
@@ -62,13 +65,11 @@ public class Board extends Application{
     }
 
     private Pane buildGUI() {
-        BorderPane root = new BorderPane();
+        root = new BorderPane();
         root.setCenter(canvas);
 
-        DragAndDrop toolBar = new DragAndDrop(canvas, tileMap);
+        toolBar = new DragAndDrop(canvas, tileMap);
         root.setTop(toolBar.makeToolBar());
-
-        root.setCenter(canvas);
 
         return root;
     }
@@ -164,4 +165,8 @@ public class Board extends Application{
         return items;
     }
 
+    @Override
+    public void tickEvent() {
+        root.setTop(toolBar.makeToolBar());
+    }
 }

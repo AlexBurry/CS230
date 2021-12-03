@@ -53,17 +53,25 @@ public class Menu {
         BorderPane menuPane = new BorderPane();
 
         Label playLbl = presetLabel("Play", font, 72);
-        Label highScoreLbl = presetLabel("Profile", font, 36);
+        Label profileLbl = presetLabel("Profile", font, 36);
+        Label highscoreLbl = presetLabel("Highscore", font, 36);
         Label exitLbl = presetLabel("Exit", font, 36);
 
-        playLbl.setOnMouseClicked(mouseEvent -> buildLoginUI());
-        highScoreLbl.setOnMouseClicked(mouseEvent -> buildHighScore());
+        playLbl.setOnMouseClicked(a -> {
+            try {
+                buildLevel(primaryStage);
+            } catch (FileNotFoundException e) {
+                System.out.println("Failed To Build Map!");
+            }
+        });
+        profileLbl.setOnMouseClicked(mouseEvent -> buildProfile(primaryStage));
+        highscoreLbl.setOnMouseClicked(mouseEvent -> buildHighScore());
         exitLbl.setOnMouseClicked(mouseEvent -> System.exit(0));
 
         VBox options = new VBox();
         options.setPadding(new Insets(10, 10, 10, 10));
         options.setAlignment(Pos.CENTER);
-        options.getChildren().addAll(playLbl, highScoreLbl, exitLbl);
+        options.getChildren().addAll(playLbl, highscoreLbl, profileLbl, exitLbl);
 
         //menuPane.setTop(//MessageOfTheDayLbl); Message Of The Day Here!
         menuPane.setCenter(options);
@@ -96,16 +104,19 @@ public class Menu {
         gPane.setVgap(5);
         gPane.setAlignment(Pos.CENTER);
 
-        enterBtn.setOnAction(a -> {
-            try {
-                buildLevel(primaryStage, inputField);
-            } catch (FileNotFoundException e) {
-                System.out.println("Failed To Build Map!");
-            }
-        });
+        enterBtn.setOnAction(mouseEvent -> loginProcess(inputField));
 
         Scene scene = new Scene(gPane, 300, 150);
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Login", scene);
+    }
+
+    public void loginProcess(TextField inputField) {
+        if (!inputField.getText().isEmpty() && inputField.getText().contains(",") || skip) {
+            if(skip){p = new Profile("test");}else{p = new Profile(inputField.getText());}
+            buildMenu();
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid Username!", "Try Again!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
@@ -113,25 +124,44 @@ public class Menu {
      * entered an acceptable username.
      *
      * @param primaryStage
-     * @param inputField
      * @throws FileNotFoundException
      */
-    public void buildLevel(Stage primaryStage, TextField inputField) throws FileNotFoundException {
-
-        if (!inputField.getText().isEmpty() || skip) {
-            if(skip){p = new Profile("test");}else{p = new Profile(inputField.getText());}
+    public void buildLevel(Stage primaryStage) throws FileNotFoundException {
             primaryStage.setTitle("Rats: Steampunk Edition");
             primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
             Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
+            
+            new BombItem(2,2);
+    }
 
-            // newLevel.getLevelBoard().addRat(new RatClasses.Rat('f', false,true, false, 2, 5, 3));
-            //newLevel.getLevelBoard().addItem(new ItemClasses.SexChangeItem(2,4));
-            //new BombItem(2,2);
+    public void buildProfile(Stage primaryStage) {
+        GridPane gPane = new GridPane();
 
-        } else {
-            JOptionPane.showMessageDialog(null, "Invalid Username!", "Try Again!", JOptionPane.INFORMATION_MESSAGE);
-        }
+        Label username = presetLabel("Username:" + p.getName(), font, 24);
+        Label currentLevel = presetLabel("Currentln On Level:" + p.getCurrentLevel(), font, 24);
+        Label highestLevel = presetLabel("Highest Level Cleared:" + p.getHighestLevelUnlocked(), font, 24);
+        Label score = presetLabel("Score: " + p.getScore(), font, 24);
+        Button backBtn = new Button("Back");
+
+        GridPane.setHalignment(username, HPos.CENTER);
+        GridPane.setHalignment(currentLevel, HPos.CENTER);
+        GridPane.setHalignment(highestLevel, HPos.CENTER);
+        GridPane.setHalignment(score, HPos.CENTER);
+        GridPane.setHalignment(backBtn, HPos.CENTER);
+        gPane.add(username, 0, 0);
+        gPane.add(currentLevel, 0, 1);
+        gPane.add(highestLevel, 0, 2);
+        gPane.add(score, 0, 3);
+        gPane.add(backBtn, 0, 4);
+
+        gPane.setVgap(5);
+        gPane.setAlignment(Pos.CENTER);
+
+        backBtn.setOnAction(mouseEvent -> buildMenu());
+
+        Scene scene = new Scene(gPane, 400, 400);
+        presetStage(primaryStage, "Sprites/raticon.png", "Rats: Menu", scene);
     }
 
     public void buildHighScore() {

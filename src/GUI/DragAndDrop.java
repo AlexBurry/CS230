@@ -4,16 +4,16 @@ import Game.Level;
 import Game.Tile;
 import ItemClasses.*;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  * This class creates the HBox which stores items icons
@@ -46,6 +46,16 @@ public class DragAndDrop {
         instance = Level.getInstance();
     }
 
+    public GridPane makeItemWithCounter(int numberOfItem, ImageView item) {
+        Label lbl = new Label(String.valueOf(numberOfItem));
+        lbl.setFont(new Font("Comic Sans", 16));
+        GridPane noEntryPane = new GridPane();
+        GridPane.setHalignment(lbl, HPos.RIGHT);
+        noEntryPane.add(lbl, 0, 1);
+        noEntryPane.add(item, 0, 2);
+        return noEntryPane;
+    }
+
     // Not scaled to all items yet.
     public HBox makeToolBar() {
         HBox toolBar = new HBox();
@@ -53,25 +63,25 @@ public class DragAndDrop {
         toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
         noEntry.setImage(new Image("Sprites/NoEntry.png"));
-        toolBar.getChildren().add(noEntry);
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfNoEntry(), noEntry));
 
         deathRat.setImage(new Image("Sprites/DeathRat.png"));
-        toolBar.getChildren().add(deathRat);
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfDeathRat(), deathRat));
 
         poison.setImage(new Image("Sprites/PoisonTrap.png"));
-        toolBar.getChildren().add(poison);
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfPoison(), poison));
 
         femaleSexChange.setImage(new Image("Sprites/femaleMaleSexChange.png"));
-        toolBar.getChildren().add(femaleSexChange);
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfFSexChange(), femaleSexChange));
 
         maleSexChange.setImage(new Image("Sprites/maleFemaleSexChange.png"));
-        toolBar.getChildren().add(maleSexChange);
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfMSexChange(), maleSexChange));
 
         sterilise.setImage(new Image("Sprites/metalTile.png"));
-        toolBar.getChildren().add(sterilise);
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfSterilisation(), sterilise));
 
         bomb.setImage(new Image("Sprites/Bomb4.png"));
-        toolBar.getChildren().add(bomb);
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfBombs(), bomb));
 
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
 
