@@ -2,11 +2,13 @@ package RatClasses;
 
 
 import Game.Level;
+import Game.Tile;
 import ItemClasses.DeathRatItem;
 import ItemClasses.Item;
 import Game.ITickHandler;
 import javafx.scene.image.Image;
 
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,11 +28,12 @@ public class Rat implements ITickHandler {
     private boolean alive;
     private boolean isSterile;
     private int speed;
+    private Boolean isPregnant;
 
     private Image sprite;
-    private final Image maleRat = new Image ("Sprites/ratMale.png");
-    private final Image femaleRat = new Image ("Sprites/ratFemale.png");
-    private final Image deathRat = new Image ("Sprites/DeathRat.png");
+    private final Image maleRat = new Image("Sprites/ratMale.png");
+    private final Image femaleRat = new Image("Sprites/ratFemale.png");
+    private final Image deathRat = new Image("Sprites/DeathRat.png");
 
     private double imgWidth;
     private double imgHeight;
@@ -40,7 +43,6 @@ public class Rat implements ITickHandler {
     private int yPos;
 
     private ArrayList<Item> itemsToDeleteOnCollision = new ArrayList<>();
-
 
 
     public enum Directions {
@@ -71,6 +73,7 @@ public class Rat implements ITickHandler {
     }
 
     private Directions currentDirection;
+    private Directions oldDirection;
 
     //baby rat..
     public Rat(char sex, int xPos, int yPos) {
@@ -85,6 +88,7 @@ public class Rat implements ITickHandler {
         instance = Level.getInstance();
         instance.addListener(this);
         this.sprite = new Image("Sprites/babyRat.png");
+        isPregnant = false;
     }
 
     public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, int speed) {
@@ -101,6 +105,8 @@ public class Rat implements ITickHandler {
         instance = Level.getInstance();
         instance.addListener(this);
         this.sprite = new Image("Sprites/ratMale.png");
+        isPregnant = false;
+
 
     }
 
@@ -111,10 +117,10 @@ public class Rat implements ITickHandler {
     @Override
     public void tickEvent() {
 
-        instance.getLevelBoard().redrawTile(xPos,yPos,true);
+        instance.getLevelBoard().redrawTile(xPos, yPos, true);
         move();
-        if(instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")){
-            instance.getLevelBoard().redrawTile(xPos,yPos,false);
+        if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
+            instance.getLevelBoard().redrawTile(xPos, yPos, false);
         }
         checkCollision();
         checkRatCollision();
@@ -131,8 +137,10 @@ public class Rat implements ITickHandler {
     public void move() {
         int newxPos = xPos;
         int newyPos = yPos;
-
-
+        System.out.println(oldDirection);
+        oldDirection = currentDirection;
+        detectOptions();
+        System.out.println(oldDirection);
         if (currentDirection == Directions.EAST) {
             newxPos += 1;
         } else if (currentDirection == Directions.WEST) {
@@ -145,29 +153,84 @@ public class Rat implements ITickHandler {
         if (isTraversable(newxPos, newyPos)) {
             xPos = newxPos;
             yPos = newyPos;
-        } else {
+        }
+        /*else {
             Directions oldDirection = currentDirection;
             currentDirection = Directions.values()[new Random().nextInt(Directions.values().length)];
-           /* while (currentDirection == oldDirection) {
-                currentDirection = Directions.values()[new Random().nextInt(DirectionsWhenFaceNorth.values().length)];
-                System.out.println(Arrays.toString(DirectionsWhenFaceNorth.values()));
-            }*/
+        }*/
+    }
+
+    public void detectOptions() {
+        boolean f;
+        boolean b;
+        boolean l;
+        boolean r;
+        Directions relativeBack = switch (oldDirection) {
+            case SOUTH -> Directions.NORTH;
+            case NORTH -> Directions.SOUTH;
+            case WEST -> Directions.EAST;
+            case EAST -> Directions.WEST;
+        };
+
+        Tile[][] tileMap = instance.getLevelBoard().getTileMap();
+        f = tileMap[xPos][yPos - 1].getTraversable();
+        b = tileMap[xPos][yPos + 1].getTraversable();
+        l = tileMap[xPos - 1][yPos].getTraversable();
+        r = tileMap[xPos + 1][yPos].getTraversable();
+
+        ArrayList<Directions> options = new ArrayList<>();
+        if (f && b && l && r){
+            options.add(Directions.NORTH);
+            options.add(Directions.WEST);
+            options.add(Directions.EAST);
+            options.add(Directions.SOUTH);
+        } else if (f){
+            options.add(Directions.NORTH);
+            if(l){
+                options.add(Directions.WEST);
+            }
+            if(r){
+                options.add(Directions.EAST);
+            }
+        } else if(b){
+            options.add(Directions.SOUTH);
+            if(l){
+                options.add(Directions.WEST);
+            }
+            if(r){
+                options.add(Directions.EAST);
+            }
+        } else if(l){
+            options.add(Directions.WEST);
+            if (r){
+                options.add(Directions.EAST);
+            }
+        } else if(r){
+            options.add(Directions.EAST);
         }
-
-
+        System.out.println(options.size());
+        if(options.size() > 1) {
+            if (options.contains(relativeBack)) {
+                options.remove(relativeBack);
+            }
+            for (int i = 0; i < options.size(); i++) {
+                int rand = new Random().nextInt(options.size());
+                currentDirection = options.get(rand);
+            }
+        }
     }
 
     /**
      * @author Trafford (made for Items)
      * Goes through each item on the board and checks if its at our location.
      */
-    public void checkCollision(){
+    public void checkCollision() {
         ArrayList<Item> existingItems = instance.getLevelBoard().getItems();
-        for (Item it: existingItems) {
-            if(it != null){
-                if(it.getX() == xPos && it.getY() == yPos){
+        for (Item it : existingItems) {
+            if (it != null) {
+                if (it.getX() == xPos && it.getY() == yPos) {
                     //Falls through cases to check if available.
-                    switch (it.getMyItemType()){
+                    switch (it.getMyItemType()) {
                         case Poison -> {
                             itemsToDeleteOnCollision.add(it); //adds it to the array to be deleted after we have iterated
                             deleteRat();
@@ -188,7 +251,7 @@ public class Rat implements ITickHandler {
                         }
                         case NoEntry -> System.out.println("No Entry");
                         case DeathRat -> {
-                            if(!this.isDeathRat){
+                            if (!this.isDeathRat) {
                                 DeathRatItem a = (DeathRatItem) it;
                                 a.incrementKills();
                                 deleteRat();
@@ -198,28 +261,42 @@ public class Rat implements ITickHandler {
                     }
                 }
             }
-            
+
 
         }
 
-        for (Item it : itemsToDeleteOnCollision){
+        for (Item it : itemsToDeleteOnCollision) {
             it.deleteItem();
         }
     }
 
+    public char getSex() {
+        return sex;
+    }
+
     public void checkRatCollision() {
         ArrayList<Rat> existingRats = instance.getLevelBoard().getRats();
-        for (Rat rt: existingRats) {
-            if(rt != this){
-                if(rt.getX() == xPos && rt.getY() == yPos){
+        for (Rat rt : existingRats) {
+            if (rt != this) {
+                if (rt.getX() == xPos && rt.getY() == yPos) {
                     System.out.println("RAT COLLISION");
+                    //check if male and female rat in same tile then sexy time
+                    if (sex == 'f' && rt.getSex() == 'm' && !isPregnant) {
+                        isPregnant = true;
+                        System.out.println("this rat is now pregnant = " + isPregnant);
+                    }
+
                 }
             }
         }
     }
 
+    public void mate() {
+
+    }
+
     public void listOfItems() {
-        System.out.println( instance.getLevelBoard().getItems());
+        System.out.println(instance.getLevelBoard().getItems());
     }
 
     public boolean isTraversable(int x, int y) {
@@ -235,7 +312,7 @@ public class Rat implements ITickHandler {
     }
 
     public Image getSprite() {
-        if(isDeathRat){
+        if (isDeathRat) {
             return deathRat;
         }
         if (sex == 'm') {
@@ -268,7 +345,7 @@ public class Rat implements ITickHandler {
         isSterile = true;
     }
 
-    public Directions getCurrentDirection(){
+    public Directions getCurrentDirection() {
         return currentDirection;
     }
 
