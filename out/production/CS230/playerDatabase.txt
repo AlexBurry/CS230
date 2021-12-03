@@ -10,8 +10,4 @@ Michael,1,1,966
 Josh,1,5,4502
 Lexyren,1,1,0
 Tom,1,1,0
-\n new int,1,1,0
-penis,1,1,0
-d,1,1,0
-e,1,1,0
 test,1,1,0
