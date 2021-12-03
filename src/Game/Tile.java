@@ -42,6 +42,7 @@ public class Tile {
                 case "t":
                     Image tunnelImage = new Image("Sprites/drainTile.png");
                     gc.drawImage(tunnelImage, xValue * 60, yValue * 60);
+
                     break;
             }
         }

@@ -82,6 +82,8 @@ public class Level {
 
         levelBoard.drawRats();
         levelBoard.drawItems();
+        levelBoard.drawTunnels();
+
         checkLossCondition();
         timeLeft = timeLeft - 1;
     }

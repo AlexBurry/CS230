@@ -25,6 +25,7 @@ public class Board extends Application implements ITickHandler {
     private final String[][] tempTileMap;
     private final Tile[][] tileMap;
     private ArrayList<Tile> traversableTiles = new ArrayList<>();
+    private ArrayList<Tile> tunnelTiles = new ArrayList<>(); //used to make sure tunnels remain ontop
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
     private final int mapX;
@@ -83,8 +84,12 @@ public class Board extends Application implements ITickHandler {
         for (int y = 0; y < mapY; y++) {
             for (int x = 0; x < mapX; x++) {
                 tileMap[x][y] = new Tile(tempTileMap[x][y], x, y, canvas);
-                if(tileMap[x][y].getTraversable()){
-                    traversableTiles.add(tileMap[x][y]);
+                Tile thisTile = tileMap[x][y];
+                if(thisTile.getTraversable()){
+                    traversableTiles.add(thisTile);
+                    if(thisTile.getTileType().equals("t")){
+                        tunnelTiles.add(thisTile);
+                    }
                 }
             }
         }
@@ -92,6 +97,13 @@ public class Board extends Application implements ITickHandler {
 
         drawRats();
         drawItems();
+    }
+
+    public void drawTunnels(){
+        System.out.println("here");
+        for (Tile t:tunnelTiles) {
+            t.draw(canvas);
+        }
     }
 
     public void drawRats() {
