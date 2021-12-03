@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -47,10 +48,13 @@ public class DragAndDrop {
         selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
         instance = Level.getInstance();
 
+
+
+
     }
 
     public GridPane makeItemWithCounter(int numberOfItem, ImageView item) {
-        Label lbl = new Label(String.valueOf(numberOfItem));
+        Label lbl = new Label( String.valueOf(numberOfItem));
         lbl.setFont(new Font("Comic Sans", 16));
         lbl.setTextFill(Color.WHITE);
 
@@ -59,6 +63,7 @@ public class DragAndDrop {
         GridPane.setHalignment(lbl, HPos.CENTER);
         noEntryPane.add(lbl, 0, 1);
         noEntryPane.add(item, 0, 2);
+
         return noEntryPane;
     }
 
@@ -73,26 +78,26 @@ public class DragAndDrop {
         toolBar.setBackground(new Background(image));
 
 
-        noEntry.setImage(ImageRefs.noEntryDamage0);
+        noEntry.setImage(ImageRefs.iconNoEntry);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfNoEntry(), noEntry));
+        Tooltip.install(noEntry, new Tooltip("Hello"));
 
-
-        deathRat.setImage(ImageRefs.deathRatDown);
+        deathRat.setImage(ImageRefs.iconDeathRat);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfDeathRat(), deathRat));
 
-        poison.setImage(ImageRefs.poisonImage);
+        poison.setImage(ImageRefs.iconPoison);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfPoison(), poison));
 
-        femaleSexChange.setImage(ImageRefs.maleToFemaleSC);
+        femaleSexChange.setImage(ImageRefs.iconMFSC);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfFSexChange(), femaleSexChange));
 
-        maleSexChange.setImage(ImageRefs.maleToFemaleSC);
+        maleSexChange.setImage(ImageRefs.iconFMSC);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfMSexChange(), maleSexChange));
 
-        sterilise.setImage(ImageRefs.steriliseImage);
+        sterilise.setImage(ImageRefs.iconSterilise);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfSterilisation(), sterilise));
 
-        bomb.setImage(ImageRefs.bombStage4);
+        bomb.setImage(ImageRefs.iconBomb);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfBombs(), bomb));
 
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
