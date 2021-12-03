@@ -127,7 +127,7 @@ public class Menu {
 
             // newLevel.getLevelBoard().addRat(new RatClasses.Rat('f', false,true, false, 2, 5, 3));
             //newLevel.getLevelBoard().addItem(new ItemClasses.SexChangeItem(2,4));
-            new SteriliseItem(2,2);
+            new BombItem(2,2);
 
         } else {
             JOptionPane.showMessageDialog(null, "Invalid Username!", "Try Again!", JOptionPane.INFORMATION_MESSAGE);

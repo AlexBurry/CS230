@@ -55,9 +55,7 @@ System.out.println("Sterilize timer = " + timer);
         int currentXPos = getX();
         int currentYPos = getY();
         for (int x = -2; x <= 2; x++) {
-           System.out.println(x);
            for (int y = -2; y <= 2; y++){
-               System.out.println(y);
                 sterilizeZone.add( localMap[currentXPos+x][currentYPos+y]);
                 System.out.println(localMap[currentXPos+x][currentYPos+y].getLocation());
             }
