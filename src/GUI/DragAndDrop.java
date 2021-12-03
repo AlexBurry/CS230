@@ -3,9 +3,11 @@ package GUI;
 import Game.Level;
 import Game.Tile;
 import ItemClasses.*;
+import Sprites.ImageRefs;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -44,13 +46,17 @@ public class DragAndDrop {
         this.tileMap = tileMap;
         selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
         instance = Level.getInstance();
+
     }
 
     public GridPane makeItemWithCounter(int numberOfItem, ImageView item) {
         Label lbl = new Label(String.valueOf(numberOfItem));
         lbl.setFont(new Font("Comic Sans", 16));
+        lbl.setTextFill(Color.WHITE);
+
+
         GridPane noEntryPane = new GridPane();
-        GridPane.setHalignment(lbl, HPos.RIGHT);
+        GridPane.setHalignment(lbl, HPos.CENTER);
         noEntryPane.add(lbl, 0, 1);
         noEntryPane.add(item, 0, 2);
         return noEntryPane;
@@ -60,27 +66,33 @@ public class DragAndDrop {
     public HBox makeToolBar() {
         HBox toolBar = new HBox();
         toolBar.setPadding(new Insets(10, 10, 10, 10));
-        toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        //toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        BackgroundImage image = new BackgroundImage(new Image("Sprites/HBoxFill.png"),BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,
+                new BackgroundSize(1200,104,true,true,true,false));
+        toolBar.setBackground(new Background(image));
 
-        noEntry.setImage(new Image("Sprites/NoEntry.png"));
+
+        noEntry.setImage(ImageRefs.noEntryDamage0);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfNoEntry(), noEntry));
 
-        deathRat.setImage(new Image("Sprites/DeathRat.png"));
+
+        deathRat.setImage(ImageRefs.deathRatDown);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfDeathRat(), deathRat));
 
-        poison.setImage(new Image("Sprites/PoisonTrap.png"));
+        poison.setImage(ImageRefs.poisonImage);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfPoison(), poison));
 
-        femaleSexChange.setImage(new Image("Sprites/femaleMaleSexChange.png"));
+        femaleSexChange.setImage(ImageRefs.maleToFemaleSC);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfFSexChange(), femaleSexChange));
 
-        maleSexChange.setImage(new Image("Sprites/maleFemaleSexChange.png"));
+        maleSexChange.setImage(ImageRefs.maleToFemaleSC);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfMSexChange(), maleSexChange));
 
-        sterilise.setImage(new Image("Sprites/metalTile.png"));
+        sterilise.setImage(ImageRefs.steriliseImage);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfSterilisation(), sterilise));
 
-        bomb.setImage(new Image("Sprites/Bomb4.png"));
+        bomb.setImage(ImageRefs.bombStage4);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfBombs(), bomb));
 
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
