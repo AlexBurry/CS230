@@ -9,7 +9,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         Menu m = new Menu(primaryStage);
-        m.buildLoginUI();
+        m.buildMenu();
     }
 
     public static void main(String[] args) {

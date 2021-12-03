@@ -26,7 +26,7 @@ public class Level {
     private Board levelBoard;
     private Inventory levelInv;
     private static Level instance;
-    private final int TICKRATE = 200;
+    private final int TICKRATE = 1000;
     private List<ITickHandler> listeners = new ArrayList<>();
     private ArrayList<ITickHandler> nullListeners = new ArrayList<>();
 

@@ -3,10 +3,6 @@ package GUI;
 import Game.Level;
 import Game.Profile;
 import Game.ReadFile;
-import ItemClasses.BombItem;
-import ItemClasses.MFChange;
-import ItemClasses.FMChange;
-import ItemClasses.SteriliseItem;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,8 +25,9 @@ public class Menu {
     private Profile p;
     private boolean skip = true;
     private String font = "Comic Sans";
+    private boolean loggedIn = false;
 
-    public Menu (Stage primaryStage) {
+    public Menu(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
@@ -63,12 +60,18 @@ public class Menu {
 
         playLbl.setOnMouseClicked(a -> {
             try {
-                buildLevel(primaryStage);
+                buildLoginUI(primaryStage, "l");
             } catch (FileNotFoundException e) {
-                System.out.println("Failed To Build Map!");
+                e.printStackTrace();
             }
         });
-        profileLbl.setOnMouseClicked(mouseEvent -> buildProfile(primaryStage));
+        profileLbl.setOnMouseClicked(mouseEvent -> {
+            try {
+                buildLoginUI(primaryStage, "p");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         highscoreLbl.setOnMouseClicked(mouseEvent -> buildHighScore());
         exitLbl.setOnMouseClicked(mouseEvent -> System.exit(0));
 
@@ -79,7 +82,6 @@ public class Menu {
         options.getChildren().addAll(playLbl,profileLbl, highscoreLbl, exitLbl);
 
         //menuPane.setTop(//MessageOfTheDayLbl); Message Of The Day Here!
-
 
         //menuPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasic.png"),BackgroundRepeat.NO_REPEAT,
@@ -99,12 +101,16 @@ public class Menu {
      *
      * @returns Formatted GridPane.
      */
-    public void buildLoginUI() {
+    public void buildLoginUI(Stage primaryStage, String name) throws FileNotFoundException {
         GridPane gPane = new GridPane();
 
         Label userLbl = new Label("Enter Username!");
         TextField inputField = new TextField("");
         Button enterBtn = new Button("Enter");
+
+        userLbl.setFont(new Font("Comic Sans", 36));
+        inputField.setPrefSize(100,10);
+        enterBtn.setPrefSize(50,20);
 
         GridPane.setHalignment(userLbl, HPos.CENTER);
         GridPane.setHalignment(enterBtn, HPos.RIGHT);
@@ -115,16 +121,42 @@ public class Menu {
         gPane.setVgap(5);
         gPane.setAlignment(Pos.CENTER);
 
-        enterBtn.setOnAction(mouseEvent -> loginProcess(inputField));
+        System.out.println(loggedIn);
 
-        Scene scene = new Scene(gPane, 300, 150);
+        Scene scene = new Scene(gPane, 1200, 884);
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Login", scene);
+
+        if (!loggedIn) {
+            enterBtn.setOnAction(mouseEvent ->
+            {
+                try {
+                    loginProcess(inputField, primaryStage, name);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            switch (name) {
+                case "l" -> buildLevel(primaryStage);
+                case "p" -> buildProfile(primaryStage);
+            }
+        }
     }
 
-    public void loginProcess(TextField inputField) {
-        if (!inputField.getText().isEmpty() && inputField.getText().contains(",") || skip) {
-            if(skip){p = new Profile("test");}else{p = new Profile(inputField.getText());}
-            buildMenu();
+    public void loginProcess(TextField inputField, Stage primaryStage, String name) throws FileNotFoundException {
+        if (!inputField.getText().isEmpty() && !inputField.getText().contains(",") || skip) {
+            System.out.println(inputField.getText());
+            if (skip) {
+                p = new Profile("test");
+            } else {
+                p = new Profile(inputField.getText());
+            }
+            loggedIn = true;
+            switch (name) {
+                case "l" -> buildLevel(primaryStage);
+                case "p" -> buildProfile(primaryStage);
+            }
+
         } else {
             JOptionPane.showMessageDialog(null, "Invalid Username!", "Try Again!", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -138,19 +170,17 @@ public class Menu {
      * @throws FileNotFoundException
      */
     public void buildLevel(Stage primaryStage) throws FileNotFoundException {
-            primaryStage.setTitle("Rats: Steampunk Edition");
-            primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
+        primaryStage.setTitle("Rats: Steampunk Edition");
+        primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
-            Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
-            
-
+        Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
     }
 
     public void buildProfile(Stage primaryStage) {
         GridPane gPane = new GridPane();
 
         Label username = presetLabel("Username:" + p.getName(), font, 24);
-        Label currentLevel = presetLabel("Currentln On Level:" + p.getCurrentLevel(), font, 24);
+        Label currentLevel = presetLabel("Currently On Level:" + p.getCurrentLevel(), font, 24);
         Label highestLevel = presetLabel("Highest Level Cleared:" + p.getHighestLevelUnlocked(), font, 24);
         Label score = presetLabel("Score: " + p.getScore(), font, 24);
         Button backBtn = new Button("Back");
@@ -171,7 +201,7 @@ public class Menu {
 
         backBtn.setOnAction(mouseEvent -> buildMenu());
 
-        Scene scene = new Scene(gPane, 400, 400);
+        Scene scene = new Scene(gPane, 1200, 884);
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Menu", scene);
     }
 
