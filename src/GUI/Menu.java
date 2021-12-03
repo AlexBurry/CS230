@@ -131,7 +131,7 @@ public class Menu {
             primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
             Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
-
+            
             new BombItem(2,2);
     }
 
