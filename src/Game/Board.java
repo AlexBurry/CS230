@@ -100,7 +100,6 @@ public class Board extends Application implements ITickHandler {
     }
 
     public void drawTunnels(){
-        System.out.println("here");
         for (Tile t:tunnelTiles) {
             t.draw(canvas);
         }

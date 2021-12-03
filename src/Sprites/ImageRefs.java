@@ -55,6 +55,14 @@ public class ImageRefs {
 
     //UI -------------------------------------
             //for menu, buttons and backgrounds
+    public static final Image iconBomb = new Image("Sprites/iconBomb.png");
+    public static final Image iconSterilise = new Image("Sprites/iconSterilise.png");
+    public static final Image iconNoEntry = new Image("Sprites/iconNoEntry.png");
+    public static final Image iconGas = new Image("Sprites/iconGas.png");
+    public static final Image iconMFSC = new Image("Sprites/iconMFSC.png");
+    public static final Image iconFMSC = new Image("Sprites/iconFMSC.png");
+    public static final Image iconPoison = new Image("Sprites/iconPoison.png");
+    public static final Image iconDeathRat = new Image("Sprites/iconDeathRat.png");
     //other -------------------------------------
             //for anything else
 }
