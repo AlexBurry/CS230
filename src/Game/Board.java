@@ -89,7 +89,7 @@ public class Board extends Application implements ITickHandler {
             }
         }
 
-        System.out.println("Drawing a rat");
+
         drawRats();
         drawItems();
     }
@@ -168,5 +168,10 @@ public class Board extends Application implements ITickHandler {
     @Override
     public void tickEvent() {
         root.setTop(toolBar.makeToolBar());
+    }
+
+    public void drawRat(Rat rat) {
+        redrawTile(rat.getX(),rat.getY(),false);
+        gc.drawImage(rat.getSprite(),rat.getX(),rat.getY());
     }
 }

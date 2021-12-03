@@ -132,7 +132,7 @@ public class Menu {
 
             Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
             
-            new BombItem(2,2);
+
     }
 
     public void buildProfile(Stage primaryStage) {

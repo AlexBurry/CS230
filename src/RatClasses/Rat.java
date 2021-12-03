@@ -39,6 +39,8 @@ public class Rat implements ITickHandler {
     private double imgHeight;
     private Level instance;
 
+
+
     private int xPos;
     private int yPos;
 
@@ -87,7 +89,7 @@ public class Rat implements ITickHandler {
         isSterile = false;
         instance = Level.getInstance();
         instance.addListener(this);
-        this.sprite = new Image("Sprites/babyRat.png");
+        changeSprite();
         isPregnant = false;
     }
 
@@ -104,7 +106,12 @@ public class Rat implements ITickHandler {
         this.isSterile = isSterile;
         instance = Level.getInstance();
         instance.addListener(this);
-        this.sprite = new Image("Sprites/ratMale.png");
+        if(isDeathRat){
+            sprite = new Image("Sprites/DeathRat.png");
+        }
+        else{
+            changeSprite();
+        }
         isPregnant = false;
 
 
@@ -117,13 +124,17 @@ public class Rat implements ITickHandler {
     @Override
     public void tickEvent() {
 
+
         instance.getLevelBoard().redrawTile(xPos, yPos, true);
         move();
         if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
+
             instance.getLevelBoard().redrawTile(xPos, yPos, false);
+
         }
         checkCollision();
         checkRatCollision();
+        System.out.println(instance.getLevelBoard().getRats().contains(this));
     }
 
     public int getX() {
@@ -137,12 +148,13 @@ public class Rat implements ITickHandler {
     public void move() {
         int newxPos = xPos;
         int newyPos = yPos;
-        System.out.println(oldDirection);
+
         oldDirection = currentDirection;
+
         detectOptions();
-        System.out.println(oldDirection);
         if (currentDirection == Directions.EAST) {
             newxPos += 1;
+
         } else if (currentDirection == Directions.WEST) {
             newxPos -= 1;
         } else if (currentDirection == Directions.NORTH) {
@@ -151,13 +163,35 @@ public class Rat implements ITickHandler {
             newyPos += 1;
         }
         if (isTraversable(newxPos, newyPos)) {
+
             xPos = newxPos;
             yPos = newyPos;
+            if(isDeathRat){
+                ((DeathRat) this).getItem().updatePos();
+            }
+            changeSprite();
+
         }
-        /*else {
-            Directions oldDirection = currentDirection;
-            currentDirection = Directions.values()[new Random().nextInt(Directions.values().length)];
-        }*/
+
+    }
+
+    private void changeSprite(){
+        if(sex == 'm'){
+            switch (currentDirection){
+                case EAST -> sprite = new Image("Sprites/ratMale-Right.png");
+                case WEST -> sprite = new Image("Sprites/ratMale-Left.png");
+                case NORTH -> sprite = new Image("Sprites/ratMale.png");
+                case SOUTH -> sprite = new Image("Sprites/ratMale-Down.png");
+            }
+        }
+        else{
+            switch (currentDirection){
+                case EAST -> sprite = new Image("Sprites/ratFemale-Right.png");
+                case WEST -> sprite = new Image("Sprites/ratFemale-Left.png");
+                case NORTH -> sprite = new Image("Sprites/ratFemale.png");
+                case SOUTH -> sprite = new Image("Sprites/ratFemale-Down.png");
+            }
+        }
     }
 
     public void detectOptions() {
@@ -252,9 +286,9 @@ public class Rat implements ITickHandler {
                         case NoEntry -> System.out.println("No Entry");
                         case DeathRat -> {
                             if (!this.isDeathRat) {
-                                DeathRatItem a = (DeathRatItem) it;
-                                a.incrementKills();
-                                deleteRat();
+//                                DeathRatItem a = (DeathRatItem) it;
+//                                a.incrementKills();
+//                                deleteRat();
                             }
 
                         }
@@ -285,7 +319,12 @@ public class Rat implements ITickHandler {
                         isPregnant = true;
                         System.out.println("this rat is now pregnant = " + isPregnant);
                     }
-
+                    System.out.println(rt.isDeathRat);
+                    if(rt.isDeathRat){
+                        DeathRatItem a = ((DeathRat) rt).getItem();
+                        a.incrementKills();
+                        deleteRat();
+                    }
                 }
             }
         }
@@ -313,24 +352,20 @@ public class Rat implements ITickHandler {
 
     public Image getSprite() {
         if (isDeathRat) {
-            return deathRat;
+            return sprite;
         }
         if (sex == 'm') {
-            return maleRat;
+            return sprite;
         }
         //if female
         else {
-            return femaleRat;
+            return sprite;
         }
     }
 
     public void setPosition(int x, int y) {
         xPos = x;
         yPos = y;
-    }
-
-    public void draw(int x, int y) {
-
     }
 
     // kill rat method
