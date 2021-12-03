@@ -52,10 +52,14 @@ public class Menu {
     public void buildMenu() {
         BorderPane menuPane = new BorderPane();
 
-        Label playLbl = presetLabel("Play", font, 72);
-        Label profileLbl = presetLabel("Profile", font, 36);
-        Label highscoreLbl = presetLabel("Highscore", font, 36);
-        Label exitLbl = presetLabel("Exit", font, 36);
+        Label playLbl = presetLabel("Play", font, 70);
+        Label profileLbl = presetLabel("Profile", font, 60);
+        Label highscoreLbl = presetLabel("Highscore", font, 45);
+        Label exitLbl = presetLabel("Exit", font, 40);
+        playLbl.setTextFill(Color.BLACK);
+        profileLbl.setTextFill(Color.BLACK);
+        highscoreLbl.setTextFill(Color.BLACK);
+        exitLbl.setTextFill(Color.BLACK);
 
         playLbl.setOnMouseClicked(a -> {
             try {
@@ -69,16 +73,23 @@ public class Menu {
         exitLbl.setOnMouseClicked(mouseEvent -> System.exit(0));
 
         VBox options = new VBox();
-        options.setPadding(new Insets(10, 10, 10, 10));
+
         options.setAlignment(Pos.CENTER);
-        options.getChildren().addAll(playLbl, highscoreLbl, profileLbl, exitLbl);
+        options.setPadding(new Insets(100, 40, 40, 40));
+        options.getChildren().addAll(playLbl,profileLbl, highscoreLbl, exitLbl);
 
         //menuPane.setTop(//MessageOfTheDayLbl); Message Of The Day Here!
+
+
+        //menuPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasic.png"),BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,
+                new BackgroundSize(1200,104,true,true,true,false));
+        menuPane.setBackground(new Background(image));
+
         menuPane.setCenter(options);
 
-        menuPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-
-        Scene scene = new Scene(menuPane, 400, 400);
+        Scene scene = new Scene(menuPane, 1200, 884);
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Menu", scene);
     }
 
