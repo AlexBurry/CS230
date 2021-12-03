@@ -124,7 +124,7 @@ public class Board extends Application implements ITickHandler {
     public void removeItem(Item item) {
         if(items.contains(item)){
             items.remove(item);
-            drawBoard();
+            redrawTile(item.getX(),item.getY(),true);
         }
     }
 

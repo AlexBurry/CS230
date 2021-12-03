@@ -106,7 +106,7 @@ public class Inventory implements ITickHandler {
             if (bombSpawnRateTimer == 0) {
                 numberOfBombs++;
                 bombSpawnRateTimer = bombSpawnRate;
-                System.out.println("Added Bomb to Inv");
+
             }
             else {
                 bombSpawnRateTimer--;
@@ -125,7 +125,7 @@ public class Inventory implements ITickHandler {
             if (mSexChangeSpawnRateTimer == 0) {
                 numberOfMSexChange++;
                 mSexChangeSpawnRateTimer = mSexChangeSpawnRate;
-                System.out.println("Added Male Sex Change to Inv");
+
             } else {
                 mSexChangeSpawnRateTimer--;
             }
@@ -143,7 +143,7 @@ public class Inventory implements ITickHandler {
             if (fSexChangeSpawnRateTimer == 0) {
                 numberOfFSexChange++;
                 fSexChangeSpawnRateTimer = fSexChangeSpawnRate;
-                System.out.println("Added Female Sex Change to Inv");
+
             } else {
                 fSexChangeSpawnRateTimer--;
             }
@@ -161,7 +161,7 @@ public class Inventory implements ITickHandler {
             if (gasSpawnRateTimer == 0) {
                 numberOfGas++;
                 gasSpawnRateTimer = gasSpawnRate;
-                System.out.println("Added Gas to Inv");
+
             } else {
                 gasSpawnRateTimer--;
             }
@@ -179,7 +179,7 @@ public class Inventory implements ITickHandler {
             if (sterilisationSpawnRateTimer == 0) {
                 numberOfSterilisation++;
                 sterilisationSpawnRateTimer = sterilisationSpawnRate;
-                System.out.println("Added Sterilisation to Inv");
+
             } else {
                 sterilisationSpawnRateTimer--;
             }
@@ -197,7 +197,7 @@ public class Inventory implements ITickHandler {
             if (poisonSpawnRateTimer == 0) {
                 numberOfPoison++;
                 poisonSpawnRateTimer = poisonSpawnRate;
-                System.out.println("Added Poison to Inv");
+
             } else {
                 poisonSpawnRateTimer--;
             }
@@ -215,7 +215,7 @@ public class Inventory implements ITickHandler {
             if (noEntrySpawnRateTimer== 0) {
                 numberOfNoEntry++;
                 noEntrySpawnRateTimer = noEntrySpawnRate;
-                System.out.println("Added No Entry Sign to Inv");
+
             } else {
                 noEntrySpawnRateTimer--;
             }
@@ -233,7 +233,7 @@ public class Inventory implements ITickHandler {
             if (deathRatSpawnRateTimer == 0) {
                 numberOfDeathRat++;
                 deathRatSpawnRateTimer = deathRatSpawnRate;
-                System.out.println("Added Death Rat to Inv");
+
             } else {
                 deathRatSpawnRateTimer--;
             }

@@ -3,6 +3,7 @@ package RatClasses;
 
 import Game.Level;
 import Game.Tile;
+import ItemClasses.NoEntryItem;
 import Sprites.ImageRefs;
 import ItemClasses.DeathRatItem;
 import ItemClasses.Item;
@@ -130,9 +131,9 @@ public class Rat implements ITickHandler {
             instance.getLevelBoard().redrawTile(xPos, yPos, false);
 
         }
-        checkCollision();
+
         checkRatCollision();
-        System.out.println(instance.getLevelBoard().getRats().contains(this));
+
     }
 
     public int getX() {
@@ -240,7 +241,7 @@ public class Rat implements ITickHandler {
         } else if(r) {
             options.add(Directions.EAST);
         }
-        System.out.println(options.size());
+
         if(options.size() > 1) {
             if (options.contains(relativeBack)) {
                 options.remove(relativeBack);
@@ -253,6 +254,7 @@ public class Rat implements ITickHandler {
         else{
             currentDirection = options.get(0);
         }
+        checkCollision();
     }
 
     /**
@@ -284,12 +286,24 @@ public class Rat implements ITickHandler {
                                 itemsToDeleteOnCollision.add(it);
                             }
                         }
-                        case NoEntry -> System.out.println("No Entry");
+                        case NoEntry -> {
+                            currentDirection = switch (oldDirection) {
+                                case SOUTH -> Directions.NORTH;
+                                case NORTH -> Directions.SOUTH;
+                                case WEST -> Directions.EAST;
+                                case EAST -> Directions.WEST;
+                            };
+                            NoEntryItem noEntryItem = (NoEntryItem) it;
+                            noEntryItem.hit();
+                            if(noEntryItem.shouldKill()){
+                                itemsToDeleteOnCollision.add(it);
+                            }
+                        }
                         case DeathRat -> {
                             if (!this.isDeathRat) {
-//                                DeathRatItem a = (DeathRatItem) it;
-//                                a.incrementKills();
-//                                deleteRat();
+                                DeathRatItem a = (DeathRatItem) it;
+                                a.incrementKills();
+                                deleteRat();
                             }
 
                         }
@@ -320,12 +334,12 @@ public class Rat implements ITickHandler {
                         isPregnant = true;
                         System.out.println("this rat is now pregnant = " + isPregnant);
                     }
-                    System.out.println(rt.isDeathRat);
-                    if(rt.isDeathRat){
-                        DeathRatItem a = ((DeathRat) rt).getItem();
-                        a.incrementKills();
-                        deleteRat();
-                    }
+
+//                    if(rt.isDeathRat){
+//                        DeathRatItem a = ((DeathRat) rt).getItem();
+//                        a.incrementKills();
+//                        deleteRat();
+//                    }
                 }
             }
         }

@@ -3,6 +3,7 @@ package ItemClasses;
 import Game.ITickHandler;
 import Game.Tile;
 import RatClasses.Rat;
+import Sprites.ImageRefs;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class BombItem extends Item implements ITickHandler {
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(new Image("Sprites/Bomb4.png")); //Defaults to the highest number, bomb-4seconds
+        this.setImage(ImageRefs.bombStage4); //Defaults to the highest number, bomb-4seconds
         this.setMyItemType(itemType.Bomb); //Sets the item type to a Bomb.
         this.directionToCheck = checkDir.North; //Default to north as our first direction to check.
         this.bombZone = getBombZone();
@@ -57,6 +58,15 @@ public class BombItem extends Item implements ITickHandler {
     public void tickEvent() {
 
         countdown();
+        if (timer == 3) {
+            this.setImage(ImageRefs.bombStage3);
+        } else if (timer == 2) {
+            this.setImage(ImageRefs.bombStage2);
+        } else if (timer == 1) {
+            this.setImage(ImageRefs.bombStage1);
+        }
+
+        getLocalInstance().getLevelBoard().redrawTile(getX(),getY(),true);
     }
 
 
@@ -70,6 +80,7 @@ public class BombItem extends Item implements ITickHandler {
 
         } else {
             timer -= 1;
+
         }
 
     }

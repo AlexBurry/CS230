@@ -229,6 +229,8 @@ public class DragAndDrop {
                 }
             }
         }
+
+        instance.getLevelBoard().redrawTile(x,y,true);
     }
 
     public void dragCode(ImageView item) {
