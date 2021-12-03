@@ -225,6 +225,9 @@ public class Rat implements ITickHandler {
             if(r){
                 options.add(Directions.EAST);
             }
+            if(b){
+                options.add(Directions.SOUTH);
+            }
         } else if(b){
             options.add(Directions.SOUTH);
             if(l){
@@ -251,7 +254,7 @@ public class Rat implements ITickHandler {
                 currentDirection = options.get(rand);
             }
         }
-        else{
+        else if (options.size() == 1){
             currentDirection = options.get(0);
         }
         checkCollision();
