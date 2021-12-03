@@ -1,6 +1,7 @@
 package ItemClasses;
 
 import RatClasses.DeathRat;
+import Sprites.ImageRefs;
 import javafx.scene.image.Image;
 
 import java.util.concurrent.Executors;
@@ -33,7 +34,7 @@ public class DeathRatItem extends Item {
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(new Image("Sprites/DeathRat.png"));
+        this.setImage(ImageRefs.deathRatUp);
         this.setMyItemType(itemType.DeathRat); //set the type
         waitToSpawnRat();
     }
@@ -75,7 +76,7 @@ public class DeathRatItem extends Item {
     private void spawnDeathRat() {
         this.deathRat = new DeathRat('m', true, true, true, getX(), getY(), 3);
         this.deathRat.setItem(this); // give this class to the death rat, so it can reference it.
-        this.setImage(new Image("Sprites/DeathRat.png")); //make it invisible.
+        this.setImage(ImageRefs.deathRatUp); //make it invisible.
 
 
     }

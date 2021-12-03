@@ -1,5 +1,6 @@
 package ItemClasses;
 
+import Sprites.ImageRefs;
 import javafx.scene.image.Image;
 
 //TODO: FINISH THIS CLASS
@@ -19,8 +20,15 @@ public class NoEntryItem extends Item{
         super();
         this.setX(x);
         this.setY(y);
-        this.setImage(new Image("Sprites/NoEntry.png"));
+        this.setImage(ImageRefs.noEntryDamage0);
         this.setMyItemType(itemType.NoEntry);
+    }
+
+    public void hit(){
+        healthPoints -= 1;
+        if(healthPoints <= 0){
+            deleteItem();
+        }
     }
 
     

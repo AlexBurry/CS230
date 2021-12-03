@@ -18,30 +18,6 @@ public class BabyRat extends Rat{
             }
     }
 
-    @Override
-    public void move() {
-        int newxPos = getX();
-        int newyPos = getY();
-
-
-        if (getCurrentDirection() == Directions.EAST) {
-            newxPos += 1;
-        } else if (getCurrentDirection() == Directions.WEST) {
-            newxPos -= 1;
-        } else if (getCurrentDirection() == Directions.NORTH) {
-            newyPos -= 1;
-        } else {
-            newyPos += 1;
-        }
-        if (isTraversable(newxPos, newyPos)) {
-            setPosition(newxPos,newyPos);
-
-        } else {
-            Directions oldDirection = getCurrentDirection();
-            setCurrentDirection(Directions.values()[new Random().nextInt(Directions.values().length)]);
-
-        }
-    }
 
 
 }

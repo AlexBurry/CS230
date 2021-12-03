@@ -21,16 +21,6 @@ public class BombItem extends Item implements ITickHandler {
     private ArrayList<Tile> bombZone; //The tiles to detonate on
 
     /**
-     * This class is a listener of the ITickHandler event.
-     * It will countdown every tick (default: 1s)
-     */
-    @Override
-    public void tickEvent() {
-
-        countdown();
-    }
-
-    /**
      * The direction type, allowing us to switch through them.
      */
     private enum checkDir {
@@ -58,6 +48,17 @@ public class BombItem extends Item implements ITickHandler {
         this.bombZone = getBombZone();
 
     }
+
+    /**
+     * This class is a listener of the ITickHandler event.
+     * It will count down every tick (default: 1s)
+     */
+    @Override
+    public void tickEvent() {
+
+        countdown();
+    }
+
 
     /**
      * Explodes the bomb after 5 seconds has passed
