@@ -443,13 +443,4 @@ public class Rat implements ITickHandler {
     public String toString() {
         return "";
     }
-
-
-    /**
-     * @author Jack
-     * takes in a gender for rats to become, checks the rat isn't the same as the gender
-     */
-    public void initiateSexChange(char gender) {
-            sex = gender;
-        }
 }
