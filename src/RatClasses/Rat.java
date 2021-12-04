@@ -131,7 +131,7 @@ public class Rat implements ITickHandler {
     @Override
     public void tickEvent(int count) {
 
-        if(count == 2 || count == 4){
+        if (count == 2 || count == 4) {
             instance.getLevelBoard().redrawTile(xPos, yPos, true);
             move();
             if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
@@ -141,6 +141,7 @@ public class Rat implements ITickHandler {
             checkRatCollision();
             giveBirth();
         }
+
     }
 
     public int getX() {
@@ -275,7 +276,10 @@ public class Rat implements ITickHandler {
         } else if (options.size() == 1) {
             currentDirection = options.get(0);
         }
-        checkCollision();
+        if (!isDeathRat) {
+            checkCollision();
+        }
+
     }
 
     /**
@@ -296,16 +300,16 @@ public class Rat implements ITickHandler {
                         case Gas -> System.out.println("Gas");
                         //case Sterilise -> System.out.println("Sterilise");
                         case MSex -> {
-                            if (isDeathRat == false) {
-                                initiateSexChange('m');
-                                itemsToDeleteOnCollision.add(it);
-                            }
+
+                            initiateSexChange('m');
+                            itemsToDeleteOnCollision.add(it);
+
                         }
                         case FSex -> {
-                            if (isDeathRat == false) {
-                                initiateSexChange('f');
-                                itemsToDeleteOnCollision.add(it);
-                            }
+
+                            initiateSexChange('f');
+                            itemsToDeleteOnCollision.add(it);
+
                         }
                         case NoEntry -> {
                             currentDirection = switch (oldDirection) {
