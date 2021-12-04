@@ -14,7 +14,6 @@ public class DeathRat extends Rat{
         super(sex, isDeath, alive, isSterile, xPos, yPos, speed);
         this.setImage(ImageRefs.deathRatUp);
         Level.getInstance().getLevelBoard().addRat(this);
-
     }
 
     public DeathRatItem getItem(){

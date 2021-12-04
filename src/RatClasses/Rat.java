@@ -106,6 +106,24 @@ public class Rat implements ITickHandler {
         }
     }
 
+    public void counter(){
+        tickTimer += 1;
+        //resets the counter
+        if (tickTimer == 4){
+            tickTimer = 0;
+            //if the female rat is pregnant it will no longer be.
+            if(sex == 'f') {
+                isPregnant = false;
+                //System.out.println("no longer pregnant " + isPregnant);
+                giveBirth();
+            }
+        }
+    }
+
+    public void giveBirth(){
+
+    }
+
     /**
      * This is an event listener.
      * Called every x seconds by the Level class
@@ -119,12 +137,10 @@ public class Rat implements ITickHandler {
             if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
                 instance.getLevelBoard().redrawTile(xPos, yPos, false);
             }
+            counter();
             checkRatCollision();
+            giveBirth();
         }
-
-
-
-
     }
 
     public int getX() {
@@ -329,7 +345,7 @@ public class Rat implements ITickHandler {
     }
 
     /**
-     * @author Marcus
+     *
      * checks if rats collide into each other
      */
     public void checkRatCollision() {
@@ -342,9 +358,9 @@ public class Rat implements ITickHandler {
                     if (sex == 'f' && rt.getSex() == 'm' && !isPregnant) {
                         isPregnant = true;
                         System.out.println("this rat is now pregnant = " + isPregnant);
-                    }
-                    if (tickTimer == 3) {
-                        //System.out.println(tickTimer);
+                        char ratGender = new Random().nextBoolean() ? 'f' : 'm';
+                        //BabyRat babyRat = new BabyRat(ratGender, xPos, yPos);
+                        //instance.getLevelBoard().addRat(babyRat);
                     }
 
                 }
