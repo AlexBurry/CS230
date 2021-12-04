@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 public class TileTest {
     public static void main(String args[]) throws FileNotFoundException {
 
-        //new ReadFile("testlevel.txt");
+        //new Game.ReadFile("testlevel.txt");
 
     }
 }
