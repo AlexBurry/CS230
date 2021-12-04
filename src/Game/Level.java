@@ -88,6 +88,7 @@ public class Level {
         //add rats after, so we dont modify the collection.
         for (Rat rt : ratsToAddAfterTick){
             getLevelBoard().addRat(rt);
+            listeners.add(rt);
         }
         ratsToAddAfterTick.clear();
 
