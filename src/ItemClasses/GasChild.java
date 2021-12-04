@@ -2,21 +2,26 @@ package ItemClasses;
 
 import Game.Tile;
 import Sprites.ImageRefs;
-
 import java.util.ArrayList;
 
 /**
- * Smaller node of gasItem, reproduces on condition.
+ * Smaller node of gasItem, produces 2 duplicate nodes
+ * to give it more of a natural look.
  * @author Trafford
- * @author Jack
- * @version 0.1
- * @since 0.1
+ * @version 1.0
+ * @since 04/12/2021
  */
 public class GasChild extends GasItem{
-    private GasItem centralNode;
+
     private ArrayList<GasChild> associatedGas = new ArrayList<>();
 
 
+    /**
+     * Creates a new gas child. If this node can grow more, it should be told to do so.
+     * @param x
+     * @param y
+     * @param growFurther should this node spawn up to 4 more nodes?
+     */
     public GasChild(int x, int y, boolean growFurther) {
 
         this.setX(x);
@@ -31,13 +36,14 @@ public class GasChild extends GasItem{
 
     }
 
-    public void setCentralNode(GasItem parent){
-        this.centralNode = parent;
+    private boolean checkIfSafe(int x, int y){
+        return x >= 0 && y >= 0 && x <= getLocalInstance().getLevelBoard().getGameWidthInTiles()
+                && y <= getLocalInstance().getLevelBoard().getGameHeightInTiles();
     }
-
 
     /**
      * Try to grow once in all directions.
+     * Works by checking each value is in range,
      */
     public void tryGrow(){
         Coordinate left = new Coordinate(getX() - 1,getY());
@@ -48,26 +54,26 @@ public class GasChild extends GasItem{
         Tile[][] allTiles = getLocalInstance().getLevelBoard().getTileMap();
 
 
-        if(left.x >= 0 && left.y >= 0 && allTiles[left.x][left.y].getTraversable()){
-            System.out.println(allTiles[left.x][left.y].getTraversable());
+        if(checkIfSafe(left.x, left.y) && allTiles[left.x][left.y].getTraversable()){
+
             if(!getLocalInstance().getLevelBoard().existsItemAt(left.x,left.y)){
                 GasChild child = new GasChild(left.x,left.y,false);
                 associatedGas.add(child);
             }
         }
-        if(right.x >= 0 && right.y >= 0 && allTiles[right.x][right.y].getTraversable()){
+        if(checkIfSafe(right.x, right.y) && allTiles[right.x][right.y].getTraversable()){
             if(!getLocalInstance().getLevelBoard().existsItemAt(left.x,left.y)){
                 GasChild child = new GasChild(left.x,left.y,false);
                 associatedGas.add(child);
             }
         }
-        if(up.x >= 0 && up.y >= 0 && allTiles[up.x][up.y].getTraversable()){
+        if(checkIfSafe(up.x, up.y) && allTiles[up.x][up.y].getTraversable()){
             if(!getLocalInstance().getLevelBoard().existsItemAt(up.x,up.y)){
                 GasChild child = new GasChild(up.x,up.y,false);
                 associatedGas.add(child);
             }
         }
-        if(down.x >= 0 && down.y >= 0 && allTiles[down.x][down.y].getTraversable()){
+        if(checkIfSafe(down.x, down.y) && allTiles[down.x][down.y].getTraversable()){
             if(!getLocalInstance().getLevelBoard().existsItemAt(down.x,down.y)){
                 GasChild child = new GasChild(down.x,down.y,false);
                 associatedGas.add(child);

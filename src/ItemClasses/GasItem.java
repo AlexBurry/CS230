@@ -19,11 +19,9 @@ import java.util.ArrayList;
  */
 public class GasItem extends Item implements ITickHandler {
 
-    private final int EXPANSION_TIME = 3;
     private final int DIRECTION_LIMIT = 3; //when do we stop checking?
-    private boolean dissipating = false;
-    private Rat.Directions tileDirection;
-    private int expansionTileCount; //how many tiles do we need to expand on?
+    private boolean dissipating = false; //Should we reverse?
+
     private int expansionStage = 0;
 
     class Coordinate {
@@ -53,8 +51,8 @@ public class GasItem extends Item implements ITickHandler {
     /**
      * Creates a new gas node which will produce children that replicate themselves.
      *
-     * @param x
-     * @param y
+     * @param x The x Coordinate
+     * @param y The y Coordinate
      */
     public GasItem(int x, int y) {
         super();
@@ -70,6 +68,7 @@ public class GasItem extends Item implements ITickHandler {
 
     /**
      * Calculates the area of effect that the gas node has.
+     * This is achieved by checking 3 tiles in every direction.
      */
     private void calculateAOE() {
 
@@ -134,8 +133,6 @@ public class GasItem extends Item implements ITickHandler {
         System.out.println(easternTiles.size());
 
 
-        //this is how many tiles there are left to expand onto.
-        expansionTileCount = northernTiles.size() + southernTiles.size() + easternTiles.size() + westernTiles.size();
     }
 
     /**
@@ -145,7 +142,7 @@ public class GasItem extends Item implements ITickHandler {
     private void replicateAt(int x, int y) {
         if (x >= 0 && y >= 0) {
             GasChild child = new GasChild(x, y, true);
-            child.setCentralNode(this); //assign this gasItem to the child node.
+
             myChildren.add(child);
         }
 
@@ -245,17 +242,20 @@ public class GasItem extends Item implements ITickHandler {
         }
     }
 
+    /**
+     * For this class, it handles growth and dissipations.
+     * @param count how many ticks have passed? Resets every second.
+     */
     @Override
     public void tickEvent(int count) {
 
-        if(count >= 4){
+        if (count >= 4) {
             if (!dissipating) {
                 handleGrowthTick();
             } else {
                 handleDissipationTick();
             }
         }
-
 
 
     }
