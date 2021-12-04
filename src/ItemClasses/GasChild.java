@@ -1,6 +1,7 @@
 package ItemClasses;
 
 import Game.Tile;
+import RatClasses.Rat;
 import Sprites.ImageRefs;
 import java.util.ArrayList;
 
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 public class GasChild extends GasItem{
 
     private ArrayList<GasChild> associatedGas = new ArrayList<>();
-
+    private Rat.Directions expansionDirection;
+    private GasItem parent;
 
     /**
      * Creates a new gas child. If this node can grow more, it should be told to do so.
@@ -31,15 +33,41 @@ public class GasChild extends GasItem{
 
         if(growFurther){
             tryGrow();
+        }else{
+            setImage(ImageRefs.gasOuterChild);
         }
 
 
+
+
     }
 
-    private boolean checkIfSafe(int x, int y){
-        return x >= 0 && y >= 0 && x <= getLocalInstance().getLevelBoard().getGameWidthInTiles()
-                && y <= getLocalInstance().getLevelBoard().getGameHeightInTiles();
+    public void setParent(GasItem center){
+        this.parent = center;
+        setRelativePosToCenter();
     }
+
+    /**
+     * Calculate the relative position (direction) to the center node.
+     */
+    private void setRelativePosToCenter() {
+        int x = parent.getX();
+        int y = parent.getY();
+
+        if(x < getX()){
+            expansionDirection = Rat.Directions.EAST;
+        }
+        else if (x > getX()){
+            expansionDirection = Rat.Directions.WEST;
+        }
+        else if (y < getY()){
+            expansionDirection = Rat.Directions.NORTH;
+        }
+        else if (y > getY()){
+            expansionDirection = Rat.Directions.SOUTH;
+        }
+    }
+
 
     /**
      * Try to grow once in all directions.
@@ -54,33 +82,44 @@ public class GasChild extends GasItem{
         Tile[][] allTiles = getLocalInstance().getLevelBoard().getTileMap();
 
 
-        if(checkIfSafe(left.x, left.y) && allTiles[left.x][left.y].getTraversable()){
+        if(expansionDirection != Rat.Directions.EAST && allTiles[left.x][left.y].getTraversable()){
 
             if(!getLocalInstance().getLevelBoard().existsItemAt(left.x,left.y)){
                 GasChild child = new GasChild(left.x,left.y,false);
+                child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(checkIfSafe(right.x, right.y) && allTiles[right.x][right.y].getTraversable()){
+        if(expansionDirection != Rat.Directions.WEST && allTiles[right.x][right.y].getTraversable()){
+
             if(!getLocalInstance().getLevelBoard().existsItemAt(left.x,left.y)){
                 GasChild child = new GasChild(left.x,left.y,false);
+                child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(checkIfSafe(up.x, up.y) && allTiles[up.x][up.y].getTraversable()){
+        if(expansionDirection != Rat.Directions.NORTH && allTiles[up.x][up.y].getTraversable()){
+
             if(!getLocalInstance().getLevelBoard().existsItemAt(up.x,up.y)){
                 GasChild child = new GasChild(up.x,up.y,false);
+                child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(checkIfSafe(down.x, down.y) && allTiles[down.x][down.y].getTraversable()){
+        if(expansionDirection != Rat.Directions.SOUTH && allTiles[down.x][down.y].getTraversable()){
+
             if(!getLocalInstance().getLevelBoard().existsItemAt(down.x,down.y)){
                 GasChild child = new GasChild(down.x,down.y,false);
+                child.setParent(this);
                 associatedGas.add(child);
             }
         }
     }
 
+
+    /**
+     * remove this gas from the map
+     */
     public void removeSelf(){
         for (Item it:associatedGas) {
             getLocalInstance().getLevelBoard().removeItem(it);

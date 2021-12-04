@@ -142,7 +142,7 @@ public class GasItem extends Item implements ITickHandler {
     private void replicateAt(int x, int y) {
         if (x >= 0 && y >= 0) {
             GasChild child = new GasChild(x, y, true);
-
+            child.setParent(this);
             myChildren.add(child);
         }
 

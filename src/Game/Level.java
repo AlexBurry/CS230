@@ -92,11 +92,12 @@ public class Level {
         }
         ratsToAddAfterTick.clear();
 
+
+
         levelBoard.drawRats();
         levelBoard.drawItems();
         levelBoard.drawTunnels();
 
-        //System.out.println(tickCount);
         tickCount++;
 
         if(tickCount > 4){
