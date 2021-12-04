@@ -327,19 +327,15 @@ public class Rat implements ITickHandler {
                                 instance.getLevelBoard().removeRat(this);
                             }
                         }
-
                         case MSex -> {
 
                             initiateSexChange('m');
                             itemsToDeleteOnCollision.add(it);
-
-                        }
                         case FSex -> {
-
-                            initiateSexChange('f');
+                            sex = 'f';
                             itemsToDeleteOnCollision.add(it);
-
                         }
+
                         case NoEntry -> {
                             currentDirection = switch (oldDirection) {
                                 case SOUTH -> Directions.NORTH;
@@ -453,6 +449,8 @@ public class Rat implements ITickHandler {
         isSterile = true;
     }
 
+    public boolean getIsSterile(){return isSterile;};
+
     public Directions getCurrentDirection() {
         return currentDirection;
     }
@@ -465,17 +463,4 @@ public class Rat implements ITickHandler {
     public String toString() {
         return "";
     }
-
-    public void initiateSexChange(char gender) {
-        if (gender != sex) {
-            if (gender == 'm') {
-                sex = 'm';
-            } else {
-                sex = 'f';
-            }
-        }
-
-
-    }
-
 }
