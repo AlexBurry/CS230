@@ -21,17 +21,7 @@ public class BombItem extends Item implements ITickHandler {
     private int timer = 4; //The countdown period
     private ArrayList<Tile> bombZone; //The tiles to detonate on
 
-    /**
-     * The direction type, allowing us to switch through them.
-     */
-    private enum checkDir {
-        North,
-        South,
-        West,
-        East
-    }
-
-    private checkDir directionToCheck; //our local variable which holds our current direction.
+    private Rat.Directions directionToCheck; //our local variable which holds our current direction.
 
     /**
      * Creates a new bomb and calculates the zone in which it will explode.
@@ -45,7 +35,7 @@ public class BombItem extends Item implements ITickHandler {
         this.setY(y);
         this.setImage(ImageRefs.bombStage4); //Defaults to the highest number, bomb-4seconds
         this.setMyItemType(itemType.Bomb); //Sets the item type to a Bomb.
-        this.directionToCheck = checkDir.North; //Default to north as our first direction to check.
+        this.directionToCheck = Rat.Directions.NORTH; //Default to north as our first direction to check.
         this.bombZone = getBombZone();
 
     }
@@ -55,18 +45,21 @@ public class BombItem extends Item implements ITickHandler {
      * It will count down every tick (default: 1s)
      */
     @Override
-    public void tickEvent() {
+    public void tickEvent(int count) {
+        System.out.println(count);
+        if(count >= 4){
+            countdown();
+            if (timer == 3) {
+                this.setImage(ImageRefs.bombStage3);
+            } else if (timer == 2) {
+                this.setImage(ImageRefs.bombStage2);
+            } else if (timer == 1) {
+                this.setImage(ImageRefs.bombStage1);
+            }
 
-        countdown();
-        if (timer == 3) {
-            this.setImage(ImageRefs.bombStage3);
-        } else if (timer == 2) {
-            this.setImage(ImageRefs.bombStage2);
-        } else if (timer == 1) {
-            this.setImage(ImageRefs.bombStage1);
+            getLocalInstance().getLevelBoard().redrawTile(getX(),getY(),true);
         }
 
-        getLocalInstance().getLevelBoard().redrawTile(getX(),getY(),true);
     }
 
 
@@ -112,10 +105,10 @@ public class BombItem extends Item implements ITickHandler {
 
         while (!foundAllTiles) { //while we haven't checked all directions
             switch (directionToCheck) { //adds or removes 1 on each index to move the "check"
-                case North -> currentYPos -= 1;
-                case South -> currentYPos += 1;
-                case West -> currentXPos -= 1;
-                case East -> currentXPos += 1;
+                case NORTH -> currentYPos -= 1;
+                case SOUTH -> currentYPos += 1;
+                case WEST -> currentXPos -= 1;
+                case EAST -> currentXPos += 1;
             }
 
             Tile tempTile = localMap[currentXPos][currentYPos];
@@ -125,10 +118,10 @@ public class BombItem extends Item implements ITickHandler {
                 //If it is null, or not traversable, then we should check a different direction from
                 //the starting point.
                 switch (directionToCheck) {
-                    case North -> directionToCheck = checkDir.East;
-                    case South -> directionToCheck = checkDir.West;
-                    case West -> foundAllTiles = true;
-                    case East -> directionToCheck = checkDir.South;
+                    case NORTH -> directionToCheck = Rat.Directions.EAST;
+                    case SOUTH -> directionToCheck = Rat.Directions.WEST;
+                    case WEST -> foundAllTiles = true;
+                    case EAST -> directionToCheck = Rat.Directions.SOUTH;
                 }
                 //reset starting point, so we check in relative directions from the center.
                 currentXPos = getX();

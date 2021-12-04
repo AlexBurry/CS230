@@ -41,6 +41,7 @@ public class DragAndDrop {
     private ImageView maleSexChange = new ImageView();
     private ImageView sterilise = new ImageView();
     private ImageView bomb = new ImageView();
+    private ImageView gas = new ImageView();
 
     public DragAndDrop(Canvas canvas, Tile[][] tileMap) {
         this.canvas = canvas;
@@ -49,12 +50,10 @@ public class DragAndDrop {
         instance = Level.getInstance();
 
 
-
-
     }
 
     public GridPane makeItemWithCounter(int numberOfItem, ImageView item) {
-        Label lbl = new Label( String.valueOf(numberOfItem));
+        Label lbl = new Label(String.valueOf(numberOfItem));
         lbl.setFont(new Font("Comic Sans", 16));
         lbl.setTextFill(Color.WHITE);
 
@@ -72,9 +71,9 @@ public class DragAndDrop {
         HBox toolBar = new HBox();
         toolBar.setPadding(new Insets(10, 10, 10, 10));
         //toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        BackgroundImage image = new BackgroundImage(new Image("Sprites/HBoxFill.png"),BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,
-                new BackgroundSize(1200,104,true,true,true,false));
+        BackgroundImage image = new BackgroundImage(new Image("Sprites/HBoxFill.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                new BackgroundSize(1200, 104, true, true, true, false));
         toolBar.setBackground(new Background(image));
 
 
@@ -99,6 +98,9 @@ public class DragAndDrop {
 
         bomb.setImage(ImageRefs.iconBomb);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfBombs(), bomb));
+
+        gas.setImage(ImageRefs.iconGas);
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfGas(), gas));
 
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
 
@@ -133,6 +135,9 @@ public class DragAndDrop {
         } else if (x < (firstSprite + (secondSprite * 6)) && x > (firstSprite + (secondSprite * 5))) {
             selectedItem = Item.itemType.Bomb;
             dragCode(bomb);
+        } else if (x < (firstSprite + (secondSprite * 7)) && x > (firstSprite + (secondSprite * 6))) {
+            selectedItem = Item.itemType.Gas;
+            dragCode(gas);
         }
     }
 
@@ -182,7 +187,7 @@ public class DragAndDrop {
     public void convertAndCreate(int x, int y) {
         switch (selectedItem) {
             case Bomb -> {
-                if(instance.getLevelInv().getNumberOfBombs() > 0) {
+                if (instance.getLevelInv().getNumberOfBombs() > 0) {
                     instance.getLevelInv().decreaseNumberOfBombs();
                     new BombItem(x, y);
                 } else {
@@ -190,7 +195,7 @@ public class DragAndDrop {
                 }
             }
             case Gas -> {
-                if(instance.getLevelInv().getNumberOfGas() > 0) {
+                if (instance.getLevelInv().getNumberOfGas() > 0) {
                     instance.getLevelInv().decreaseNumberOfGas();
                     new GasItem(x, y);
                 } else {
@@ -206,7 +211,7 @@ public class DragAndDrop {
                 }
             }
             case MSex -> {
-                if(instance.getLevelInv().getNumberOfMSexChange() > 0) {
+                if (instance.getLevelInv().getNumberOfMSexChange() > 0) {
                     instance.getLevelInv().decreaseNumberOfMSexChange();
                     new MFChange(x, y);
                 } else {
@@ -214,7 +219,7 @@ public class DragAndDrop {
                 }
             }
             case FSex -> {
-                if(instance.getLevelInv().getNumberOfFSexChange() > 0) {
+                if (instance.getLevelInv().getNumberOfFSexChange() > 0) {
                     instance.getLevelInv().decreaseNumberOfFSexChange();
                     new FMChange(x, y);
                 } else {
@@ -222,7 +227,7 @@ public class DragAndDrop {
                 }
             }
             case Poison -> {
-                if(instance.getLevelInv().getNumberOfPoison() > 0) {
+                if (instance.getLevelInv().getNumberOfPoison() > 0) {
                     instance.getLevelInv().decreaseNumberOfPoison();
                     new PoisonItem(x, y);
                 } else {
@@ -230,7 +235,7 @@ public class DragAndDrop {
                 }
             }
             case DeathRat -> {
-                if(instance.getLevelInv().getNumberOfDeathRat() > 0) {
+                if (instance.getLevelInv().getNumberOfDeathRat() > 0) {
                     instance.getLevelInv().decreaseNumberOfDeathRat();
                     new DeathRatItem(x, y);
                 } else {
@@ -238,16 +243,17 @@ public class DragAndDrop {
                 }
             }
             case NoEntry -> {
-                if(instance.getLevelInv().getNumberOfNoEntry() > 0) {
+                if (instance.getLevelInv().getNumberOfNoEntry() > 0) {
                     instance.getLevelInv().decreaseNumberOfNoEntry();
                     new NoEntryItem(x, y);
                 } else {
                     System.out.println("No No Entry SIgn signs left");
                 }
             }
+
         }
 
-        instance.getLevelBoard().redrawTile(x,y,true);
+        instance.getLevelBoard().redrawTile(x, y, true);
     }
 
     public void dragCode(ImageView item) {

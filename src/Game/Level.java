@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Game.Level class
+ *
  * @author Alex
  * @version 0.1
  */
@@ -26,19 +27,21 @@ public class Level {
     private Board levelBoard;
     private Inventory levelInv;
     private static Level instance;
-    private final int TICKRATE = 1000;
+    private final int TICKRATE = 250;
+    private int tickCount = 1; //used to keep ticks in line.
     private List<ITickHandler> listeners = new ArrayList<>();
     private ArrayList<ITickHandler> nullListeners = new ArrayList<>();
 
     /**
      * Level constructor for a new Level
-     * @param mapX Width of map
-     * @param mapY Height of map
-     * @param tiles 2D array of the tile map as strings
+     *
+     * @param mapX         Width of map
+     * @param mapY         Height of map
+     * @param tiles        2D array of the tile map as strings
      * @param primaryStage primary stage scene
      */
-    public Level (int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
-                  int allowedTime, int lossCondition, Stage primaryStage) {
+    public Level(int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
+                 int allowedTime, int lossCondition, Stage primaryStage) {
 
         this.ALLOWED_TIME = allowedTime;
         timeLeft = this.ALLOWED_TIME;
@@ -61,7 +64,7 @@ public class Level {
 
     }
 
-    public List<ITickHandler> getListeners(){
+    public List<ITickHandler> getListeners() {
         return listeners;
     }
 
@@ -73,19 +76,32 @@ public class Level {
      * ITickHandler method for the game runtime, updates board every second/tick
      */
     public void tick() { //TODO: figure out order through trial and error
-        for (ITickHandler t : nullListeners){
+        tickCount++;
+
+        for (ITickHandler t : nullListeners) {
             listeners.remove(t);
         }
         for (ITickHandler t : listeners) {
-            t.tickEvent();
+            t.tickEvent(tickCount);
         }
+
 
         levelBoard.drawRats();
         levelBoard.drawItems();
         levelBoard.drawTunnels();
 
-        checkLossCondition();
-        timeLeft = timeLeft - 1;
+
+
+        if(tickCount >= 4){
+
+
+
+            timeLeft = timeLeft - 1;
+            checkLossCondition();
+            tickCount = 1;
+        }
+
+
     }
 
     public void increaseScore(int pointsToAdd) {
@@ -95,6 +111,7 @@ public class Level {
 
     /**
      * Getter for the Board object
+     *
      * @return Board object
      */
     public Board getLevelBoard() {
@@ -107,9 +124,10 @@ public class Level {
 
     /**
      * Idk
+     *
      * @return Instance of this Level object
      */
-    public static Level getInstance(){
+    public static Level getInstance() {
         return instance;
     }
 
@@ -138,4 +156,6 @@ public class Level {
     public int getALLOWED_TIME() {
         return ALLOWED_TIME;
     }
+
+
 }

@@ -110,15 +110,19 @@ public class Rat implements ITickHandler {
      * Called every x seconds by the Level class
      */
     @Override
-    public void tickEvent() {
+    public void tickEvent(int count) {
 
-
-        instance.getLevelBoard().redrawTile(xPos, yPos, true);
-        move();
-        if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
-            instance.getLevelBoard().redrawTile(xPos, yPos, false);
+        if(count == 2){
+            instance.getLevelBoard().redrawTile(xPos, yPos, true);
+            move();
+            if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
+                instance.getLevelBoard().redrawTile(xPos, yPos, false);
+            }
+            checkRatCollision();
         }
-        checkRatCollision();
+
+
+
 
     }
 

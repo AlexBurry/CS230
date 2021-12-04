@@ -90,15 +90,19 @@ public class Inventory implements ITickHandler {
     }
 
     @Override
-    public void tickEvent() {
-        increaseNumberOfBombs();
-        increaseNumberOfMSexChange();
-        increaseNumberOfFSexChange();
-        increaseNumberOfGas();
-        increaseNumberOfSterilisation();
-        increaseNumberOfPoison();
-        increaseNumberOfNoEntry();
-        increaseNumberOfDeathRat();
+    public void tickEvent(int count) {
+
+        if(count >= 4){
+            increaseNumberOfBombs();
+            increaseNumberOfMSexChange();
+            increaseNumberOfFSexChange();
+            increaseNumberOfGas();
+            increaseNumberOfSterilisation();
+            increaseNumberOfPoison();
+            increaseNumberOfNoEntry();
+            increaseNumberOfDeathRat();
+        }
+
     }
 
     public void increaseNumberOfBombs() {

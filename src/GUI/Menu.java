@@ -105,6 +105,7 @@ public class Menu {
         GridPane gPane = new GridPane();
 
         Label userLbl = new Label("Enter Username!");
+        userLbl.setTextFill(Color.BLACK);
         TextField inputField = new TextField("");
         Button enterBtn = new Button("Enter");
 
@@ -124,6 +125,12 @@ public class Menu {
         System.out.println(loggedIn);
 
         Scene scene = new Scene(gPane, 1200, 884);
+
+        BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasic.png"),BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,
+                new BackgroundSize(1200,104,true,true,true,false));
+        gPane.setBackground(new Background(image));
+
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Login", scene);
 
         if (!loggedIn) {

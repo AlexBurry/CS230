@@ -97,6 +97,7 @@ public class Board extends Application implements ITickHandler {
 
         drawRats();
         drawItems();
+
     }
 
     public void drawTunnels(){
@@ -111,8 +112,27 @@ public class Board extends Application implements ITickHandler {
         }
     }
 
+    /**
+     * The same as DrawRats, but only draws them at a specified tile.
+     * @param x
+     * @param y
+     */
+    public void drawRats(int x, int y) {
+        for (Rat rt: rats) {
+            if(rt.getX() == x && rt.getY() == y){
+                gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
+            }
+
+        }
+    }
+
     public void drawItems() {
         for (Item it: items) {
+            if(it.getMyItemType() == Item.itemType.Gas){
+                redrawTile(it.getX(),it.getY(),false);
+                drawRats(it.getX(),it.getY());
+            }
+
             gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
         }
 
@@ -148,12 +168,15 @@ public class Board extends Application implements ITickHandler {
     }
 
     public void redrawTile(int x, int y, boolean redrawItems) {
-        Tile tile = tileMap[x][y];
-        tile.draw(canvas);
+        if(x >= 0 && y >= 0){ //ensures we never try to draw out of bounds.
+            Tile tile = tileMap[x][y];
+            tile.draw(canvas);
 
-        if(redrawItems){
-            drawItems();
+            if(redrawItems){
+                drawItems();
+            }
         }
+
 
     }
 
@@ -177,12 +200,28 @@ public class Board extends Application implements ITickHandler {
     }
 
     @Override
-    public void tickEvent() {
+    public void tickEvent(int count) {
         root.setTop(toolBar.makeToolBar());
     }
 
     public void drawRat(Rat rat) {
         redrawTile(rat.getX(),rat.getY(),false);
         gc.drawImage(rat.getSprite(),rat.getX(),rat.getY());
+    }
+
+    /**
+     * Check if an item exists at a given location already.
+     * @param x
+     * @param y
+     * @return true if an item exists, false otherwise.
+     */
+    public boolean existsItemAt(int x, int y) {
+        for(Item item: items){
+            if(item.getX() == x && item.getY() == y){
+                return true;
+            }
+
+        }
+        return false;
     }
 }

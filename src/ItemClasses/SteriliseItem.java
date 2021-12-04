@@ -29,9 +29,12 @@ public class SteriliseItem extends Item implements ITickHandler {
     }
 
     @Override
-    public void tickEvent() {
-        countdown();
-        System.out.println("timer test");
+    public void tickEvent(int count) {
+        if(count >= 4){
+            countdown();
+            System.out.println("timer test");
+        }
+
     }
 
     private void countdown() {
