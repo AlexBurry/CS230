@@ -31,6 +31,7 @@ public class Level {
     private int tickCount = 1; //used to keep ticks in line.
     private List<ITickHandler> listeners = new ArrayList<>();
     private ArrayList<ITickHandler> nullListeners = new ArrayList<>();
+    private ArrayList<Rat> ratsToAddAfterTick = new ArrayList<>();
 
     /**
      * Level constructor for a new Level
@@ -84,6 +85,11 @@ public class Level {
             t.tickEvent(tickCount);
         }
 
+        //add rats after, so we dont modify the collection.
+        for (Rat rt : ratsToAddAfterTick){
+            getLevelBoard().addRat(rt);
+        }
+        ratsToAddAfterTick.clear();
 
         levelBoard.drawRats();
         levelBoard.drawItems();
@@ -102,6 +108,11 @@ public class Level {
         }
 
 
+
+    }
+
+    public void addRatToQueue(Rat rat){
+        ratsToAddAfterTick.add(rat);
 
     }
 

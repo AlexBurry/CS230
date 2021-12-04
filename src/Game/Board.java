@@ -28,6 +28,7 @@ public class Board extends Application implements ITickHandler {
     private ArrayList<Tile> tunnelTiles = new ArrayList<>(); //used to make sure tunnels remain ontop
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
+
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
