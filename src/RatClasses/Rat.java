@@ -310,18 +310,15 @@ public class Rat implements ITickHandler {
                         }
                         case Gas -> System.out.println("Gas");
                         //case Sterilise -> System.out.println("Sterilise");
+
                         case MSex -> {
-
-                            initiateSexChange('m');
-                            itemsToDeleteOnCollision.add(it);
-
-                        }
+                            sex = 'm';
+                            itemsToDeleteOnCollision.add(it);}
                         case FSex -> {
-
-                            initiateSexChange('f');
+                            sex = 'f';
                             itemsToDeleteOnCollision.add(it);
-
                         }
+
                         case NoEntry -> {
                             currentDirection = switch (oldDirection) {
                                 case SOUTH -> Directions.NORTH;
@@ -432,6 +429,8 @@ public class Rat implements ITickHandler {
         isSterile = true;
     }
 
+    public boolean getIsSterile(){return isSterile;};
+
     public Directions getCurrentDirection() {
         return currentDirection;
     }
@@ -445,16 +444,12 @@ public class Rat implements ITickHandler {
         return "";
     }
 
+
+    /**
+     * @author Jack
+     * takes in a gender for rats to become, checks the rat isn't the same as the gender
+     */
     public void initiateSexChange(char gender) {
-        if (gender != sex) {
-            if (gender == 'm') {
-                sex = 'm';
-            } else {
-                sex = 'f';
-            }
+            sex = gender;
         }
-
-
-    }
-
 }
