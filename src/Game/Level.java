@@ -77,7 +77,7 @@ public class Level {
      * ITickHandler method for the game runtime, updates board every second/tick
      */
     public void tick() { //TODO: figure out order through trial and error
-
+        System.out.println(lossCondition);
         for (ITickHandler t : nullListeners) {
             listeners.remove(t);
         }
@@ -88,6 +88,7 @@ public class Level {
         //add rats after, so we dont modify the collection.
         for (Rat rt : ratsToAddAfterTick){
             getLevelBoard().addRat(rt);
+            listeners.add(rt);
         }
         ratsToAddAfterTick.clear();
 
@@ -95,7 +96,7 @@ public class Level {
         levelBoard.drawItems();
         levelBoard.drawTunnels();
 
-        System.out.println(tickCount);
+        //System.out.println(tickCount);
         tickCount++;
 
         if(tickCount > 4){

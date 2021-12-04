@@ -11,7 +11,7 @@ public class BabyRat extends Rat{
     public BabyRat(char sex,  int xPos, int yPos /*int speed, Boolean alive, Boolean isSterile,*/) {
         super(sex, xPos, yPos /*,speed, alive, isSterile*/);
         this.setImage(ImageRefs.babyRatUp);
-        Level.getInstance().getLevelBoard().addRat(this);
+        //Level.getInstance().getLevelBoard().addRat(this);
     }
 
 }

@@ -43,6 +43,7 @@ public class Rat implements ITickHandler {
     private int yPos;
 
     private ArrayList<Item> itemsToDeleteOnCollision = new ArrayList<>();
+    private ArrayList<Rat> babyRatsQueue = new ArrayList<>();
 
 
     public enum Directions {
@@ -66,7 +67,7 @@ public class Rat implements ITickHandler {
         isDeathRat = false;
         isSterile = false;
         instance = Level.getInstance();
-        instance.addListener(this);
+        //instance.addListener(this);
         isPregnant = false;
         changeSprite();
 
@@ -85,7 +86,7 @@ public class Rat implements ITickHandler {
         this.alive = alive;
         this.isSterile = isSterile;
         instance = Level.getInstance();
-        instance.addListener(this);
+        //instance.addListener(this);
         if (isDeathRat) {
             sprite = ImageRefs.deathRatUp;
         } else {
@@ -115,13 +116,15 @@ public class Rat implements ITickHandler {
             if(sex == 'f') {
                 isPregnant = false;
                 //System.out.println("no longer pregnant " + isPregnant);
-                giveBirth();
+
             }
         }
     }
 
     public void giveBirth(){
-
+        for(Rat br : babyRatsQueue){
+            instance.addRatToQueue(br);
+        }
     }
 
     /**
@@ -138,8 +141,9 @@ public class Rat implements ITickHandler {
                 instance.getLevelBoard().redrawTile(xPos, yPos, false);
             }
             counter();
-            checkRatCollision();
             giveBirth();
+            checkRatCollision();
+
         }
 
     }
@@ -354,6 +358,7 @@ public class Rat implements ITickHandler {
      */
     public void checkRatCollision() {
         ArrayList<Rat> existingRats = instance.getLevelBoard().getRats();
+
         for (Rat rt : existingRats) {
             if (rt != this) {
                 if (rt.getX() == xPos && rt.getY() == yPos) {
@@ -363,16 +368,14 @@ public class Rat implements ITickHandler {
                         isPregnant = true;
                         System.out.println("this rat is now pregnant = " + isPregnant);
                         char ratGender = new Random().nextBoolean() ? 'f' : 'm';
-                        //BabyRat babyRat = new BabyRat(ratGender, xPos, yPos);
-                        //instance.getLevelBoard().addRat(babyRat);
+                        BabyRat babyRat = new BabyRat(ratGender, xPos, yPos);
+                        babyRatsQueue.add(babyRat);
+                        System.out.println("added baby rat");
                     }
 
                 }
             }
         }
-    }
-
-    public void mate(Rat something) {
 
     }
 
