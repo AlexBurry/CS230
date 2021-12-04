@@ -329,8 +329,9 @@ public class Rat implements ITickHandler {
                         }
                         case MSex -> {
 
-                            initiateSexChange('m');
+                            sex = 'm';
                             itemsToDeleteOnCollision.add(it);
+                        }
                         case FSex -> {
                             sex = 'f';
                             itemsToDeleteOnCollision.add(it);
