@@ -7,6 +7,8 @@ import java.util.Random;
 
 public class BabyRat extends Rat{
 
+    private Level instance;
+
     public BabyRat(char sex,  int xPos, int yPos /*int speed, Boolean alive, Boolean isSterile,*/) {
         super(sex, xPos, yPos /*,speed, alive, isSterile*/);
         this.setImage(ImageRefs.babyRatUp);
@@ -23,4 +25,13 @@ public class BabyRat extends Rat{
         }
     }
 
+    public void turnAdult(){
+        deleteRat();
+    }
+
+    public void deleteRat() {
+        //instance.markListenerForRemoval(this);
+        instance.getLevelBoard().removeRat(this);
+        //instance.increaseScore(5);
+    }
 }

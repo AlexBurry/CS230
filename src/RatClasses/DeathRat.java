@@ -10,8 +10,8 @@ public class DeathRat extends Rat{
 
     private DeathRatItem item;
 
-    public DeathRat(char sex, boolean isDeath, boolean alive, boolean isSterile, int xPos, int yPos, int speed) {
-        super(sex, isDeath, alive, isSterile, xPos, yPos, speed, false);
+    public DeathRat(char sex, boolean isDeath, boolean alive, boolean isSterile, int xPos, int yPos) {
+        super(sex, isDeath, alive, isSterile, xPos, yPos,false);
         this.setImage(ImageRefs.deathRatUp);
         Level.getInstance().getLevelBoard().addRat(this);
     }

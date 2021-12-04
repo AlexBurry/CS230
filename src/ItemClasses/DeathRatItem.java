@@ -45,7 +45,6 @@ public class DeathRatItem extends Item {
     public void checkKillCount() {
         if (killCount >= 5) {
             deathRat.deleteRat();
-
             deleteItem();
         }
     }
@@ -74,7 +73,7 @@ public class DeathRatItem extends Item {
      * communicate.
      */
     private void spawnDeathRat() {
-        this.deathRat = new DeathRat('m', true, true, true, getX(), getY(), 3);
+        this.deathRat = new DeathRat('m', true, true, true, getX(), getY());
         this.deathRat.setItem(this); // give this class to the death rat, so it can reference it.
         this.setImage(ImageRefs.deathRatUp); //make it invisible.
     }

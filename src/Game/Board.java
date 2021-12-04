@@ -186,8 +186,6 @@ public class Board extends Application implements ITickHandler {
                 drawItems();
             }
         }
-
-
     }
 
     public void addRat(Rat rat) {
