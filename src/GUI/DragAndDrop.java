@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
  * and allows the player to drag and drop them onto the Board.
  *
  * @author Dominik
+ * @author Trafford
  * @version 1.0
  * @since 1.0
  */
@@ -48,10 +49,17 @@ public class DragAndDrop {
         this.tileMap = tileMap;
         selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
         instance = Level.getInstance();
-
-
     }
 
+    /**
+     * This method creates display for the number of available
+     * Items for each type of Item using a Label
+     * and the Item Image in a GridPane layout.
+     *
+     * @param numberOfItem number of available Items.
+     * @param item image of the Item.
+     * @return formatted GridPane with item image and number embedded.
+     */
     public GridPane makeItemWithCounter(int numberOfItem, ImageView item) {
         Label lbl = new Label(String.valueOf(numberOfItem));
         lbl.setFont(new Font("Comic Sans", 16));
@@ -66,11 +74,15 @@ public class DragAndDrop {
         return noEntryPane;
     }
 
-    // Not scaled to all items yet.
+    /**
+     * This method creates a HBox, formats it
+     * adds images and a 'onMouseDragged' event.
+     *
+     * @return formatted HBox.
+     */
     public HBox makeToolBar() {
         HBox toolBar = new HBox();
         toolBar.setPadding(new Insets(10, 10, 10, 10));
-        //toolBar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         BackgroundImage image = new BackgroundImage(new Image("Sprites/HBoxFill.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(1200, 104, true, true, true, false));
@@ -107,10 +119,17 @@ public class DragAndDrop {
         return toolBar;
     }
 
+    /**
+     * This method is called when the player drags something
+     * on the "toolBar" HBox. It splits up the HBox into squares
+     * for each item which helps decide which item was used.
+     *
+     * @param mouseEvent object used to get the mouse's coordinates.
+     */
     public void itemMover(MouseEvent mouseEvent) {
-        double x = 0;
         int firstSprite = 70;
         int secondSprite = 60;
+        double x = 0;
 
         x = mouseEvent.getX();
 
@@ -141,7 +160,13 @@ public class DragAndDrop {
         }
     }
 
-    public void canvasDragDroppedOccurred(DragEvent event, ImageView item) {
+    /**
+     * This method places the item dragged by the player onto the Grid
+     * and snaps it to the center of the closest Tile.
+     *
+     * @param event DragEvent object used to get mouse coordinates.
+     */
+    public void canvasDragDroppedOccurred(DragEvent event) {
         int tileSize = 60;
 
         double x = event.getX();
@@ -149,10 +174,6 @@ public class DragAndDrop {
 
         int tileMapX = (int) (x / tileSize);
         int tileMapY = (int) (y / tileSize);
-
-        //String s = String.format("You dropped at (%f, %f) relative to the canvas.", x, y);
-        //System.out.println(s);
-        //System.out.println(tileMapX + ", " + tileMapY);
 
         if (tileMap[tileMapX][tileMapY].getTileType().equalsIgnoreCase("P")) {
             if (!noItemPresent(tileMapX, tileMapY)) {
@@ -247,15 +268,20 @@ public class DragAndDrop {
                     instance.getLevelInv().decreaseNumberOfNoEntry();
                     new NoEntryItem(x, y);
                 } else {
-                    System.out.println("No No Entry SIgn signs left");
+                    System.out.println("No No Entry Sign signs left");
                 }
             }
-
         }
 
         instance.getLevelBoard().redrawTile(x, y, true);
     }
 
+    /**
+     * Handles the drag event and calls canvasDragDroppedOccurred
+     * when the user releases the item.
+     *
+     * @param item the selected item to be drag and dropped.
+     */
     public void dragCode(ImageView item) {
         item.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -274,7 +300,7 @@ public class DragAndDrop {
         });
         canvas.setOnDragDropped(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                canvasDragDroppedOccurred(event, item);
+                canvasDragDroppedOccurred(event);
                 event.consume();
             }
         });

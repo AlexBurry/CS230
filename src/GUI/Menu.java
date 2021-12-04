@@ -19,6 +19,20 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 
+/**
+ * This class is responsible for creating the GUI
+ * for Menu, Login and Level. It also handles the
+ * login process and Menu options.
+ *
+ * ----------------------------------------------
+ * ############ Art Made By Trafford ############
+ * ----------------------------------------------
+ *
+ * @author Dominik
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class Menu {
 
     private Stage primaryStage;
@@ -31,12 +45,28 @@ public class Menu {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Creates a label and formats it based on user input.
+     *
+     * @param labelName the variable the label is initialized to.
+     * @param font the font of the text within the label.
+     * @param size the size of the text within the label.
+     * @return a formatted Label.
+     */
     public Label presetLabel(String labelName, String font, int size) {
         Label lbl = new Label(labelName);
         lbl.setFont(new Font(font, size));
         return lbl;
     }
 
+    /**
+     * Creates a stage and formats it based on user input.
+     *
+     * @param primaryStage the Main Stage that is shown.
+     * @param iconPath the location of the Icon image.
+     * @param title the title of the Scene.
+     * @param scene the Scene object that is formatted and set on the Stage.
+     */
     public void presetStage(Stage primaryStage, String iconPath, String title, Scene scene) {
         primaryStage.getIcons().add(new Image(iconPath));
         primaryStage.setTitle(title);
@@ -46,6 +76,10 @@ public class Menu {
         primaryStage.show();
     }
 
+    /**
+     * Creates a Menu with 'clickable' Labels to navigate
+     * and displays it on the primaryStage on start-up.
+     */
     public void buildMenu() {
         BorderPane menuPane = new BorderPane();
 
@@ -96,10 +130,11 @@ public class Menu {
     }
 
     /**
-     * This method creates a login "form" using a GridPane Layout
-     * and allows the player to access the GUI.Menu through it.
+     * This method creates a login "form" using a GridPane Layout.
+     * It is displayed when the user select Profile or Play from the Menu.
+     * If the user has logged in already, they are not asked to log in again.
      *
-     * @returns Formatted GridPane.
+     * @return Formatted GridPane.
      */
     public void buildLoginUI(Stage primaryStage, String name) throws FileNotFoundException {
         GridPane gPane = new GridPane();
@@ -150,6 +185,16 @@ public class Menu {
         }
     }
 
+    /**
+     * This method handles the Login Process.
+     * Decides which option was selected and checks
+     * if the player has already logged in before.
+     *
+     * @param inputField the field containing the user's input.
+     * @param primaryStage the Stage that is displayed for the user.
+     * @param name a variable used to determine which option was selected.
+     * @throws FileNotFoundException
+     */
     public void loginProcess(TextField inputField, Stage primaryStage, String name) throws FileNotFoundException {
         if (!inputField.getText().isEmpty() && !inputField.getText().contains(",") || skip) {
             System.out.println(inputField.getText());
@@ -173,7 +218,7 @@ public class Menu {
      * This method creates the Level if the user
      * entered an acceptable username.
      *
-     * @param primaryStage
+     * @param primaryStage the Stage that is displayed for the user.
      * @throws FileNotFoundException
      */
     public void buildLevel(Stage primaryStage) throws FileNotFoundException {
@@ -184,6 +229,12 @@ public class Menu {
         newLevel.save(); //testing - to be removed
     }
 
+    /**
+     * Creates a Window containing the logged-in user's information
+     * such as player name, current level, the highest level beaten...
+     *
+     * @param primaryStage the Stage that is displayed for the user.
+     */
     public void buildProfile(Stage primaryStage) {
         GridPane gPane = new GridPane();
 
@@ -192,6 +243,10 @@ public class Menu {
         Label highestLevel = presetLabel("Highest Level Cleared:" + p.getHighestLevelUnlocked(), font, 24);
         Label score = presetLabel("Score: " + p.getScore(), font, 24);
         Button backBtn = new Button("Back");
+        username.setTextFill(Color.BLACK);
+        currentLevel.setTextFill(Color.BLACK);
+        highestLevel.setTextFill(Color.BLACK);
+        score.setTextFill(Color.BLACK);
 
         GridPane.setHalignment(username, HPos.CENTER);
         GridPane.setHalignment(currentLevel, HPos.CENTER);
@@ -207,12 +262,20 @@ public class Menu {
         gPane.setVgap(5);
         gPane.setAlignment(Pos.CENTER);
 
+        BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasic.png"),BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,
+                new BackgroundSize(1200,104,true,true,true,false));
+        gPane.setBackground(new Background(image));
+
         backBtn.setOnAction(mouseEvent -> buildMenu());
 
         Scene scene = new Scene(gPane, 1200, 884);
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Menu", scene);
     }
 
+    /**
+     * Work in Progress...
+     */
     public void buildHighScore() {
         System.out.println("Work in Progress...");
     }

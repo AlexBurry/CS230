@@ -18,7 +18,7 @@ public class MFChange extends Item {
         this.setX(x);
         this.setY(y);
         this.setImage(ImageRefs.maleToFemaleSC);
-        this.setMyItemType(itemType.MSex);
+        this.setMyItemType(itemType.FSex);
     }
 
 

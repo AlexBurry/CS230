@@ -1,12 +1,14 @@
 package Game;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * This class' purpose is to keep details about the Player.
  * It also serves to create files to store the high scores per level
  * and update those files based on the Player's achievements.
+ *
  * @author Dominik
  * @version 1.0
  * @since 1.0
@@ -32,8 +34,9 @@ public class Profile {
 
     /**
      * Searches the playerDatabase for the value stored in name.
-     * @param name
-     * @returns true if the profile exists, false otherwise.
+     *
+     * @param name the variable that stores the player's name.
+     * @return true if the profile exists, false otherwise.
      */
     public boolean profileExists(String name) {
         boolean exists = false;
@@ -42,10 +45,10 @@ public class Profile {
         try {
             FileReader reader = new FileReader(playerDatabase);
             BufferedReader buffReader = new BufferedReader(reader);
-            while((lineRead = buffReader.readLine()) != null) {
+            while ((lineRead = buffReader.readLine()) != null) {
                 tempArray = lineRead.split(",");
                 if ((tempArray[0]).equalsIgnoreCase(name)) {
-                     exists = true;
+                    exists = true;
                 }
             }
             buffReader.close();
@@ -56,8 +59,9 @@ public class Profile {
     }
 
     /**
-     * Finds the Game.Profile using the name as their unique identifier
+     * Finds the Profile using the name as their unique identifier
      * and loads in all the information the player has.
+     *
      * @param name used as primary key.
      */
     public void getProfile(String name) {
@@ -66,7 +70,7 @@ public class Profile {
         try {
             FileReader reader = new FileReader(playerDatabase);
             BufferedReader buffReader = new BufferedReader(reader);
-            while((lineRead = buffReader.readLine()) != null) {
+            while ((lineRead = buffReader.readLine()) != null) {
                 tempArray = lineRead.split(",");
                 if (tempArray[0].equalsIgnoreCase(name)) {
                     currentLevel = Integer.parseInt(tempArray[1]);
@@ -81,9 +85,9 @@ public class Profile {
     }
 
     /**
-     * This method creates a brand new Game.Profile.
+     * This method creates a brand-new Profile.
      * currentLevel and highestLevelUnlocked is
-     * set to 1 and score is set to 0.
+     * set to 1 and score is set to 0 by default.
      */
     public void createProfile() {
         try {
@@ -137,7 +141,7 @@ public class Profile {
     /**
      * This method removes the score if the player has achieved a higher score.
      *
-     * @param name that is being removed.
+     * @param name contains the name that is being removed.
      */
     public void deleteFromHighscore(String name) {
         ArrayList<String> tempList = new ArrayList<>();
@@ -170,7 +174,7 @@ public class Profile {
     }
 
     /**
-     * Adds a new high score into the tables
+     * Adds a new high score into the table
      * and rearranges the existing ones.
      */
     public void addHighscore() {
@@ -215,7 +219,7 @@ public class Profile {
     /**
      * Creates a file for the level.
      *
-     * @returns the created file.
+     * @return the created File object.
      */
     public File makeFile() {
         return new File("Lvl".concat(String.valueOf(currentLevel).concat(".txt")));
@@ -224,7 +228,7 @@ public class Profile {
     /**
      * Initialises the file so the leaderboard is not empty.
      *
-     * @param file
+     * @param file contains the File object that is initialised.
      */
     public void intializeFile(File file) {
         int leaderBoardRank = 1;
@@ -250,26 +254,37 @@ public class Profile {
     */
 
     /**
-     * @returns player's name.
+     * This method returns the player's name.
+     *
+     * @return player name.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @returns player's score.
+     * This method returns the player's score
+     *
+     * @returns player score.
      */
     public int getScore() {
         return score;
     }
 
     /**
-     * @returns player's current level.
+     * This method returns the level the player is currently on.
+     *
+     * @returns player current level.
      */
     public int getCurrentLevel() {
         return currentLevel;
     }
 
+    /**
+     * This method returns the highest level the player has unlocked.
+     *
+     * @return player the highest level unlocked.
+     */
     public int getHighestLevelUnlocked() {
         return highestLevelUnlocked;
     }

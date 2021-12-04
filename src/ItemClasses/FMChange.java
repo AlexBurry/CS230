@@ -18,7 +18,7 @@ public class FMChange extends Item {
         this.setX(x);
         this.setY(y);
         this.setImage(ImageRefs.femaleToMaleSC);
-        this.setMyItemType(itemType.FSex);
+        this.setMyItemType(itemType.MSex);
     }
 
 
