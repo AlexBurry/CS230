@@ -4,6 +4,7 @@ import GUI.DragAndDrop;
 import ItemClasses.BombItem;
 import ItemClasses.Item;
 import ItemClasses.SteriliseItem;
+import RatClasses.BabyRat;
 import RatClasses.Rat;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -28,10 +29,13 @@ public class Board extends Application implements ITickHandler {
     private ArrayList<Tile> tunnelTiles = new ArrayList<>(); //used to make sure tunnels remain ontop
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
+
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
     private final int GAME_HEIGHT = 884;
+    private int gameWidthInTiles;
+    private int gameHeightInTiles;
     private Level instance;
     private final Canvas canvas= new Canvas(GAME_WIDTH, GAME_HEIGHT);
     private final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -48,12 +52,18 @@ public class Board extends Application implements ITickHandler {
         this.mapY = mapY;
         tileMap = new Tile[this.mapX][this.mapY];
         tempTileMap = tiles;
-        for (String rt : rats) {
-            this.rats.add(new Rat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
-                    Character.getNumericValue(rt.charAt(4))));
-        }
         instance = Level.getInstance();
+        for (String rt : rats) {
+            Rat newRat = new BabyRat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
+                    Character.getNumericValue(rt.charAt(4)));
+            this.rats.add(newRat);
+            instance.addListener(newRat);
+        }
+
         instance.addListener(this);
+
+        gameWidthInTiles = GAME_WIDTH / 60;
+        gameWidthInTiles = (GAME_HEIGHT - 104) / 60;
     }
 
     public void start(Stage primaryStage) {
@@ -223,5 +233,19 @@ public class Board extends Application implements ITickHandler {
 
         }
         return false;
+    }
+
+    /**
+     * @return int gameWidthInTiles, the width in terms of tiles.
+     */
+    public int getGameWidthInTiles(){
+        return gameWidthInTiles;
+    }
+
+    /**
+     * @return int gameHeightInTiles, the height in terms of tiles, accounting for the inventory box.
+     */
+    public int getGameHeightInTiles() {
+        return gameHeightInTiles;
     }
 }

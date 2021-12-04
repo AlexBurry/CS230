@@ -77,8 +77,6 @@ public class DeathRatItem extends Item {
         this.deathRat = new DeathRat('m', true, true, true, getX(), getY(), 3);
         this.deathRat.setItem(this); // give this class to the death rat, so it can reference it.
         this.setImage(ImageRefs.deathRatUp); //make it invisible.
-
-
     }
 
     /**
