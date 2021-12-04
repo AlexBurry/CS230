@@ -46,7 +46,7 @@ public class BombItem extends Item implements ITickHandler {
      */
     @Override
     public void tickEvent(int count) {
-        System.out.println(count);
+
         if(count >= 4){
             countdown();
             if (timer == 3) {

@@ -195,6 +195,9 @@ public class Board extends Application implements ITickHandler {
     }
 
     public void removeRat(Rat rat) {
+        //remove the listener. All rats are listeners.
+        instance.markListenerForRemoval(rat);
+
         if(rats.contains(rat)){
             rats.remove(rat);
             drawBoard();

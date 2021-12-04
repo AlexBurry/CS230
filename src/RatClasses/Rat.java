@@ -29,10 +29,12 @@ public class Rat implements ITickHandler {
     private boolean isSterile;
     private int speed;
     private boolean isPregnant;
+    private boolean inGas;
+    private int secondsInGas;
     private int tickTimer;
-    private int internalTickCount;
     private boolean isBaby;
     private Image sprite;
+
 
     private double imgWidth;
     private double imgHeight;
@@ -111,13 +113,13 @@ public class Rat implements ITickHandler {
         }
     }
 
-    public void counter(){
+    public void counter() {
         tickTimer += 1;
         //resets the counter
-        if (tickTimer == 4){
+        if (tickTimer == 4) {
             tickTimer = 0;
             //if the female rat is pregnant it will no longer be.
-            if(sex == 'f') {
+            if (sex == 'f') {
                 isPregnant = false;
                 //System.out.println("no longer pregnant " + isPregnant);
 
@@ -125,8 +127,8 @@ public class Rat implements ITickHandler {
         }
     }
 
-    public void giveBirth(){
-        for(Rat br : babyRatsQueue){
+    public void giveBirth() {
+        for (Rat br : babyRatsQueue) {
             instance.addRatToQueue(br);
         }
         babyRatsQueue.clear();
@@ -139,17 +141,26 @@ public class Rat implements ITickHandler {
     @Override
     public void tickEvent(int count) {
 
-        if (count == 2 || count == 4) {
+        if (count == 2 || count == 4) { //If 500ms have passed (2/4 values is 500(ms) / 1000(1s))
             instance.getLevelBoard().redrawTile(xPos, yPos, true);
             move();
             if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
                 instance.getLevelBoard().redrawTile(xPos, yPos, false);
             }
-            if(count == 4) {
-                counter();
-            }
+
+
             giveBirth();
-            checkRatCollision();
+            checkRatCollision(); //do this before to make sure we are still in gas.
+
+            if (count == 4) { //If one second has passed.
+                counter();
+                if (inGas) {
+                    secondsInGas++;
+                } else {
+                    secondsInGas = 0; //if we are not in gas, we are safe.
+                }
+            }
+
 
         }
 
@@ -299,6 +310,7 @@ public class Rat implements ITickHandler {
      */
     public void checkCollision() {
         ArrayList<Item> existingItems = instance.getLevelBoard().getItems();
+        inGas = false; //always start off as false
         for (Item it : existingItems) {
             if (it != null) {
                 if (it.getX() == xPos && it.getY() == yPos) {
@@ -308,8 +320,14 @@ public class Rat implements ITickHandler {
                             itemsToDeleteOnCollision.add(it); //adds it to the array to be deleted after we have iterated
                             deleteRat();
                         }
-                        case Gas -> System.out.println("Gas");
-                        //case Sterilise -> System.out.println("Sterilise");
+                        case Gas -> {
+                            inGas = true; //change back to true before the method finishes.
+                            System.out.println(secondsInGas);
+                            if(secondsInGas >= 2){
+                                instance.getLevelBoard().removeRat(this);
+                            }
+                        }
+
                         case MSex -> {
 
                             initiateSexChange('m');
@@ -353,6 +371,10 @@ public class Rat implements ITickHandler {
         for (Item it : itemsToDeleteOnCollision) {
             it.deleteItem();
         }
+
+        if(!inGas){
+            secondsInGas = 0;
+        }
     }
 
     public char getSex() {
@@ -360,7 +382,6 @@ public class Rat implements ITickHandler {
     }
 
     /**
-     *
      * checks if rats collide into each other
      */
     public void checkRatCollision() {
@@ -422,7 +443,7 @@ public class Rat implements ITickHandler {
 
     // kill rat method
     public void deleteRat() {
-        instance.markListenerForRemoval(this);
+        //instance.markListenerForRemoval(this);
         instance.getLevelBoard().removeRat(this);
         instance.increaseScore(5);
     }

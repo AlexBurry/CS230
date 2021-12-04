@@ -180,7 +180,7 @@ public class Menu {
         primaryStage.setTitle("Rats: Steampunk Edition");
         primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
-        Level newLevel = new ReadFile("test_level.txt", primaryStage).newLevel();
+        Level newLevel = new ReadFile("level_0.txt", primaryStage).newLevel();
     }
 
     public void buildProfile(Stage primaryStage) {
