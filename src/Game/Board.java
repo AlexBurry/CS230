@@ -224,4 +224,16 @@ public class Board extends Application implements ITickHandler {
         }
         return false;
     }
+
+    public String[][] getTempTileMap() {
+        return tempTileMap;
+    }
+
+    public int getMapX() {
+        return mapX;
+    }
+
+    public int getMapY() {
+        return mapY;
+    }
 }

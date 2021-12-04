@@ -150,6 +150,10 @@ public class Level {
         }
     }
 
+    public void save() {
+        new Save(levelBoard.getMapX(), levelBoard.getMapY(), levelBoard.getTempTileMap());
+    }
+
     public int getTimeLeft() {
         return timeLeft;
     }

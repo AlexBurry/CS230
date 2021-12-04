@@ -181,6 +181,7 @@ public class Menu {
         primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
         Level newLevel = new ReadFile("level_1.txt", primaryStage).newLevel();
+        newLevel.save(); //testing - to be removed
     }
 
     public void buildProfile(Stage primaryStage) {
