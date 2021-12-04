@@ -28,10 +28,10 @@ public class Rat implements ITickHandler {
     private boolean alive;
     private boolean isSterile;
     private int speed;
-    private Boolean isPregnant;
+    private boolean isPregnant;
     private int tickTimer;
     private int internalTickCount;
-
+    private boolean isBaby;
     private Image sprite;
 
     private double imgWidth;
@@ -74,9 +74,9 @@ public class Rat implements ITickHandler {
     }
 
     //To be checked -> constructor below not actually being used for male and female rat? only death rat????
-    public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, int speed) {
+    public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, int speed, boolean isBaby) {
         currentDirection = Directions.NORTH;
-
+        this.isBaby = isBaby;
         if (sex == 'f' || sex == 'm') {
             this.sex = sex;
         }
@@ -94,6 +94,10 @@ public class Rat implements ITickHandler {
         }
         //pregnantDuration();
 
+    }
+
+    public void setBaby(boolean baby) {
+        isBaby = baby;
     }
 
     public void pregnantDuration() {
@@ -125,6 +129,7 @@ public class Rat implements ITickHandler {
         for(Rat br : babyRatsQueue){
             instance.addRatToQueue(br);
         }
+        babyRatsQueue.clear();
     }
 
     /**
@@ -140,7 +145,9 @@ public class Rat implements ITickHandler {
             if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
                 instance.getLevelBoard().redrawTile(xPos, yPos, false);
             }
-            counter();
+            if(count == 4) {
+                counter();
+            }
             giveBirth();
             checkRatCollision();
 
@@ -193,7 +200,7 @@ public class Rat implements ITickHandler {
      * @author Trafford
      * changes the direction the rat is facing depending on the direction it is going.
      */
-    private void changeSprite() {
+    public void changeSprite() {
         if (sex == 'm') {
             switch (currentDirection) {
                 case EAST -> sprite = ImageRefs.maleRatRight;
@@ -364,7 +371,7 @@ public class Rat implements ITickHandler {
                 if (rt.getX() == xPos && rt.getY() == yPos) {
 
                     //check if male and female rat in same tile then sexy time
-                    if (sex == 'f' && rt.getSex() == 'm' && !isPregnant) {
+                    if (sex == 'f' && rt.getSex() == 'm' && !isPregnant && !isBaby) {
                         isPregnant = true;
                         System.out.println("this rat is now pregnant = " + isPregnant);
                         char ratGender = new Random().nextBoolean() ? 'f' : 'm';

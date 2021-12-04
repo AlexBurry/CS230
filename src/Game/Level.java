@@ -77,7 +77,7 @@ public class Level {
      * ITickHandler method for the game runtime, updates board every second/tick
      */
     public void tick() { //TODO: figure out order through trial and error
-        System.out.println(lossCondition);
+        //System.out.println(lossCondition);
         for (ITickHandler t : nullListeners) {
             listeners.remove(t);
         }
