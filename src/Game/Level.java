@@ -76,7 +76,6 @@ public class Level {
      * ITickHandler method for the game runtime, updates board every second/tick
      */
     public void tick() { //TODO: figure out order through trial and error
-        tickCount++;
 
         for (ITickHandler t : nullListeners) {
             listeners.remove(t);
@@ -90,9 +89,10 @@ public class Level {
         levelBoard.drawItems();
         levelBoard.drawTunnels();
 
+        System.out.println(tickCount);
+        tickCount++;
 
-
-        if(tickCount >= 4){
+        if(tickCount > 4){
 
 
 
@@ -100,6 +100,7 @@ public class Level {
             checkLossCondition();
             tickCount = 1;
         }
+
 
 
     }

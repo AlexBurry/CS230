@@ -30,6 +30,7 @@ public class Rat implements ITickHandler {
     private int speed;
     private Boolean isPregnant;
     private int tickTimer;
+    private int internalTickCount;
 
     private Image sprite;
 
@@ -112,7 +113,7 @@ public class Rat implements ITickHandler {
     @Override
     public void tickEvent(int count) {
 
-        if(count == 2){
+        if(count == 2 || count == 4){
             instance.getLevelBoard().redrawTile(xPos, yPos, true);
             move();
             if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
