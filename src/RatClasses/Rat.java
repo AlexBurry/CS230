@@ -128,6 +128,9 @@ public class Rat implements ITickHandler {
     @Override
     public void tickEvent(int count) {
 
+        //250ms 1/4 1s
+        //1...2...3....4 > 1
+        //2 and 4 turns up half the time 2/4
         if (count == 2 || count == 4) { //If 500ms have passed (2/4 values is 500(ms) / 1000(1s))
             instance.getLevelBoard().redrawTile(xPos, yPos, true);
             move();
@@ -315,7 +318,6 @@ public class Rat implements ITickHandler {
                             }
                         }
                         case MSex -> {
-
                             sex = 'm';
                             itemsToDeleteOnCollision.add(it);
                         }
@@ -323,7 +325,6 @@ public class Rat implements ITickHandler {
                             sex = 'f';
                             itemsToDeleteOnCollision.add(it);
                         }
-
                         case NoEntry -> {
                             currentDirection = switch (oldDirection) {
                                 case SOUTH -> Directions.NORTH;
@@ -444,6 +445,22 @@ public class Rat implements ITickHandler {
 
     public void setCurrentDirection(Directions currentDirection) {
         this.currentDirection = currentDirection;
+    }
+
+    public boolean isInGas() {
+        return inGas;
+    }
+
+    public Level getInstance() {
+        return instance;
+    }
+
+    public int getSecondsInGas() {
+        return secondsInGas;
+    }
+
+    public void setSecondsInGas(int secondsInGas) {
+        this.secondsInGas = secondsInGas;
     }
 
     @Override
