@@ -118,7 +118,7 @@ public class Rat implements ITickHandler {
             tickTimer = 0;
             //if the female rat is pregnant it will no longer be.
             if (sex == 'f' ) {
-                System.out.println(gestatingChildren.size());
+    
                 babyRatsToQueue();
             }
         } else if (tickTimer == 9 && isBaby) {
