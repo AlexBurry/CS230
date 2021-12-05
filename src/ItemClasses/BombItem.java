@@ -142,7 +142,9 @@ public class BombItem extends Item implements ITickHandler {
      */
     private void detonate() {
         ArrayList<Rat> rats = getLocalInstance().getLevelBoard().getRats();
+        ArrayList<Item> items = getLocalInstance().getLevelBoard().getItems();
         ArrayList<Rat> toKill = new ArrayList<>();
+        ArrayList<Item> toRemove = new ArrayList<>();
 
         for (Tile tile : bombZone) {
             //TODO: Optimise and add VFX
@@ -152,6 +154,12 @@ public class BombItem extends Item implements ITickHandler {
                     toKill.add(rat); //mark it to be killed. Cannot do this INSIDE this for loop, or it will break.
                 }
             }
+
+            for(Item it : items) {
+                if(it.getX() == tile.getLocation()[0] && it.getY() == tile.getLocation()[1]){
+                    toRemove.add(it);
+                }
+            }
         }
 
         //Without this, we are changing the collection as we iterate on it, causing an exception.
@@ -159,8 +167,16 @@ public class BombItem extends Item implements ITickHandler {
             killRat.deleteRat();
         }
 
+        //Without this, we are changing the collection as we iterate on it, causing an exception.
+        for (Item it : toRemove) {
+            it.deleteItem();
+        }
+
+
+
         getLocalInstance().markListenerForRemoval(this); //Stop listening so that we dont call Tick on a dead object
         deleteItem();
+
 
     }
 
