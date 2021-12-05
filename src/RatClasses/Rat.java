@@ -16,11 +16,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import java.sql.Struct;
-import java.util.ArrayList;
-import java.util.Random;
-
-
 /**
  * The main rat class. Covers all basic features of Rats.
  *
@@ -242,12 +237,12 @@ public class Rat implements ITickHandler {
     }
 
     /**
-     * @author Marcus and Trafford
+     * changes the direction and position of the rat
      */
     public void move() {
         int newxPos = xPos;
         int newyPos = yPos;
-
+        //remembers the old direction of the rat
         oldDirection = currentDirection;
 
         detectOptions();
@@ -261,6 +256,7 @@ public class Rat implements ITickHandler {
         } else {
             newyPos += 1;
         }
+        //checks if the new coordinates is traversable
         if (isTraversable(newxPos, newyPos)) {
 
             xPos = newxPos;
@@ -303,8 +299,7 @@ public class Rat implements ITickHandler {
     /**
      * @author Trafford and Marcus
      * checks for all available options for the rat to go,
-     * and with those available options, it randomly chooses
-     * a path to take.
+     * and with those available options, it randomly chooses a path to take.
      */
     public void detectOptions() {
         boolean north;
@@ -358,7 +353,8 @@ public class Rat implements ITickHandler {
         } else if (east) {
             options.add(Directions.EAST);
         }
-
+        //if there is more than 1 option to go, then it removes the option to go back
+        //then randomly chooses a direction to take.
         if (options.size() > 1) {
             options.remove(relativeBack);
 
@@ -369,6 +365,7 @@ public class Rat implements ITickHandler {
         } else if (options.size() == 1) {
             currentDirection = options.get(0);
         }
+        //death rats
         if (!isDeathRat) {
             checkItemCollision();
         }
@@ -450,7 +447,10 @@ public class Rat implements ITickHandler {
     }
 
     /**
-     * checks if rats collide into each other
+     * checks if rats collide into each other, and
+     * if two male and female rats collide they stay in the same tile and have sex.
+     * The female rat becomes pregnant, and adds baby rats
+     * into gestating children to prepare to give birth.
      */
     public void checkRatCollision() {
         ArrayList<Rat> existingRats = instance.getLevelBoard().getRats();
@@ -484,36 +484,49 @@ public class Rat implements ITickHandler {
         }
     }
 
+    /**
+     * sets if rat can move.
+     */
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
     }
 
-    public void listOfItems() {
-        System.out.println(instance.getLevelBoard().getItems());
-    }
-
+    /**
+     * checks if the tile is traversable.
+     * It is traversable if it is a path, or a sewer tile.
+     */
     public boolean isTraversable(int x, int y) {
         return instance.getLevelBoard().getTileMap()[x][y].getTraversable();
     }
 
-    /*
-    sets and gets the width and height of the image.
-    currently imgWidth and imgHeight has no use.
+    /**
+     * sets the image of the sprite.
      */
     public void setImage(Image newImage) {
         sprite = newImage;
     }
 
+    /**
+     * gets the sprite.
+     * @return type image
+     */
     public Image getSprite() {
         return sprite;
     }
 
+    /**
+     * sets the position.
+     * @param x horizontal axis
+     * @param y vertical axis
+     */
     public void setPosition(int x, int y) {
         xPos = x;
         yPos = y;
     }
 
-    // kill rat method
+    /**
+     * deletes rat from level, and increases the score every time a rat is removed.
+     */
     public void deleteRat() {
         //instance.markListenerForRemoval(this);
         instance.getLevelBoard().removeRat(this);
@@ -531,50 +544,70 @@ public class Rat implements ITickHandler {
         isSterile = true;
     }
 
-
+    /**
+     * gets if the rat is sterile.
+     */
     public boolean getIsSterile() {
         return isSterile;
     }
 
+    /**
+     * gets current direction
+     */
     public Directions getCurrentDirection() {
         return currentDirection;
     }
 
-    public void setCurrentDirection(Directions currentDirection) {
-        this.currentDirection = currentDirection;
-    }
-
+    /**
+     * checks if it's in gas
+     */
     public boolean isInGas() {
         return inGas;
     }
 
+    /**
+     * gets the instance of the level
+     */
     public Level getInstance() {
         return instance;
     }
 
+    /**
+     * gets the seconds in gas
+     */
     public int getSecondsInGas() {
         return secondsInGas;
     }
 
+    /**
+     * sets the seconds in gas
+     */
     public void setSecondsInGas(int secondsInGas) {
         this.secondsInGas = secondsInGas;
     }
 
+    /**
+     * gets the value of isBaby
+     * @return boolean
+     */
     public boolean getIsBaby() {
         return isBaby;
     }
 
+    /**
+     * gets x position
+     * @return int
+     */
     public int getxPos() {
         return xPos;
     }
 
+    /**
+     * gets y position
+     * @return int
+     */
     public int getyPos() {
         return yPos;
     }
 
-
-    @Override
-    public String toString() {
-        return "";
-    }
 }
