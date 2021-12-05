@@ -93,12 +93,14 @@ public class Rat implements ITickHandler {
         this.isDeathRat = isDeathRat;
         this.isSterile = isSterile;
         instance = Level.getInstance();
-        //instance.addListener(this);
-        if (isDeathRat) {
-            sprite = ImageRefs.deathRatUp;
-        } else {
-            changeSprite();
+
+        if(isDeathRat){
+            instance.getLevelBoard().addRat(this);
+            instance.addListener(this);
         }
+
+
+        changeSprite();
         //pregnantDuration();
 
     }
@@ -231,10 +233,11 @@ public class Rat implements ITickHandler {
 
             xPos = newxPos;
             yPos = newyPos;
+            changeSprite();
             if (isDeathRat) {
                 ((DeathRat) this).getItem().updatePos();
             }
-            changeSprite();
+
 
         }
 
@@ -245,6 +248,8 @@ public class Rat implements ITickHandler {
      * changes the direction the rat is facing depending on the direction it is going.
      */
     public void changeSprite() {
+
+
         if (sex == 'm') {
             switch (currentDirection) {
                 case EAST -> sprite = ImageRefs.maleRatRight;
@@ -260,6 +265,8 @@ public class Rat implements ITickHandler {
                 case SOUTH -> sprite = ImageRefs.femaleRatDown;
             }
         }
+
+
     }
 
     /**
@@ -384,11 +391,10 @@ public class Rat implements ITickHandler {
                             }
                         }
                         case DeathRat -> {
-                            if (!this.isDeathRat) {
-                                DeathRatItem a = (DeathRatItem) it;
-                                a.incrementKills();
-                                deleteRat();
-                            }
+                            DeathRatItem a = (DeathRatItem) it;
+                            a.incrementKills();
+                            deleteRat();
+
 
                         }
                     }
@@ -468,16 +474,7 @@ public class Rat implements ITickHandler {
     }
 
     public Image getSprite() {
-        if (isDeathRat) {
-            return sprite;
-        }
-        if (sex == 'm') {
-            return sprite;
-        }
-        //if female
-        else {
-            return sprite;
-        }
+        return sprite;
     }
 
     public void setPosition(int x, int y) {

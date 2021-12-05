@@ -13,7 +13,7 @@ public class DeathRat extends Rat{
     public DeathRat(char sex, boolean isDeath, boolean alive, boolean isSterile, int xPos, int yPos) {
         super(sex, isDeath, alive, isSterile, xPos, yPos,false);
         this.setImage(ImageRefs.deathRatUp);
-        Level.getInstance().getLevelBoard().addRat(this);
+
     }
 
     public DeathRatItem getItem(){
@@ -24,7 +24,15 @@ public class DeathRat extends Rat{
         this.item = item;
     }
 
-
+    @Override
+    public void changeSprite() {
+        switch (getCurrentDirection()) {
+            case EAST -> setImage(ImageRefs.deathRatRight);
+            case WEST -> setImage(ImageRefs.deathRatLeft);
+            case NORTH -> setImage(ImageRefs.deathRatUp);
+            case SOUTH -> setImage(ImageRefs.deathRatDown);
+        }
+    }
 
 
 
