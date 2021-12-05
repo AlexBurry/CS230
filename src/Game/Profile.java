@@ -19,6 +19,7 @@ public class Profile {
     private int score;
     private int currentLevel = 1;
     private int highestLevelUnlocked;
+    private ArrayList<Integer> levelsSavedTo = new ArrayList<>();
     private File playerDatabase = new File("src/playerDatabase.txt");
     private File Lvl;
 
@@ -76,6 +77,13 @@ public class Profile {
                     currentLevel = Integer.parseInt(tempArray[1]);
                     highestLevelUnlocked = Integer.parseInt(tempArray[2]);
                     score = Integer.parseInt(tempArray[3]);
+                    //for saving which levels have been saved to.
+                    levelsSavedTo = new ArrayList<>();
+                    for (int i = 4; i < tempArray.length; i++) {
+                        //start at 4, because we have already iterated to 3.
+                        levelsSavedTo.add(Integer.parseInt(tempArray[i]));
+                    }
+
                 }
             }
             buffReader.close();
@@ -287,5 +295,15 @@ public class Profile {
      */
     public int getHighestLevelUnlocked() {
         return highestLevelUnlocked;
+    }
+
+    public ArrayList<Integer> getLevelsSavedTo() {
+        return levelsSavedTo;
+    }
+
+    public void addToSavedLevels(int i){
+        if(!levelsSavedTo.contains(i)){
+            levelsSavedTo.add(i);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package GUI;
 
 import Game.Level;
+import Game.Profile;
 import Game.Tile;
 import ItemClasses.*;
 import RatClasses.Rat;
@@ -26,8 +27,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
-import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -206,6 +205,8 @@ public class DragAndDrop {
                 public void handle(ActionEvent actionEvent) {
                     //temporary.
                     instance.save();
+                    Menu.getProfile().addToSavedLevels(instance.getLevelNumber());
+
                 }
             });
 
