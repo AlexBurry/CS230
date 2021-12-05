@@ -530,12 +530,16 @@ public class Rat implements ITickHandler {
     public void deleteRat() {
         //instance.markListenerForRemoval(this);
         instance.getLevelBoard().removeRat(this);
-        instance.increaseScore(10);
+
+        if (!isDeathRat) {
+            instance.increaseScore(10);
+        }
 
         if(babyRatsQueue.size() > 0){
             for (Rat bRat:babyRatsQueue) {
                 instance.increaseScore(10);
             }
+
         }
     }
 

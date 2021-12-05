@@ -7,10 +7,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static java.lang.Character.toUpperCase;
 
+/**
+ * Save classes that save the games current data and writes it to a File
+ */
 public class Save {
     private String playerName;
     private int mapX;
@@ -23,9 +25,29 @@ public class Save {
     private int lossCondition;
     private int currentScore;
     private int[] inv;
+    private final String PROFILE_NAME;
+    private final String LEVEL_NAME;
 
-    public Save(int mapX, int mapY, String[][] tileMap, ArrayList<Rat> rats, ArrayList<String> itemsRespawnRate,
-                int timeLeft, int lossCondition, ArrayList<Item> items, int currentScore, int[] inv) {
+    /**
+     * Constructor for Save class
+     * @param profileName players name
+     * @param levelName current levels name
+     * @param mapX height of map
+     * @param mapY width of map
+     * @param tileMap map of characters that correlate to tiles
+     * @param rats list of rats and their data
+     * @param itemsRespawnRate list of item respawn rates for the current level
+     * @param timeLeft amount of time left in the level
+     * @param lossCondition the loss condition for the level
+     * @param items list of items and their data
+     * @param currentScore current player score in level
+     * @param inv inventory data
+     */
+    public Save(String profileName, String levelName, int mapX, int mapY, String[][] tileMap, ArrayList<Rat> rats,
+                ArrayList<String> itemsRespawnRate, int timeLeft, int lossCondition, ArrayList<Item> items,
+                int currentScore, int[] inv) {
+        PROFILE_NAME = profileName;
+        LEVEL_NAME = levelName;
         Level INSTANCE = Level.getInstance();
         this.mapX = mapX;
         this.mapY = mapY;
@@ -41,6 +63,11 @@ public class Save {
         writeToFile();
     }
 
+    /**
+     * Retrieves relevant info from each rat
+     * @param rats arraylist of rat objects
+     * @return an arraylist of rats and their positions
+     */
     public ArrayList<String> getRatInfo(ArrayList<Rat> rats) {
         ArrayList<String> ratList = new ArrayList<>();
         char sex;
@@ -57,6 +84,11 @@ public class Save {
         return ratList;
     }
 
+    /**
+     * Retrieves relevant info from each item
+     * @param items arraylist of item objects
+     * @return an arraylist of items and their positions
+     */
     public ArrayList<String> getItemInfo(ArrayList<Item> items) {
         ArrayList<String> itemList = new ArrayList<>();
         char type;
@@ -84,9 +116,12 @@ public class Save {
 //
 //    }
 
+    /**
+     * Creates a new save file named after the player and current level
+     */
     public void makeFile() {
         try {
-            File myObj = new File("filename.txt");
+            File myObj = new File(PROFILE_NAME + LEVEL_NAME);
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -98,9 +133,12 @@ public class Save {
         }
     }
 
+    /**
+     * Writes to the new save file in the correct format
+     */
     public void writeToFile() {
         try {
-            FileWriter myWriter = new FileWriter("filename.txt");
+            FileWriter myWriter = new FileWriter(PROFILE_NAME + LEVEL_NAME);
             myWriter.write(mapX + ", " + mapY + ",");
             myWriter.write("\n");
             for (int y = 0; y < mapY; y++) {
@@ -117,15 +155,15 @@ public class Save {
                 myWriter.write(irr + ";");
             }
             myWriter.write("\n");
-            myWriter.write(timeLeft);
+            myWriter.write("" + timeLeft);
             myWriter.write("\n");
-            myWriter.write(lossCondition);
+            myWriter.write(String.valueOf(lossCondition));
             myWriter.write("\n");
             for (String i: itemList) {
                 myWriter.write(i);
             }
             myWriter.write("\n");
-            myWriter.write(currentScore);
+            myWriter.write("" + currentScore);
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
