@@ -3,6 +3,7 @@ package GUI;
 import Game.Level;
 import Game.Tile;
 import ItemClasses.*;
+import RatClasses.Rat;
 import Sprites.ImageRefs;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -10,13 +11,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+
+import java.util.ArrayList;
 
 /**
  * This class creates the HBox which stores items icons
@@ -33,6 +38,12 @@ public class DragAndDrop {
     private Tile[][] tileMap;
     private Level instance;
 
+    private int maleRats;
+    private int femaleRats;
+    private int babyRats;
+
+    private int ratListSize = 0;
+    private boolean sexChangeUsed;
     private Item.itemType selectedItem;
 
     private ImageView noEntry = new ImageView();
@@ -66,12 +77,12 @@ public class DragAndDrop {
         lbl.setTextFill(Color.WHITE);
 
 
-        GridPane noEntryPane = new GridPane();
+        GridPane counterPane = new GridPane();
         GridPane.setHalignment(lbl, HPos.CENTER);
-        noEntryPane.add(lbl, 0, 1);
-        noEntryPane.add(item, 0, 2);
+        counterPane.add(lbl, 0, 1);
+        counterPane.add(item, 0, 2);
 
-        return noEntryPane;
+        return counterPane;
     }
 
     /**
@@ -87,7 +98,6 @@ public class DragAndDrop {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(1200, 104, true, true, true, false));
         toolBar.setBackground(new Background(image));
-
 
         noEntry.setImage(ImageRefs.iconNoEntry);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfNoEntry(), noEntry));
@@ -114,9 +124,64 @@ public class DragAndDrop {
         gas.setImage(ImageRefs.iconGas);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfGas(), gas));
 
+        Pane invisiblePane = new Pane();
+        invisiblePane.setPrefSize(470,40);
+        toolBar.getChildren().add(invisiblePane);
+        toolBar.getChildren().add(makeHealthBar());
+
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
 
         return toolBar;
+    }
+
+    /**
+     * Creates a GridPane and formats it into a Health Bar
+     * using Rectangle objects and the Array list of Rats from Level.
+     * Rats are recalculated if rat list's size changes or sex change is used.
+     *
+     * @return formatted GridPane as Health Bar.
+     */
+    public GridPane makeHealthBar() {
+        int availableSpace = 455;
+        HBox hpBar = new HBox();
+        GridPane gPane = new GridPane();
+
+        Label invisibleLbl = new Label("");
+        invisibleLbl.setFont(new Font("Comic Sans", 24));
+
+        hpBar.setPrefSize(700, 50);
+        countRats();
+        Rectangle maleRect = new Rectangle((availableSpace/instance.getLossCondition()) * maleRats,50,Color.BLUE);
+        Rectangle femaleRect = new Rectangle((availableSpace/instance.getLossCondition()) * femaleRats,50,Color.PINK);
+        Rectangle babyRect = new Rectangle((availableSpace/instance.getLossCondition()) * babyRats,50,Color.WHITE);
+        hpBar.getChildren().addAll(maleRect, femaleRect, babyRect);
+
+        gPane.add(invisibleLbl, 0, 1);
+        gPane.add(hpBar, 0, 2);
+
+        return gPane;
+    }
+
+    /**
+     * Counts the number of male, female and baby rats
+     * stores in the Rat array stored in Level.
+     */
+    public void countRats() {
+        ArrayList<Rat> rats = instance.getLevelBoard().getRats();
+        if (ratListSize != rats.size() || sexChangeUsed) {
+            maleRats = 0;
+            femaleRats = 0;
+            babyRats = 0;
+            sexChangeUsed = false;
+            for (int i = 0; i < rats.size(); i++) {
+                switch (rats.get(i).getSex()) {
+                    case 'm' -> maleRats++;
+                    case 'f' -> femaleRats++;
+                    default -> babyRats++;
+                }
+            }
+            ratListSize = rats.size();
+        }
     }
 
     /**
@@ -235,6 +300,7 @@ public class DragAndDrop {
                 if (instance.getLevelInv().getNumberOfMSexChange() > 0) {
                     instance.getLevelInv().decreaseNumberOfMSexChange();
                     new MFChange(x, y);
+                    sexChangeUsed = true;
                 } else {
                     System.out.println("No Male Sex Change left");
                 }
@@ -243,6 +309,7 @@ public class DragAndDrop {
                 if (instance.getLevelInv().getNumberOfFSexChange() > 0) {
                     instance.getLevelInv().decreaseNumberOfFSexChange();
                     new FMChange(x, y);
+                    sexChangeUsed = true;
                 } else {
                     System.out.println("No Female Sex Change left");
                 }

@@ -180,5 +180,5 @@ public class Level {
         return ALLOWED_TIME;
     }
 
-
+    public int getLossCondition() { return lossCondition; }
 }
