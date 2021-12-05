@@ -88,6 +88,7 @@ public class DeathRatItem extends Item {
         int prevY = getY();
         this.setX(deathRat.getX()); //Move to where the death rat is so that other rats can collide with us.
         this.setY(deathRat.getY());
+        this.setImage(deathRat.getSprite());
         getLocalInstance().getLevelBoard().redrawTile(prevX, prevY, false); //redraw the tile we came from.
 
     }

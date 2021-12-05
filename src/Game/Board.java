@@ -164,7 +164,16 @@ public class Board extends Application implements ITickHandler {
     }
 
     public void removeItem(Item item) {
+
+
+
         if(items.contains(item)){
+            if(item.getMyItemType() == Item.itemType.Gas || item.getMyItemType() == Item.itemType.Bomb
+                    || item.getMyItemType() == Item.itemType.Sterilise){
+                //if we are listeners..
+                instance.markListenerForRemoval((ITickHandler) item);
+            }
+
             items.remove(item);
             redrawTile(item.getX(),item.getY(),true);
         }
