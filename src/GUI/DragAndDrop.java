@@ -1,7 +1,6 @@
 package GUI;
 
 import Game.Level;
-import Game.Profile;
 import Game.Tile;
 import ItemClasses.*;
 import RatClasses.Rat;
@@ -15,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,7 +25,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -107,29 +104,29 @@ public class DragAndDrop {
         toolBar.setBackground(new Background(image));
 
         noEntry.setImage(ImageRefs.iconNoEntry);
-        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfNoEntry(), noEntry));
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfNoEntry(), noEntry));
         Tooltip.install(noEntry, new Tooltip("Hello"));
 
         deathRat.setImage(ImageRefs.iconDeathRat);
-        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfDeathRat(), deathRat));
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfDeathRat(), deathRat));
 
         poison.setImage(ImageRefs.iconPoison);
-        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfPoison(), poison));
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfPoison(), poison));
 
         femaleSexChange.setImage(ImageRefs.iconMFSC);
-        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfFSexChange(), femaleSexChange));
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfFSexChange(), femaleSexChange));
 
         maleSexChange.setImage(ImageRefs.iconFMSC);
-        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfMSexChange(), maleSexChange));
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfMSexChange(), maleSexChange));
 
         sterilise.setImage(ImageRefs.iconSterilise);
-        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfSterilisation(), sterilise));
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfSterilisation(), sterilise));
 
         bomb.setImage(ImageRefs.iconBomb);
-        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfBombs(), bomb));
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfBombs(), bomb));
 
         gas.setImage(ImageRefs.iconGas);
-        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfGas(), gas));
+        toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfGas(), gas));
 
         toolBar.getChildren().add(makeScore());
         toolBar.getChildren().add(makeHealthBar());
@@ -198,7 +195,7 @@ public class DragAndDrop {
      */
     public StackPane rectangleWithText(Color color, int multiplier) {
         StackPane completedPane = new StackPane();
-        Rectangle rectName = new Rectangle((AVAILABLE_SPACE/instance.getLossCondition()) * multiplier,50,color);
+        Rectangle rectName = new Rectangle((AVAILABLE_SPACE/instance.getLOSS_CONDITION()) * multiplier,50,color);
         Label ratCount = new Label(String.valueOf(multiplier));
         ratCount.setTextFill(Color.BLACK);
         ratCount.setFont(new Font("Comic Sans", 24));
@@ -385,32 +382,32 @@ public class DragAndDrop {
     public void convertAndCreate(int x, int y) {
         switch (selectedItem) {
             case Bomb -> {
-                if (instance.getLevelInv().getNumberOfBombs() > 0) {
-                    instance.getLevelInv().decreaseNumberOfBombs();
+                if (instance.getLevelInventory().getNumberOfBombs() > 0) {
+                    instance.getLevelInventory().decreaseNumberOfBombs();
                     new BombItem(x, y);
                 } else {
                     System.out.println("No Bombs left");
                 }
             }
             case Gas -> {
-                if (instance.getLevelInv().getNumberOfGas() > 0) {
-                    instance.getLevelInv().decreaseNumberOfGas();
+                if (instance.getLevelInventory().getNumberOfGas() > 0) {
+                    instance.getLevelInventory().decreaseNumberOfGas();
                     new GasItem(x, y);
                 } else {
                     System.out.println("No Gas left");
                 }
             }
             case Sterilise -> {
-                if (instance.getLevelInv().getNumberOfSterilisation() > 0) {
-                    instance.getLevelInv().decreaseNumberOfSterilisation();
+                if (instance.getLevelInventory().getNumberOfSterilisation() > 0) {
+                    instance.getLevelInventory().decreaseNumberOfSterilisation();
                     new SteriliseItem(x, y);
                 } else {
                     System.out.println("No Sterilise left");
                 }
             }
             case MSex -> {
-                if (instance.getLevelInv().getNumberOfMSexChange() > 0) {
-                    instance.getLevelInv().decreaseNumberOfMSexChange();
+                if (instance.getLevelInventory().getNumberOfMSexChange() > 0) {
+                    instance.getLevelInventory().decreaseNumberOfMSexChange();
                     new MFChange(x, y);
                     sexChangeUsed = true;
                 } else {
@@ -418,8 +415,8 @@ public class DragAndDrop {
                 }
             }
             case FSex -> {
-                if (instance.getLevelInv().getNumberOfFSexChange() > 0) {
-                    instance.getLevelInv().decreaseNumberOfFSexChange();
+                if (instance.getLevelInventory().getNumberOfFSexChange() > 0) {
+                    instance.getLevelInventory().decreaseNumberOfFSexChange();
                     new FMChange(x, y);
                     sexChangeUsed = true;
                 } else {
@@ -427,24 +424,24 @@ public class DragAndDrop {
                 }
             }
             case Poison -> {
-                if (instance.getLevelInv().getNumberOfPoison() > 0) {
-                    instance.getLevelInv().decreaseNumberOfPoison();
+                if (instance.getLevelInventory().getNumberOfPoison() > 0) {
+                    instance.getLevelInventory().decreaseNumberOfPoison();
                     new PoisonItem(x, y);
                 } else {
                     System.out.println("No Poison left");
                 }
             }
             case DeathRat -> {
-                if (instance.getLevelInv().getNumberOfDeathRat() > 0) {
-                    instance.getLevelInv().decreaseNumberOfDeathRat();
+                if (instance.getLevelInventory().getNumberOfDeathRat() > 0) {
+                    instance.getLevelInventory().decreaseNumberOfDeathRat();
                     new DeathRatItem(x, y);
                 } else {
                     System.out.println("No Death Rats left");
                 }
             }
             case NoEntry -> {
-                if (instance.getLevelInv().getNumberOfNoEntry() > 0) {
-                    instance.getLevelInv().decreaseNumberOfNoEntry();
+                if (instance.getLevelInventory().getNumberOfNoEntry() > 0) {
+                    instance.getLevelInventory().decreaseNumberOfNoEntry();
                     new NoEntryItem(x, y);
                 } else {
                     System.out.println("No No Entry Sign signs left");
