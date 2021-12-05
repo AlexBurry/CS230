@@ -26,7 +26,7 @@ import java.io.FileNotFoundException;
 public class LevelSelector {
 
     private Stage primaryStage;
-    private Profile p;
+    private Profile profile;
     private Menu mObject;
     private int highestUnlocked = 1;
 
@@ -34,12 +34,12 @@ public class LevelSelector {
      * This method is used to initialise objects.
      *
      * @param primaryStage initialises primaryStage.
-     * @param p initialises Profile.
+     * @param profile initialises Profile.
      */
-    public LevelSelector(Stage primaryStage, Profile p, Menu mObject) {
+    public LevelSelector(Stage primaryStage, Profile profile, Menu mObject) {
         this.primaryStage = primaryStage;
         this.mObject = mObject;
-        this.p = p;
+        this.profile = profile;
     }
 
     /**
@@ -61,7 +61,7 @@ public class LevelSelector {
 
         lvl.setBackground(new Background(image));
 
-        if (highestUnlocked <= p.getHighestLevelUnlocked()) {
+        if (highestUnlocked <= profile.getHighestLevelUnlocked()) {
             lvl = revealLevels(lvl, highestUnlocked);
             highestUnlocked++;
         }
@@ -71,72 +71,72 @@ public class LevelSelector {
         switch (selectionLvl) {
             case 0 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (1 <= p.getHighestLevelUnlocked()) {
+                    if (1 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_0.txt",0);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                                + profile.getHighestLevelUnlocked());
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 1 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (2 <= p.getHighestLevelUnlocked()) {
+                    if (2 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_1.txt",1);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                                + profile.getHighestLevelUnlocked());
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 2 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (3 <= p.getHighestLevelUnlocked()) {
+                    if (3 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_2.txt",2);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                                + profile.getHighestLevelUnlocked());
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 3 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (4 <= p.getHighestLevelUnlocked()) {
+                    if (4 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_3.txt",3);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                                + profile.getHighestLevelUnlocked());
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 4 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (5 <= p.getHighestLevelUnlocked()) {
+                    if (5 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_4.txt",4);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                                + profile.getHighestLevelUnlocked());
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 5 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (6 <= p.getHighestLevelUnlocked()) {
+                    if (6 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "test_level.txt",5); //TODO: Change on submission
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                                + profile.getHighestLevelUnlocked());
                     }
                 } catch (FileNotFoundException e) {
                 }
@@ -248,7 +248,7 @@ public class LevelSelector {
 
         lvl.setBackground(new Background(image));
 
-        if (p.getLevelsSavedTo().contains(selectionLvl)) {
+        if (profile.getLevelsSavedTo().contains(selectionLvl)) {
             lvl = revealSavedLevels(lvl, selectionLvl);
         }
 
@@ -257,48 +257,48 @@ public class LevelSelector {
         switch (selectionLvl) {
             case 0 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (p.getLevelsSavedTo().contains(0)) {
-                        loadLevel(primaryStage, p.getName() + "level_0.txt");
+                    if (profile.getLevelsSavedTo().contains(0)) {
+                        loadLevel(primaryStage, profile.getName() + "level_0.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 1 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (p.getLevelsSavedTo().contains(1)) {
-                        loadLevel(primaryStage, p.getName() + "level_1.txt");
+                    if (profile.getLevelsSavedTo().contains(1)) {
+                        loadLevel(primaryStage, profile.getName() + "level_1.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 2 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (p.getLevelsSavedTo().contains(2)) {
-                        loadLevel(primaryStage, p.getName() + "level_2.txt");
+                    if (profile.getLevelsSavedTo().contains(2)) {
+                        loadLevel(primaryStage, profile.getName() + "level_2.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 3 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (p.getLevelsSavedTo().contains(3)) {
-                        loadLevel(primaryStage, p.getName() + "level_3.txt");
+                    if (profile.getLevelsSavedTo().contains(3)) {
+                        loadLevel(primaryStage, profile.getName() + "level_3.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 4 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (p.getLevelsSavedTo().contains(4)) {
-                        loadLevel(primaryStage, p.getName() + "level_4.txt");
+                    if (profile.getLevelsSavedTo().contains(4)) {
+                        loadLevel(primaryStage, profile.getName() + "level_4.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 5 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (p.getLevelsSavedTo().contains(5)) {
-                        loadLevel(primaryStage, p.getName() + "test_level.txt"); //TODO: Change on submission
+                    if (profile.getLevelsSavedTo().contains(5)) {
+                        loadLevel(primaryStage, profile.getName() + "test_level.txt"); //TODO: Change on submission
                     }
                 } catch (FileNotFoundException e) {
                 }
@@ -404,7 +404,7 @@ public class LevelSelector {
 
         Level newLevel = new ReadFile(level, primaryStage).newLevel();
         newLevel.setLevelNumber(number);
-        newLevel.addProfileName(p.getName());
+        newLevel.addProfileName(profile.getName());
         newLevel.addLevelName(level);
         //newLevel.save(); //testing - to be removed
     }
@@ -420,7 +420,7 @@ public class LevelSelector {
 
         Level newLevel = new ReadFile(level, primaryStage).loadLevel();
 
-        newLevel.addProfileName(p.getName());
+        newLevel.addProfileName(profile.getName());
         newLevel.addLevelName(level);
     }
 }

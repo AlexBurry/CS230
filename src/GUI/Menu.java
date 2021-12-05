@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * This class is responsible for creating the GUI
@@ -34,11 +33,11 @@ import java.io.IOException;
 public class Menu {
 
     private Stage primaryStage;
-    private static Profile p;
+    private static Profile profile;
     private LevelSelector lvlSelect;
 
     private boolean skip = false;
-    private String font = "Comic Sans";
+    private final String FONT = "Comic Sans";
     private boolean loggedIn = false;
 
     public Menu(Stage primaryStage) {
@@ -84,11 +83,11 @@ public class Menu {
         BorderPane menuPane = new BorderPane();
         menuPane.setTop(buildMOTD());
 
-        Label playLbl = presetLabel("Play", font, 60);
-        Label loadLbl = presetLabel("Load", font, 50);
-        Label profileLbl = presetLabel("Profile", font, 50);
-        Label highscoreLbl = presetLabel("Highscore", font, 45);
-        Label exitLbl = presetLabel("Exit", font, 40);
+        Label playLbl = presetLabel("Play", FONT, 60);
+        Label loadLbl = presetLabel("Load", FONT, 50);
+        Label profileLbl = presetLabel("Profile", FONT, 50);
+        Label highscoreLbl = presetLabel("Highscore", FONT, 45);
+        Label exitLbl = presetLabel("Exit", FONT, 40);
         playLbl.setTextFill(Color.BLACK);
         loadLbl.setTextFill(Color.BLACK);
         profileLbl.setTextFill(Color.BLACK);
@@ -146,7 +145,7 @@ public class Menu {
         HBox messageBox = new HBox();
         MessageOfTheDay motd = new MessageOfTheDay();
         try {
-            Label motdLbl = presetLabel(motd.getMessage(), font, 20);
+            Label motdLbl = presetLabel(motd.getMessage(), FONT, 20);
             motdLbl.setTextFill(Color.BLACK);
             motdLbl.setMaxWidth(1200);
             motdLbl.setMaxHeight(50);
@@ -154,10 +153,8 @@ public class Menu {
             messageBox.getChildren().add(motdLbl);
             messageBox.setPadding(new Insets(100, 10, 10, 10));
             messageBox.setAlignment(Pos.CENTER);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("MOTD Failed!");
         }
 
         return messageBox;
@@ -167,8 +164,6 @@ public class Menu {
      * This method creates a login "form" using a GridPane Layout.
      * It is displayed when the user select Profile or Play from the Menu.
      * If the user has logged in already, they are not asked to log in again.
-     *
-     * @return Formatted GridPane.
      */
     public void buildLoginUI(Stage primaryStage, String name) throws FileNotFoundException {
         GridPane gPane = new GridPane();
@@ -226,17 +221,17 @@ public class Menu {
      * @param inputField   the field containing the user's input.
      * @param primaryStage the Stage that is displayed for the user.
      * @param name         a variable used to determine which option was selected.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException throws error if file wasn't found.
      */
     public void loginProcess(TextField inputField, Stage primaryStage, String name) throws FileNotFoundException {
         if (!inputField.getText().isEmpty() && !inputField.getText().contains(",") || skip) {
             if (skip) {
-                p = new Profile("test");
+                profile = new Profile("test");
             } else {
-                p = new Profile(inputField.getText());
+                profile = new Profile(inputField.getText());
             }
             loggedIn = true;
-            lvlSelect = new LevelSelector(primaryStage, p, this);
+            lvlSelect = new LevelSelector(primaryStage, profile, this);
             switch (name) {
                 case "l" -> lvlSelect.levelSelector(primaryStage);
                 case "p" -> buildProfile(primaryStage);
@@ -254,10 +249,10 @@ public class Menu {
     public void buildProfile(Stage primaryStage) {
         GridPane gPane = new GridPane();
 
-        Label username = presetLabel("Username:" + p.getName(), font, 24);
-        Label currentLevel = presetLabel("Currently On Level:" + p.getCurrentLevel(), font, 24);
-        Label highestLevel = presetLabel("Highest Level Cleared:" + p.getHighestLevelUnlocked(), font, 24);
-        Label score = presetLabel("Score: " + p.getScore(), font, 24);
+        Label username = presetLabel("Username:" + profile.getName(), FONT, 24);
+        Label currentLevel = presetLabel("Currently On Level:" + profile.getCurrentLevel(), FONT, 24);
+        Label highestLevel = presetLabel("Highest Level Cleared:" + profile.getHighestLevelUnlocked(), FONT, 24);
+        Label score = presetLabel("Score: " + profile.getScore(), FONT, 24);
         Button backBtn = new Button("Back");
         username.setTextFill(Color.BLACK);
         currentLevel.setTextFill(Color.BLACK);
@@ -297,7 +292,7 @@ public class Menu {
     }
 
     public static Profile getProfile() {
-        return p;
+        return profile;
     }
 
 }

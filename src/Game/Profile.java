@@ -60,6 +60,49 @@ public class Profile {
     }
 
     /**
+     * Finds the Player in playerDatabase and adds their
+     * saves to their record.
+     *
+     * @param name stores the Player that saved.
+     */
+    public void saveToProfile(String name) {
+        ArrayList<String> tempList = new ArrayList<>();
+        String lineRead;
+        String levelsSaved = "";
+        for (int i = 0; i < levelsSavedTo.size(); i++) {
+            levelsSaved += levelsSavedTo.get(i) + ",";
+        }
+        try {
+            FileReader reader = new FileReader(playerDatabase);
+            BufferedReader buffReader = new BufferedReader(reader);
+            while ((lineRead = buffReader.readLine()) != null) {
+                String tempArray[] = lineRead.split(",");
+                if (!tempArray[0].equalsIgnoreCase(name)) {
+                    tempList.add(lineRead);
+                } else {
+                    tempList.add(tempArray[0] + ","
+                            + tempArray[1] + ","
+                            + tempArray[2] + ","
+                            + tempArray[3] + ","
+                            + levelsSaved);
+                }
+            }
+            FileWriter emptyFile = new FileWriter(playerDatabase, false);
+            FileWriter writer = new FileWriter(playerDatabase, true);
+            BufferedWriter buffWriter = new BufferedWriter(writer);
+            emptyFile.write("");
+            for (int i = 0; i < tempList.size(); i++) {
+                writer.write(tempList.get(i) + System.lineSeparator());
+            }
+            emptyFile.close();
+            buffReader.close();
+            buffWriter.close();
+        } catch (Exception e) {
+            System.out.println("Failed To Delete From Highscore!");
+        }
+    }
+
+    /**
      * Finds the Profile using the name as their unique identifier
      * and loads in all the information the player has.
      *
@@ -305,5 +348,9 @@ public class Profile {
         if(!levelsSavedTo.contains(i)){
             levelsSavedTo.add(i);
         }
+    }
+
+    public void setScore(int addScore) {
+        score += addScore;
     }
 }
