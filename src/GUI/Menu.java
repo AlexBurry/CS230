@@ -390,7 +390,7 @@ public class Menu {
         Pane unlockedPane = new Pane();
 
         // Please add Images here Trafford, thanks!
-        BackgroundImage lvl1 = new BackgroundImage(new Image("Sprites/NoEntry.png"), BackgroundRepeat.NO_REPEAT,
+        BackgroundImage lvl1 = new BackgroundImage(new Image("Sprites/testlvlIcon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(125, 125, true, true, true, false));
         BackgroundImage lvl2 = new BackgroundImage(new Image("Sprites/NoEntry.png"), BackgroundRepeat.NO_REPEAT,
