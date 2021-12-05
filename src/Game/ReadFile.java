@@ -63,10 +63,10 @@ public class ReadFile {
         int allowedTime = readTimeLimit(new Scanner(in.nextLine()));
         int lossCondition = readLossCondition(new Scanner(in.nextLine()));
         ArrayList<String> items = readItemLocations(new Scanner(in.nextLine()));
-        int currentScore = readCurrentScore(in);
+        int currentScore = readCurrentScore(new Scanner(in.nextLine()));
+        ArrayList<String> inv = readInv(in);
 
-
-        return new Level(mapX, mapY, map, rats, respawns, allowedTime, lossCondition, currentScore, items, primaryStage);
+        return new Level(mapX, mapY, map, rats, respawns, allowedTime, lossCondition, currentScore, items, inv,primaryStage);
     }
 
     private int mapSize(Scanner in) {
@@ -122,6 +122,15 @@ public class ReadFile {
             rats.add(itemScan.next());
         }
         return rats;
+    }
+
+    private ArrayList<String> readInv(Scanner in) {
+        ArrayList<String> inv = new ArrayList<>();
+        in.useDelimiter(";");
+        while (in.hasNext()) {
+            inv.add(in.next());
+        }
+        return inv;
     }
 
 }

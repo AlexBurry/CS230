@@ -1,4 +1,4 @@
-20, 13,
+20,13,
 w w w w w w w w w w w w w w w w w w w w 
 w p p p p p p p p p p p p p p p p p p w 
 w w w t w w w w t w w t w w w w t w p w 
@@ -12,9 +12,9 @@ w p w p p p p p p p w w w w w w w p w w
 w p w p w w w w w t t t t t t p w p w w 
 w p p p w w w w w w w w w w w p p p w w 
 w w w w w w w w w w w w w w w w w w w w 
-F,8,9;M,6,4;
+M,12,1;
 b,10;g,4;s,15;p,10;m,5;f,5;n,4;d,20;
-261
+179
 30
-n,9,9;
-0
+n,1,7;
+10

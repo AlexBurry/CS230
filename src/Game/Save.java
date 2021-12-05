@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static java.lang.Character.toUpperCase;
 
@@ -138,7 +139,13 @@ public class Save {
      */
     public void makeFile() {
         try {
-            File myObj = new File(PROFILE_NAME + LEVEL_NAME);
+            File myObj;
+            boolean matches = Pattern.matches(PROFILE_NAME, LEVEL_NAME);
+            if (matches) {
+                myObj = new File(LEVEL_NAME);
+            } else {
+                myObj = new File(PROFILE_NAME + LEVEL_NAME);
+            }
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -155,14 +162,26 @@ public class Save {
      */
     public void writeToFile() {
         try {
-            FileWriter myWriter = new FileWriter(PROFILE_NAME + LEVEL_NAME);
+            FileWriter myWriter;
+
+            boolean matches = Pattern.matches(PROFILE_NAME, LEVEL_NAME);
+            if (matches) {
+                myWriter = new FileWriter(LEVEL_NAME);
+            } else {
+                myWriter = new FileWriter(PROFILE_NAME + LEVEL_NAME);
+            }
+
             myWriter.write(mapX + "," + mapY + ",");
             myWriter.write("\n");
             for (int y = 0; y < mapY; y++) {
                 for (int x = 0; x < mapX; x++) {
-                     myWriter.write(stringMap[x][y] + " ");
+                    if (x == mapX - 1) {
+                        myWriter.write(stringMap[x][y]);
+                    } else {
+                        myWriter.write(stringMap[x][y] + " ");
+                    }
                 }
-                myWriter.write("\n");
+                myWriter.write("\r\n");
             }
             for (String r: ratList) {
                 myWriter.write(r);
@@ -181,6 +200,11 @@ public class Save {
             }
             myWriter.write("\n");
             myWriter.write("" + currentScore);
+            myWriter.write("\n");
+
+            for (String i: inv) {
+                myWriter.write(i +";");
+            }
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {

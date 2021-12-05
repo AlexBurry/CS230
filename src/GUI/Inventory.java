@@ -281,4 +281,36 @@ public class Inventory implements ITickHandler {
     public int getNumberOfDeathRat() {
         return numberOfDeathRat;
     }
+
+    public void setNumberOfBombs(int numberOfBombs) {
+        this.numberOfBombs = numberOfBombs;
+    }
+
+    public void setNumberOfMSexChange(int numberOfMSexChange) {
+        this.numberOfMSexChange = numberOfMSexChange;
+    }
+
+    public void setNumberOfFSexChange(int numberOfFSexChange) {
+        this.numberOfFSexChange = numberOfFSexChange;
+    }
+
+    public void setNumberOfGas(int numberOfGas) {
+        this.numberOfGas = numberOfGas;
+    }
+
+    public void setNumberOfSterilisation(int numberOfSterilisation) {
+        this.numberOfSterilisation = numberOfSterilisation;
+    }
+
+    public void setNumberOfPoison(int numberOfPoison) {
+        this.numberOfPoison = numberOfPoison;
+    }
+
+    public void setNumberOfNoEntry(int numberOfNoEntry) {
+        this.numberOfNoEntry = numberOfNoEntry;
+    }
+
+    public void setNumberOfDeathRat(int numberOfDeathRat) {
+        this.numberOfDeathRat = numberOfDeathRat;
+    }
 }

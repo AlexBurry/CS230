@@ -1,6 +1,7 @@
 package Game;
 
 import GUI.Inventory;
+import RatClasses.BabyRat;
 import RatClasses.DeathRat;
 import RatClasses.Rat;
 import javafx.animation.Animation;
@@ -11,6 +12,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Game.Level class
@@ -58,7 +60,6 @@ public class Level {
         currentScore = 0;
         instance = this;
 
-
         levelInv = new Inventory(itemsRespawnRate);
         levelBoard = new Board(tiles, rats, mapX, mapY);
         levelBoard.start(primaryStage);
@@ -81,22 +82,27 @@ public class Level {
      * @param primaryStage
      */
     public Level(int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
-                 int timeLeft, int lossCondition, int currentScore, ArrayList<String> items, Stage primaryStage) {
+                 int timeLeft, int lossCondition, int currentScore, ArrayList<String> items, ArrayList<String> inv,
+                 Stage primaryStage) {
+        instance = this;
 
         this.ALLOWED_TIME = timeLeft;
         this.timeLeft = this.ALLOWED_TIME;
         this.lossCondition = lossCondition;
         this.currentScore = currentScore;
-        instance = this;
-        
-
-        levelInv = new Inventory(itemsRespawnRate);
-        levelBoard = new Board(tiles, rats, mapX, mapY);
-        levelBoard.start(primaryStage);
 
         this.itemsRespawnRate = itemsRespawnRate;
+        levelInv = new Inventory(itemsRespawnRate);
+        reloadInv(inv);
+        levelBoard = new Board(tiles, rats, mapX, mapY);
 
-        createTick();
+        for (String i: items) {
+            String[] values = i.split(",");
+            levelBoard.reloadItems(values[0].charAt(0), Integer.parseInt(values[1]), Integer.parseInt(values[2]));
+        }
+        levelBoard.start(primaryStage);
+
+        createTick(); //begins tick
     }
 
     /**
@@ -208,7 +214,6 @@ public class Level {
 
     /**
      * Idk
-     *
      * @return Instance of this Level object
      */
     public static Level getInstance() {
@@ -233,6 +238,25 @@ public class Level {
             currentScore = currentScore + timeLeft;
             System.out.println("Game won: " + currentScore);
             System.exit(0);
+        }
+    }
+
+    /**
+     * Reloads the current inventory values
+     * @param inv arraylist of inventory values stored as strings
+     */
+    public void reloadInv(ArrayList<String> inv) {
+        for (String item: inv) {
+            switch (item.charAt(0)) {
+                case 'b' -> levelInv.setNumberOfBombs(Character.getNumericValue(item.charAt(2)));
+                case 'f' -> levelInv.setNumberOfFSexChange(Character.getNumericValue(item.charAt(2)));
+                case 'm' -> levelInv.setNumberOfMSexChange(Character.getNumericValue(item.charAt(2)));
+                case 'g' -> levelInv.setNumberOfGas(Character.getNumericValue(item.charAt(2)));
+                case 'p' -> levelInv.setNumberOfPoison(Character.getNumericValue(item.charAt(2)));
+                case 's' -> levelInv.setNumberOfSterilisation(Character.getNumericValue(item.charAt(2)));
+                case 'd' -> levelInv.setNumberOfDeathRat(Character.getNumericValue(item.charAt(2)));
+                case 'n' -> levelInv.setNumberOfNoEntry(Character.getNumericValue(item.charAt(2)));
+            }
         }
     }
 

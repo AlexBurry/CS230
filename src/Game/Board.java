@@ -1,9 +1,7 @@
 package Game;
 
 import GUI.DragAndDrop;
-import ItemClasses.BombItem;
-import ItemClasses.Item;
-import ItemClasses.SteriliseItem;
+import ItemClasses.*;
 import RatClasses.BabyRat;
 import RatClasses.Rat;
 import javafx.application.Application;
@@ -58,8 +56,14 @@ public class Board extends Application implements ITickHandler {
         instance = Level.getInstance();
         for (String rt : rats) {
             String[] values = rt.split(",");
-            Rat newRat = new BabyRat(values[0].charAt(0),Integer.parseInt(values[1]),
-                    Integer.parseInt(values[2]));
+            Rat newRat;
+            if (Character.isLowerCase(values[0].charAt(0))) {
+                newRat = new BabyRat(values[0].charAt(0),Integer.parseInt(values[1]),
+                        Integer.parseInt(values[2]));
+            } else {
+                newRat = new Rat(values[0].charAt(0),Integer.parseInt(values[1]),
+                        Integer.parseInt(values[2]));
+            }
             this.rats.add(newRat);
             instance.addListener(newRat);
         }
@@ -151,6 +155,31 @@ public class Board extends Application implements ITickHandler {
             gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
         }
 
+    }
+
+    /**
+     * Reloads items onto the board
+     * @param t
+     * @param xPos
+     * @param yPos
+     */
+    public void reloadItems(char t, int xPos, int yPos) {
+//        GasItem parent;
+//        ArrayList<GasChild> children = new ArrayList<>();
+        switch (t) {
+            case 'g' -> new GasItem(xPos, yPos);
+            case 'b' -> new BombItem(xPos, yPos);
+            case 'n' -> new NoEntryItem(xPos, yPos);
+            case 'f' -> new FMChange(xPos, yPos);
+            case 'm' -> new MFChange(xPos, yPos);
+            case 'd' -> new DeathRatItem(xPos, yPos);
+            case 'p' -> new PoisonItem(xPos, yPos);
+            case 's' -> new SteriliseItem(xPos, yPos);
+//            case 'c' -> {
+//                new GasChild(xPos, yPos, false);
+//            }
+            default -> System.out.println("Not working...");
+        }
     }
 
     /**

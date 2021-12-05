@@ -29,6 +29,7 @@ public class LeaderBoard {
     }
 
     private void showLeaderBoard(List<String> scores) throws IOException{
+        /*
         System.out.println("* LEADERBOARD *");
             for(int i=0; i< scores.size(); i++){
             	for (int j = i+1; j < 11 ; j++) {
@@ -41,5 +42,7 @@ public class LeaderBoard {
                 System.out.println(scores.get(i));
         }
         System.out.println("* Highscore Board *");
+        */
     }
+
 }

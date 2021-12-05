@@ -70,7 +70,9 @@ public class Rat implements ITickHandler {
      */
     public Rat(char sex, int xPos, int yPos) {
         currentDirection = Directions.NORTH;
-        this.sex = sex;
+
+        this.isBaby = Character.isLowerCase(sex);
+        this.sex = Character.toLowerCase(sex);
         this.xPos = xPos;
         this.yPos = yPos;
         isDeathRat = false;

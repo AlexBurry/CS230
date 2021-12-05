@@ -3,8 +3,6 @@ package GUI;
 import Game.Level;
 import Game.Profile;
 import Game.ReadFile;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -38,6 +36,7 @@ public class LevelSelector {
      * @param primaryStage initialises primaryStage.
      * @param p initialises Profile.
      */
+
     public LevelSelector(Stage primaryStage, Profile p, Menu menu) {
         this.primaryStage = primaryStage;
         mObject = menu;
@@ -178,7 +177,6 @@ public class LevelSelector {
         BackgroundImage lvl6 = new BackgroundImage(new Image("Sprites/level_5Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, standardSize);
 
-
         switch (levelUnlocked) {
             case 1 -> unlockedPane.setBackground(new Background(lvl1));
             case 2 -> unlockedPane.setBackground(new Background(lvl2));
@@ -205,6 +203,8 @@ public class LevelSelector {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(1200, 104, true, true, true, false));
 
+        HBox centerButton = new HBox();
+
         gPane.setBackground(new Background(image));
         Button backBtn = new Button("Back");
         backBtn.setPrefSize(100,35);
@@ -221,6 +221,9 @@ public class LevelSelector {
         gPane.setHgap(25);
         gPane.setVgap(25);
         gPane.setAlignment(Pos.CENTER);
+        centerButton.setAlignment(Pos.CENTER);
+        centerButton.getChildren().add(backBtn);
+        gPane.add(centerButton, 1, 2);
         gPane.setPadding(new Insets(100, 0, 0, 0));
 
         Scene scene = new Scene(gPane, 1200, 884);
@@ -362,11 +365,12 @@ public class LevelSelector {
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(1200, 104, true, true, true, false));
 
+        HBox centerButton = new HBox();
+
         gPane.setBackground(new Background(image));
         Button backBtn = new Button("Back");
         backBtn.setPrefSize(100,35);
         backBtn.setOnMouseClicked(mouseEvent -> mObject.buildMenu());
-
 
         gPane.add(makeSavePane(primaryStage, 0), 0, 0);
         gPane.add(makeSavePane(primaryStage, 1), 1, 0);
@@ -378,7 +382,9 @@ public class LevelSelector {
         gPane.setHgap(25);
         gPane.setVgap(25);
         gPane.setAlignment(Pos.CENTER);
-        gPane.add(backBtn, 1, 2);
+        centerButton.setAlignment(Pos.CENTER);
+        centerButton.getChildren().add(backBtn);
+        gPane.add(centerButton, 1, 2);
         gPane.setPadding(new Insets(100, 0, 0, 0));
 
         Scene scene = new Scene(gPane, 1200, 884);
