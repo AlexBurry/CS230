@@ -33,10 +33,10 @@ public class LeaderBoard {
         System.out.println("* LEADERBOARD *");
             for(int i=0; i< scores.size(); i++){
             	for (int j = i+1; j < 11 ; j++) {
-              	 if(scores.get(i) + 1 < scores.get(j) + 1) {
-                   temp = arr[i];
-                   arr[i] = arr[j];
-                   arr[j] = temp;
+              	 if(Integer.getInteger(scores.get(i)) + 1 < Integer.getInteger(scores.get(j)) + 1) {
+//                   temp = arr[i];
+//                   arr[i] = arr[j];
+//                   arr[j] = temp;
                }
             }
                 System.out.println(scores.get(i));
