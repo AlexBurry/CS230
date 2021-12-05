@@ -87,10 +87,12 @@ public class Menu {
         menuPane.setTop(buildMOTD());
 
         Label playLbl = presetLabel("Play", font, 70);
+        Label loadLbl = presetLabel("Load", font, 60);
         Label profileLbl = presetLabel("Profile", font, 60);
         Label highscoreLbl = presetLabel("Highscore", font, 45);
         Label exitLbl = presetLabel("Exit", font, 40);
         playLbl.setTextFill(Color.BLACK);
+        loadLbl.setTextFill(Color.BLACK);
         profileLbl.setTextFill(Color.BLACK);
         highscoreLbl.setTextFill(Color.BLACK);
         exitLbl.setTextFill(Color.BLACK);
@@ -98,6 +100,13 @@ public class Menu {
         playLbl.setOnMouseClicked(a -> {
             try {
                 buildLoginUI(primaryStage, "l");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+        loadLbl.setOnMouseClicked(a -> {
+            try {
+                buildLoginUI(primaryStage, "s");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -116,7 +125,7 @@ public class Menu {
 
         options.setAlignment(Pos.CENTER);
         options.setPadding(new Insets(80, 40, 40, 40));
-        options.getChildren().addAll(playLbl, profileLbl, highscoreLbl, exitLbl);
+        options.getChildren().addAll(playLbl,loadLbl, profileLbl, highscoreLbl, exitLbl);
 
         //menuPane.setTop(//MessageOfTheDayLbl); Message Of The Day Here!
 
@@ -200,11 +209,13 @@ public class Menu {
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Login", scene);
 
         if (!loggedIn) {
+
             enterBtn.setOnAction(mouseEvent ->
             {
                 try {
                     loginProcess(inputField, primaryStage, name);
                 } catch (FileNotFoundException e) {
+
                     e.printStackTrace();
                 }
             });
@@ -212,6 +223,7 @@ public class Menu {
             switch (name) {
                 case "l" -> levelSelector(primaryStage);
                 case "p" -> buildProfile(primaryStage);
+                case "s" -> saveSelector(primaryStage);
             }
         }
     }
@@ -238,6 +250,7 @@ public class Menu {
             switch (name) {
                 case "l" -> levelSelector(primaryStage);
                 case "p" -> buildProfile(primaryStage);
+                case "s" -> saveSelector(primaryStage);
             }
 
         } else {
@@ -480,6 +493,189 @@ public class Menu {
 
         Scene scene = new Scene(gPane, 1200, 884);
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Level Selection", scene);
+    }
+
+
+    /**
+     * This method creates a Pane, sets it to "Locked" both visually
+     * and physically. A Pane is "Unlocked" when the player has beaten
+     * the previous level.
+     * "Unlocked" Panes start the level, "Locked" ones do not.
+     *
+     * @param primaryStage the Stage that is displayed for the user.
+     * @param selectionLvl the level that the player is interacting with.
+     * @return formatted Pane with an embedded MouseEvent
+     */
+    public Pane makeSavePane(Stage primaryStage, int selectionLvl) {
+        Pane lvl = new Pane();
+
+        BackgroundImage image = new BackgroundImage(new Image("Sprites/metalTile.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                new BackgroundSize(125, 125, true, true, true, false));
+
+        lvl.setBackground(new Background(image));
+
+        if (highestUnlock <= p.getHighestLevelUnlocked()) {
+            lvl = revealLevels(lvl, highestUnlock);
+            highestUnlock++;
+        }
+
+        lvl.setPrefSize(125, 125);
+
+        switch (selectionLvl) {
+            case 0 -> lvl.setOnMouseClicked(mouseEvent -> {
+                try {
+                    if (1 <= p.getHighestLevelUnlocked()) {
+                        buildLevel(primaryStage, "level_0.txt");
+                    } else {
+                        System.out.println("This Player Has Yet To " +
+                                "Unlock This Level! Highest Level Unlocked: "
+                                + p.getHighestLevelUnlocked());
+                    }
+                } catch (FileNotFoundException e) {
+                }
+            });
+            case 1 -> lvl.setOnMouseClicked(mouseEvent -> {
+                try {
+                    if (2 <= p.getHighestLevelUnlocked()) {
+                        buildLevel(primaryStage, "level_1.txt");
+                    } else {
+                        System.out.println("This Player Has Yet To " +
+                                "Unlock This Level! Highest Level Unlocked: "
+                                + p.getHighestLevelUnlocked());
+                    }
+                } catch (FileNotFoundException e) {
+                }
+            });
+            case 2 -> lvl.setOnMouseClicked(mouseEvent -> {
+                try {
+                    if (3 <= p.getHighestLevelUnlocked()) {
+                        buildLevel(primaryStage, "level_2.txt");
+                    } else {
+                        System.out.println("This Player Has Yet To " +
+                                "Unlock This Level! Highest Level Unlocked: "
+                                + p.getHighestLevelUnlocked());
+                    }
+                } catch (FileNotFoundException e) {
+                }
+            });
+            case 3 -> lvl.setOnMouseClicked(mouseEvent -> {
+                try {
+                    if (4 <= p.getHighestLevelUnlocked()) {
+                        buildLevel(primaryStage, "level_3.txt");
+                    } else {
+                        System.out.println("This Player Has Yet To " +
+                                "Unlock This Level! Highest Level Unlocked: "
+                                + p.getHighestLevelUnlocked());
+                    }
+                } catch (FileNotFoundException e) {
+                }
+            });
+            case 4 -> lvl.setOnMouseClicked(mouseEvent -> {
+                try {
+                    if (5 <= p.getHighestLevelUnlocked()) {
+                        buildLevel(primaryStage, "level_4.txt");
+                    } else {
+                        System.out.println("This Player Has Yet To " +
+                                "Unlock This Level! Highest Level Unlocked: "
+                                + p.getHighestLevelUnlocked());
+                    }
+                } catch (FileNotFoundException e) {
+                }
+            });
+            case 5 -> lvl.setOnMouseClicked(mouseEvent -> {
+                try {
+                    if (6 <= p.getHighestLevelUnlocked()) {
+                        buildLevel(primaryStage, "test_level.txt"); //TODO: Change on submission
+                    } else {
+                        System.out.println("This Player Has Yet To " +
+                                "Unlock This Level! Highest Level Unlocked: "
+                                + p.getHighestLevelUnlocked());
+                    }
+                } catch (FileNotFoundException e) {
+                }
+            });
+        }
+
+        return lvl;
+    }
+
+
+
+    /**
+     * This method reveals the levels that have save files.
+     *
+     * @param pane          the unrevealed Pane.
+     * @param levelSaved the level currently being revealed.
+     * @return revealed Pane.
+     */
+    public Pane revealSavedLevels(Pane pane, int levelSaved) {
+        Pane savedPane = new Pane();
+        BackgroundSize standardSize = new BackgroundSize(125, 125, true, true, true, false);
+
+        BackgroundImage lvl1 = new BackgroundImage(new Image("Sprites/testlvlIconSaved.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                standardSize);
+        BackgroundImage lvl2 = new BackgroundImage(new Image("Sprites/level_1IconSaved.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                standardSize);
+        BackgroundImage lvl3 = new BackgroundImage(new Image("Sprites/level_2IconSaved.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                standardSize);
+        BackgroundImage lvl4 = new BackgroundImage(new Image("Sprites/level_3IconSaved.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                standardSize);
+        BackgroundImage lvl5 = new BackgroundImage(new Image("Sprites/level_4IconSaved.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                standardSize);
+        BackgroundImage lvl6 = new BackgroundImage(new Image("Sprites/level_5IconSaved.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, standardSize);
+
+
+        switch (levelSaved) {
+            case 1 -> savedPane.setBackground(new Background(lvl1));
+            case 2 -> savedPane.setBackground(new Background(lvl2));
+            case 3 -> savedPane.setBackground(new Background(lvl3));
+            case 4 -> savedPane.setBackground(new Background(lvl4));
+            case 5 -> savedPane.setBackground(new Background(lvl5));
+            case 6 -> savedPane.setBackground(new Background(lvl6));
+        }
+
+        return savedPane;
+    }
+
+
+
+    /**
+     * Creates the Window that allows players to select a saved level
+     * Players are only allowed to select saves from levels they have unlocked.
+     *
+     * @param primaryStage the Stage that is displayed for the user.
+     * @throws FileNotFoundException
+     */
+    public void saveSelector(Stage primaryStage) throws FileNotFoundException {
+        GridPane gPane = new GridPane();
+
+        BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasic.png"), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                new BackgroundSize(1200, 104, true, true, true, false));
+
+        gPane.setBackground(new Background(image));
+
+        gPane.add(makeSavePane(primaryStage, 0), 0, 0);
+        gPane.add(makeSavePane(primaryStage, 1), 1, 0);
+        gPane.add(makeSavePane(primaryStage, 2), 2, 0);
+        gPane.add(makeSavePane(primaryStage, 3), 0, 1);
+        gPane.add(makeSavePane(primaryStage, 4), 1, 1);
+        gPane.add(makeSavePane(primaryStage, 5), 2, 1);
+
+        gPane.setHgap(25);
+        gPane.setVgap(25);
+        gPane.setAlignment(Pos.CENTER);
+        gPane.setPadding(new Insets(100, 0, 0, 0));
+
+        Scene scene = new Scene(gPane, 1200, 884);
+        presetStage(primaryStage, "Sprites/raticon.png", "Rats: Save Selection", scene);
     }
 
     /**
