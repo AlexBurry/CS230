@@ -49,6 +49,7 @@ public class DragAndDrop {
     private int ratListSize = 0;
     private boolean sexChangeUsed;
     private Item.itemType selectedItem;
+    private final int AVAILABLE_SPACE = 380;
 
     private ImageView noEntry = new ImageView();
     private ImageView deathRat = new ImageView();
@@ -131,12 +132,17 @@ public class DragAndDrop {
         toolBar.getChildren().add(makeHealthBar());
         toolBar.getChildren().add(makeOptionsButton());
 
-        toolBar.setOnMouseClicked(mouseEvent -> System.out.println(mouseEvent.getX()));
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
 
         return toolBar;
     }
 
+    /**
+     * This method creates a formatted GridPane
+     * embedded with the user's current score.
+     *
+     * @return formatted GridPane.
+     */
     public GridPane makeScore() {
         GridPane scoreGPane = new GridPane();
         Label scoreLbl = new Label(("Current Score: " + String.valueOf(Menu.getProfile().getScore())));
@@ -159,24 +165,45 @@ public class DragAndDrop {
      * @return formatted GridPane as Health Bar.
      */
     public GridPane makeHealthBar() {
-        int availableSpace = 380;
         HBox hpBar = new HBox();
         GridPane gPane = new GridPane();
 
         Label invisibleLbl = new Label("");
         invisibleLbl.setFont(new Font("Comic Sans", 24));
 
-        hpBar.setPrefSize(availableSpace, 50);
+        hpBar.setPrefSize(AVAILABLE_SPACE, 50);
         countRats();
-        Rectangle maleRect = new Rectangle((availableSpace/instance.getLOSS_CONDITION()) * maleRats,50,Color.BLUE);
-        Rectangle femaleRect = new Rectangle((availableSpace/instance.getLOSS_CONDITION()) * femaleRats,50,Color.PINK);
-        Rectangle babyRect = new Rectangle((availableSpace/instance.getLOSS_CONDITION()) * babyRats,50,Color.WHITE);
-        hpBar.getChildren().addAll(maleRect, femaleRect, babyRect);
+
+        hpBar.getChildren().addAll(rectangleWithText(Color.BLUE,maleRats)
+                ,rectangleWithText(Color.PINK,femaleRats)
+                ,rectangleWithText(Color.WHITE,babyRats));
 
         gPane.add(invisibleLbl, 0, 1);
         gPane.add(hpBar, 0, 2);
 
         return gPane;
+    }
+
+    /**
+     * This method creates a StackPane, it overlaps a
+     * rectangle with a label to create a numerical and
+     * visual display for enemy Rats.
+     *
+     * @param color Color of the Rectangle.
+     * @param multiplier Number of Rats.
+     * @return formatted StackPane.
+     */
+    public StackPane rectangleWithText(Color color, int multiplier) {
+        StackPane completedPane = new StackPane();
+        Rectangle rectName = new Rectangle((AVAILABLE_SPACE/instance.getLOSS_CONDITION()) * multiplier,50,color);
+        Label ratCount = new Label(String.valueOf(multiplier));
+        ratCount.setTextFill(Color.BLACK);
+        ratCount.setFont(new Font("Comic Sans", 24));
+        if (multiplier != 0) {
+            completedPane.getChildren().addAll(rectName, ratCount);
+        }
+
+        return completedPane;
     }
 
     /**
@@ -247,7 +274,7 @@ public class DragAndDrop {
      */
     public void countRats() {
         ArrayList<Rat> rats = instance.getLevelBoard().getRats();
-        if (ratListSize != rats.size() || sexChangeUsed || !babyRatExists(rats)) {
+        if (ratListSize != rats.size() || sexChangeUsed) {
             maleRats = 0;
             femaleRats = 0;
             babyRats = 0;
@@ -266,24 +293,6 @@ public class DragAndDrop {
         }
     }
 
-    /**
-     * This method searches the list and checks if it
-     * contains any rats that are babies.
-     *
-     * @param rats List containing all rat objects.
-     * @return true if there is a baby in the list, false otherwise.
-     */
-    public boolean babyRatExists(ArrayList<Rat> rats) {
-        boolean babyRatExists = false;
-        for (int i = 0; i < rats.size(); i++) {
-            if (rats.get(i).getIsBaby()) {
-                babyRatExists = true;
-            } else {
-                babyRatExists = false;
-            }
-        }
-        return babyRatExists;
-    }
     /**
      * This method is called when the player drags something
      * on the "toolBar" HBox. It splits up the HBox into squares
