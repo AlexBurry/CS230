@@ -260,8 +260,8 @@ public class DragAndDrop {
                     babyRats++;
                 } else {
                     switch (rats.get(i).getSex()) {
-                        case 'm' -> maleRats++;
-                        case 'f' -> femaleRats++;
+                        case 'M' -> maleRats++;
+                        case 'F' -> femaleRats++;
                     }
                 }
             }
