@@ -20,6 +20,12 @@ public class SteriliseItem extends Item implements ITickHandler {
     private int timer = 4;
     private ArrayList<Tile> sterilizeZone;
 
+    /**
+     * Creates a new steriliseItem and finds the tiles it affects
+     *
+     * @param x the XCoordinate of the item
+     * @param y the YCoordinate of the item
+     */
     public SteriliseItem(int x, int y){
         super();
         this.setX(x);
@@ -28,7 +34,6 @@ public class SteriliseItem extends Item implements ITickHandler {
         this.setMyItemType(itemType.Sterilise);
         this.sterilizeZone = getSterilizeZone();
     }
-
 
     /**
      * This class is a listener of the ITickHandler event.
@@ -39,7 +44,6 @@ public class SteriliseItem extends Item implements ITickHandler {
         if(count >= 4){
             countdown();
         }
-
     }
 
     /**
@@ -89,24 +93,15 @@ public class SteriliseItem extends Item implements ITickHandler {
      * Checks all rats to see if any are in the area
      * Sterilizes all rats in the area
      */
-
     private void sterilize() {
         ArrayList<Rat> rats = getLocalInstance().getLevelBoard().getRats();
-        sterilizeZone = getSterilizeZone();
-        int count = 0;
         for (Tile tile : sterilizeZone) {
-            //TODO: Optimise and add VFX
             for (Rat rat : rats) { //for each rat on the entire board
                 if (rat.getX() == tile.getLocation()[0] && rat.getY() == tile.getLocation()[1]) {
                     //if the rat is on this tile
-                    if (rat.getIsSterile() == false) {
-                        count++;
-                        rat.sterilizeRat();
-                    }
                     rat.sterilizeRat();
                 }
             }
         }
-        System.out.println("Sterilized " + count + " rats");
     }
 }

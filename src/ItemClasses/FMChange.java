@@ -12,7 +12,12 @@ import javafx.scene.image.Image;
  */
 public class FMChange extends Item {
 
-
+    /**
+     * Creates a new MFItem
+     *
+     * @param x the XCoordinate of the item
+     * @param y the YCoordinate of the item
+     */
     public FMChange(int x, int y){
         super();
         this.setX(x);
