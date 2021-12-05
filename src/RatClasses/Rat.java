@@ -157,10 +157,9 @@ public class Rat implements ITickHandler {
      * removes this rat and adds a new adult rat in the same pos
      */
     public void growRat() {
-
         Rat adultRat = new Rat(getSex(),isDeathRat,isSterile, xPos, yPos,isBaby);
-        instance.getLevelBoard().removeRat(this);
         instance.addRatToQueue(adultRat);
+        instance.getLevelBoard().removeRat(this);
     }
 
     /**

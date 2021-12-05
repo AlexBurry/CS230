@@ -234,6 +234,7 @@ public class Board extends Application implements ITickHandler {
 
     public void addRat(Rat rat) {
         rats.add(rat);
+        toolBar.countRats();
     }
 
     public void removeRat(Rat rat) {
