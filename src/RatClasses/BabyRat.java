@@ -46,7 +46,9 @@ public class BabyRat extends Rat {
 
         if (count == 4) { //If one second has passed.
             counter();
+
             //giveBirth();
+
             if (isInGas()) {
                 setSecondsInGas(getSecondsInGas() + 1);
             } else {

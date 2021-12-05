@@ -102,7 +102,6 @@ public class Level {
 
         if(tickCount > 4){
 
-
             timeLeft = timeLeft - 1;
             checkLossCondition();
             tickCount = 1;
@@ -158,6 +157,10 @@ public class Level {
             System.out.println("Game won: " + currentScore);
             System.exit(0);
         }
+    }
+
+    public void save() {
+        new Save(levelBoard.getMapX(), levelBoard.getMapY(), levelBoard.getTempTileMap());
     }
 
     public int getTimeLeft() {

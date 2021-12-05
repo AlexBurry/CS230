@@ -9,11 +9,17 @@ import ItemClasses.Item;
 import Game.ITickHandler;
 import javafx.scene.image.Image;
 
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import java.sql.Struct;
+import java.util.ArrayList;
+import java.util.Random;
+
 
 /**
  * The main rat class. Covers all basic features of Rats.
@@ -37,6 +43,7 @@ public class Rat implements ITickHandler {
     private boolean canMove = true;
     Runnable releaseRat = () -> releaseRat(); //Assigns the method to be a "runnable", used to execute a wait function.
 
+
     private double imgWidth;
     private double imgHeight;
     private final Level instance;
@@ -47,6 +54,7 @@ public class Rat implements ITickHandler {
     private ArrayList<Item> itemsToDeleteOnCollision = new ArrayList<>();
     private ArrayList<Rat> babyRatsQueue = new ArrayList<>();
     private ArrayList<BabyRat> gestatingChildren = new ArrayList<>();
+
 
     public enum Directions {
         EAST,
@@ -99,11 +107,13 @@ public class Rat implements ITickHandler {
         isBaby = baby;
     }
 
-    public void counter() {
+    public void counter(){
+
         //tick timer: increments one after each tick
         // and resets when certain if statements are reached.
         tickTimer += 1;
         //resets the counter
+
         if (tickTimer == 8 && !isBaby) {
             tickTimer = 0;
             //if the female rat is pregnant it will no longer be.
@@ -112,6 +122,7 @@ public class Rat implements ITickHandler {
                 babyRatsToQueue();
             }
         } else if (tickTimer == 9 && isBaby) {
+
             setBaby(false);
             tickTimer = 0;
             Rat adultRat = new Rat(getSex(), xPos, yPos);
@@ -143,7 +154,6 @@ public class Rat implements ITickHandler {
         }
         babyRatsQueue.clear();
         isPregnant = false;
-
     }
 
     /**
@@ -158,6 +168,7 @@ public class Rat implements ITickHandler {
         //2 and 4 turns up half the time 2/4
         if (count == 2 || count == 4) { //If 500ms have passed (2/4 values is 500(ms) / 1000(1s))
             instance.getLevelBoard().redrawTile(xPos, yPos, true);
+
             if (canMove) {
                 move();
             }
@@ -167,12 +178,14 @@ public class Rat implements ITickHandler {
 
 
 
+
             checkRatCollision(); //do this before to make sure we are still in gas.
 
 
             if (count == 4) { //If one second has passed.
                 counter();
                 giveBirth();
+
                 if (inGas) {
                     secondsInGas++;
                 } else {
@@ -308,6 +321,7 @@ public class Rat implements ITickHandler {
 
         if (options.size() > 1) {
             options.remove(relativeBack);
+
             for (int i = 0; i < options.size(); i++) {
                 int rand = new Random().nextInt(options.size());
                 currentDirection = options.get(rand);
@@ -325,6 +339,7 @@ public class Rat implements ITickHandler {
      * @author Trafford (made for Items)
      * Goes through each item on the board and checks if its at our location.
      */
+
     public void checkItemCollision() {
         ArrayList<Item> existingItems = instance.getLevelBoard().getItems();
         inGas = false; //always start off as false
@@ -340,6 +355,7 @@ public class Rat implements ITickHandler {
                         case Gas -> {
                             inGas = true; //change back to true before the method finishes.
                             System.out.println(secondsInGas);
+
                             if (secondsInGas >= 2) {
                                 instance.getLevelBoard().removeRat(this);
                             }
@@ -384,6 +400,7 @@ public class Rat implements ITickHandler {
             it.deleteItem();
         }
 
+
         if (!inGas) {
             secondsInGas = 0;
         }
@@ -418,6 +435,12 @@ public class Rat implements ITickHandler {
                         rt.setCanMove(false);
                         waitToReleaseRat();
                         rt.waitToReleaseRat();
+                        isPregnant = true;
+                        System.out.println("this rat is now pregnant = " + isPregnant);
+                        char ratGender = new Random().nextBoolean() ? 'f' : 'm';
+                        BabyRat babyRat = new BabyRat(ratGender, xPos, yPos);
+                        babyRatsQueue.add(babyRat);
+                        System.out.println("added baby rat");
                     }
 
                 }
@@ -475,11 +498,10 @@ public class Rat implements ITickHandler {
         isSterile = true;
     }
 
+
     public boolean getIsSterile() {
         return isSterile;
     }
-
-    ;
 
     public Directions getCurrentDirection() {
         return currentDirection;
