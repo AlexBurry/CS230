@@ -92,11 +92,12 @@ public class Level {
         }
         ratsToAddAfterTick.clear();
 
+
+
         levelBoard.drawRats();
         levelBoard.drawItems();
         levelBoard.drawTunnels();
 
-        //System.out.println(tickCount);
         tickCount++;
 
         if(tickCount > 4){
@@ -160,6 +161,10 @@ public class Level {
             System.out.println("Game won: " + currentScore);
             System.exit(0);
         }
+    }
+
+    public void save() {
+        new Save(levelBoard.getMapX(), levelBoard.getMapY(), levelBoard.getTempTileMap());
     }
 
     public int getTimeLeft() {

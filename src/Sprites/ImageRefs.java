@@ -49,6 +49,7 @@ public class ImageRefs {
     //Gas
     public static final Image gasCenter = new Image("Sprites/GasC.png");
     public static final Image gasOuter = new Image("Sprites/GasO.png");
+    public static final Image gasOuterChild = new Image("Sprites/GasOC.png");
     //Sex Changes
     public static final Image maleToFemaleSC = new Image("Sprites/maleFemaleSexChange.png");
     public static final Image femaleToMaleSC = new Image("Sprites/femaleMaleSexChange.png");

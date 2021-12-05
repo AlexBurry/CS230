@@ -54,7 +54,7 @@ public class Board extends Application implements ITickHandler {
         tempTileMap = tiles;
         instance = Level.getInstance();
         for (String rt : rats) {
-            Rat newRat = new BabyRat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
+            Rat newRat = new Rat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
                     Character.getNumericValue(rt.charAt(4)));
             this.rats.add(newRat);
             instance.addListener(newRat);
@@ -186,8 +186,6 @@ public class Board extends Application implements ITickHandler {
                 drawItems();
             }
         }
-
-
     }
 
     public void addRat(Rat rat) {
@@ -199,8 +197,10 @@ public class Board extends Application implements ITickHandler {
         instance.markListenerForRemoval(rat);
 
         if(rats.contains(rat)){
+            int x = rat.getX();
+            int y = rat.getY();
             rats.remove(rat);
-            drawBoard();
+            redrawTile(x,y,true);
         }
     }
 
@@ -237,6 +237,17 @@ public class Board extends Application implements ITickHandler {
         }
         return false;
     }
+    
+    public String[][] getTempTileMap() {
+        return tempTileMap;
+    }
+
+    public int getMapX() {
+        return mapX;
+    }
+
+    public int getMapY() {
+        return mapY;
 
     /**
      * @return int gameWidthInTiles, the width in terms of tiles.
@@ -250,5 +261,6 @@ public class Board extends Application implements ITickHandler {
      */
     public int getGameHeightInTiles() {
         return gameHeightInTiles;
+
     }
 }

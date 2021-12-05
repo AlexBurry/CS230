@@ -24,10 +24,8 @@ import java.util.Random;
 public class Rat implements ITickHandler {
 
     private char sex;
-    private boolean isDeathRat;
-    private boolean alive;
+    private final boolean isDeathRat;
     private boolean isSterile;
-    private int speed;
     private boolean isPregnant;
     private boolean inGas;
     private int secondsInGas;
@@ -35,18 +33,15 @@ public class Rat implements ITickHandler {
     private boolean isBaby;
     private Image sprite;
 
-
     private double imgWidth;
     private double imgHeight;
-    private Level instance;
-
+    private final Level instance;
 
     private int xPos;
     private int yPos;
 
     private ArrayList<Item> itemsToDeleteOnCollision = new ArrayList<>();
     private ArrayList<Rat> babyRatsQueue = new ArrayList<>();
-
 
     public enum Directions {
         EAST,
@@ -64,8 +59,6 @@ public class Rat implements ITickHandler {
         this.sex = sex;
         this.xPos = xPos;
         this.yPos = yPos;
-        speed = 2;
-        alive = true;
         isDeathRat = false;
         isSterile = false;
         instance = Level.getInstance();
@@ -76,7 +69,7 @@ public class Rat implements ITickHandler {
     }
 
     //To be checked -> constructor below not actually being used for male and female rat? only death rat????
-    public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, int speed, boolean isBaby) {
+    public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, boolean isBaby) {
         currentDirection = Directions.NORTH;
         this.isBaby = isBaby;
         if (sex == 'f' || sex == 'm') {
@@ -85,7 +78,6 @@ public class Rat implements ITickHandler {
         this.xPos = xPos;
         this.yPos = yPos;
         this.isDeathRat = isDeathRat;
-        this.alive = alive;
         this.isSterile = isSterile;
         instance = Level.getInstance();
         //instance.addListener(this);
@@ -102,28 +94,23 @@ public class Rat implements ITickHandler {
         isBaby = baby;
     }
 
-    public void pregnantDuration() {
-        if (isPregnant && tickTimer < 3) {
-            tickTimer += 1;
-            System.out.println("during pregnancy " + tickTimer);
-        } else {
-            tickTimer = 0;
-            isPregnant = false;
-            System.out.println("no longer pregnant");
-        }
-    }
-
-    public void counter() {
+    public void counter(){
+        //tick timer: increments one after each tick
+        // and resets when certain if statements are reached.
         tickTimer += 1;
         //resets the counter
-        if (tickTimer == 4) {
+        if (tickTimer == 8 && !isBaby){
             tickTimer = 0;
             //if the female rat is pregnant it will no longer be.
-            if (sex == 'f') {
+            if(sex == 'f') {
                 isPregnant = false;
-                //System.out.println("no longer pregnant " + isPregnant);
-
             }
+        } else if(tickTimer == 9 && isBaby){
+            setBaby(false);
+            tickTimer = 0;
+            Rat adultRat = new Rat(getSex(), xPos, yPos);
+            instance.getLevelBoard().removeRat(this);
+            instance.addRatToQueue(adultRat);
         }
     }
 
@@ -141,6 +128,9 @@ public class Rat implements ITickHandler {
     @Override
     public void tickEvent(int count) {
 
+        //250ms 1/4 1s
+        //1...2...3....4 > 1
+        //2 and 4 turns up half the time 2/4
         if (count == 2 || count == 4) { //If 500ms have passed (2/4 values is 500(ms) / 1000(1s))
             instance.getLevelBoard().redrawTile(xPos, yPos, true);
             move();
@@ -328,7 +318,6 @@ public class Rat implements ITickHandler {
                             }
                         }
                         case MSex -> {
-
                             sex = 'm';
                             itemsToDeleteOnCollision.add(it);
                         }
@@ -336,7 +325,6 @@ public class Rat implements ITickHandler {
                             sex = 'f';
                             itemsToDeleteOnCollision.add(it);
                         }
-
                         case NoEntry -> {
                             currentDirection = switch (oldDirection) {
                                 case SOUTH -> Directions.NORTH;
@@ -401,7 +389,6 @@ public class Rat implements ITickHandler {
                 }
             }
         }
-
     }
 
     public void listOfItems() {
@@ -458,6 +445,22 @@ public class Rat implements ITickHandler {
 
     public void setCurrentDirection(Directions currentDirection) {
         this.currentDirection = currentDirection;
+    }
+
+    public boolean isInGas() {
+        return inGas;
+    }
+
+    public Level getInstance() {
+        return instance;
+    }
+
+    public int getSecondsInGas() {
+        return secondsInGas;
+    }
+
+    public void setSecondsInGas(int secondsInGas) {
+        this.secondsInGas = secondsInGas;
     }
 
     @Override
