@@ -42,7 +42,7 @@ public class BabyRat extends Rat {
 
 
 
-        checkRatCollision(); //do this before to make sure we are still in gas.
+
 
         if (count == 4) { //If one second has passed.
             counter();

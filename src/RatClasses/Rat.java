@@ -137,6 +137,7 @@ public class Rat implements ITickHandler {
             babyRatsQueue.add(rats);
         }
         gestatingChildren.clear();
+        giveBirth();
     }
 
     public void waitToReleaseRat() {
@@ -184,7 +185,7 @@ public class Rat implements ITickHandler {
 
             if (count == 4) { //If one second has passed.
                 counter();
-                giveBirth();
+
 
                 if (inGas) {
                     secondsInGas++;
@@ -425,22 +426,19 @@ public class Rat implements ITickHandler {
 
                         isPregnant = true;
 
-                        int numOfBabies = new Random().nextInt(1, 3);
+                        int numOfBabies = new Random().nextInt(3);
                         for (int i = 0; i < numOfBabies; i++) {
                             char ratGender = new Random().nextBoolean() ? 'f' : 'm';
                             BabyRat babyRat = new BabyRat(ratGender, xPos, yPos);
                             gestatingChildren.add(babyRat);
+                            System.out.println("Added a child to list. Size: " + gestatingChildren.size());
                         }
                         this.canMove = false;
                         rt.setCanMove(false);
                         waitToReleaseRat();
                         rt.waitToReleaseRat();
-                        isPregnant = true;
-                        System.out.println("this rat is now pregnant = " + isPregnant);
-                        char ratGender = new Random().nextBoolean() ? 'f' : 'm';
-                        BabyRat babyRat = new BabyRat(ratGender, xPos, yPos);
-                        babyRatsQueue.add(babyRat);
-                        System.out.println("added baby rat");
+
+
                     }
 
                 }
