@@ -5,11 +5,14 @@ import Game.Tile;
 import ItemClasses.*;
 import RatClasses.Rat;
 import Sprites.ImageRefs;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
@@ -20,7 +23,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+
+import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -82,6 +90,8 @@ public class DragAndDrop {
         counterPane.add(lbl, 0, 1);
         counterPane.add(item, 0, 2);
 
+
+
         return counterPane;
     }
 
@@ -128,8 +138,13 @@ public class DragAndDrop {
         invisiblePane.setPrefSize(470,40);
         toolBar.getChildren().add(invisiblePane);
         toolBar.getChildren().add(makeHealthBar());
+        toolBar.getChildren().add(makeOptionsButton());
 
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
+
+
+
+
 
         return toolBar;
     }
@@ -160,6 +175,53 @@ public class DragAndDrop {
         gPane.add(hpBar, 0, 2);
 
         return gPane;
+
+    }
+
+    /**
+     * Creates a GridPane and formats it into a Health Bar
+     * using Rectangle objects and the Array list of Rats from Level.
+     * Rats are recalculated if rat list's size changes or sex change is used.
+     *
+     * @return formatted GridPane as Health Bar.
+     */
+    public GridPane makeOptionsButton() {
+        GridPane gPane = new GridPane();
+        Label textDisplay = new Label("Save? Will overwrite existing files!");
+
+        Button optionBtn = new Button("Options");
+        optionBtn.setPrefSize(50, 20);
+        GridPane.setHalignment(optionBtn, HPos.RIGHT);
+        gPane.add(optionBtn, 0, 2);
+        gPane.add(textDisplay,0,0);
+
+        optionBtn.setOnAction(mouseEvent ->
+        {
+            Stage optionWindow = new Stage();
+            optionWindow.initModality(Modality.APPLICATION_MODAL);
+
+            Button saveBtn = new Button("Save");
+            saveBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    //temporary.
+                    instance.save();
+                }
+            });
+
+            GridPane gPane2 = new GridPane();
+            gPane2.add(saveBtn, 0, 2);
+            GridPane.setHalignment(saveBtn, HPos.CENTER);
+            Scene optionScene = new Scene(gPane2,400,200);
+            optionWindow.setResizable(false);
+            optionWindow.setScene(optionScene);
+            optionWindow.show();
+
+
+        });
+
+        return gPane;
+
     }
 
     /**

@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -254,7 +253,9 @@ public class Menu {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Invalid Username!", "Try Again!", JOptionPane.INFORMATION_MESSAGE);
+            //loginProcess(inputField,primaryStage,name);
+            //TODO: FIX THIS, SWING NOT ALLOWED!
+
         }
     }
 
@@ -676,10 +677,11 @@ public class Menu {
         primaryStage.setTitle("Rats: Steampunk Edition");
         primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
+
         Level newLevel = new ReadFile(level, primaryStage).newLevel();
         newLevel.addProfileName(p.getName());
         newLevel.addLevelName(level);
-        newLevel.save(); //testing - to be removed
+        //newLevel.save(); //testing - to be removed
     }
 
 

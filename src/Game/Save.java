@@ -1,5 +1,6 @@
 package Game;
 
+import ItemClasses.GasChild;
 import ItemClasses.Item;
 import RatClasses.Rat;
 
@@ -94,7 +95,13 @@ public class Save {
         char type;
         for (Item i: items) {
             switch (i.getMyItemType()) {
-                case Gas -> type = 'g';
+                case Gas -> {
+                        if(i.getClass() == GasChild.class){
+                            type = 'c';
+                        }else{
+                            type = 'g';
+                        }
+                }
                 case NoEntry -> type = 'n';
                 case FSex -> type = 'f';
                 case MSex -> type = 'm';
