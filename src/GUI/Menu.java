@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * This class is responsible for creating the GUI
@@ -83,6 +84,7 @@ public class Menu {
      */
     public void buildMenu() {
         BorderPane menuPane = new BorderPane();
+        menuPane.setTop(buildMOTD());
 
         Label playLbl = presetLabel("Play", font, 70);
         Label profileLbl = presetLabel("Profile", font, 60);
@@ -128,6 +130,31 @@ public class Menu {
 
         Scene scene = new Scene(menuPane, 1200, 884);
         presetStage(primaryStage, "Sprites/raticon.png", "Rats: Menu", scene);
+    }
+
+    /**
+     * This method is used to grab the Message Of The Day
+     * and embed it within a HBox for easier formatting.
+     *
+     * @return formatted HBox containing the Message Of The Day.
+     */
+    public HBox buildMOTD() {
+        HBox messageBox = new HBox();
+        MessageOfTheDay motd = new MessageOfTheDay();
+        try {
+            Label motdLbl = presetLabel(motd.getMessage(), font, 20);
+            motdLbl.setTextFill(Color.WHITE);
+            messageBox.getChildren().add(motdLbl);
+            messageBox.setPadding(new Insets(100,10,10,10));
+            messageBox.setAlignment(Pos.CENTER);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return messageBox;
     }
 
     /**

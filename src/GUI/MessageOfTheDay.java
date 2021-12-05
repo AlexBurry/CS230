@@ -1,3 +1,5 @@
+package GUI;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -6,9 +8,9 @@ import java.net.http.HttpResponse;
 
 public class MessageOfTheDay {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-
-        String Sol;
+    public String getMessage() throws IOException, InterruptedException {
+        String Sol = "";
+        int count = 1;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -20,23 +22,22 @@ public class MessageOfTheDay {
 
         String str = response.body();
 
-        // Creating array of string length
-        char[] cr = new char[str.length()];
-        Sol = Integer.toString(str.length() + 6);
+        System.out.println("Input From Website: " + str);
 
-        // Copy character by character into array
-        for (int i = 0; i < str.length(); i++) {
-            cr[i] = str.charAt(i);
-        }
-
-        System.out.println();
-
-        // Printing content of array <will be deleted>
-        for (char c : cr) {
-            Sol += c;
+        char[] charArr = str.toCharArray();
+        for (int i = 0; i < charArr.length; i++) {
+            if (count == 1) {
+                Sol += (char) ((((charArr[i] - 'A' - (i+1)) % 26) + 26) % 26  + 'A');
+                count++;
+            } else {
+                Sol += (char) ((((charArr[i] - 'A' + i+1) % 26) + 26) % 26  + 'A');
+                count--;
+            }
         }
 
         Sol += "CS-230";
+        count = Sol.length();
+        Sol = count+Sol;
         System.out.println(Sol);
 
         HttpClient clientS = HttpClient.newHttpClient();
@@ -47,6 +48,8 @@ public class MessageOfTheDay {
         HttpResponse<String> responseS = clientS.send(requestS,
                 HttpResponse.BodyHandlers.ofString());
 
-                System.out.print(responseS.body());
+        System.out.print(responseS.body());
+        return responseS.body();
     }
 }
+
