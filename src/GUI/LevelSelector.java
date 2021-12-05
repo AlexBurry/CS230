@@ -3,9 +3,12 @@ package GUI;
 import Game.Level;
 import Game.Profile;
 import Game.ReadFile;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -203,6 +206,9 @@ public class LevelSelector {
                 new BackgroundSize(1200, 104, true, true, true, false));
 
         gPane.setBackground(new Background(image));
+        Button backBtn = new Button("Back");
+        backBtn.setPrefSize(100,35);
+        backBtn.setOnMouseClicked(mouseEvent -> mObject.buildMenu());
 
         gPane.add(makeLevelPane(primaryStage, 0), 0, 0);
         gPane.add(makeLevelPane(primaryStage, 1), 1, 0);
@@ -210,6 +216,7 @@ public class LevelSelector {
         gPane.add(makeLevelPane(primaryStage, 3), 0, 1);
         gPane.add(makeLevelPane(primaryStage, 4), 1, 1);
         gPane.add(makeLevelPane(primaryStage, 5), 2, 1);
+        gPane.add(backBtn, 1, 2);
 
         gPane.setHgap(25);
         gPane.setVgap(25);
@@ -219,7 +226,6 @@ public class LevelSelector {
         Scene scene = new Scene(gPane, 1200, 884);
         mObject.presetStage(primaryStage, "Sprites/raticon.png", "Rats: Level Selection", scene);
     }
-
 
     /**
      * This method creates a Pane, sets it to "Locked" both visually
@@ -300,8 +306,6 @@ public class LevelSelector {
         return lvl;
     }
 
-
-
     /**
      * This method reveals the levels that have save files.
      *
@@ -359,6 +363,10 @@ public class LevelSelector {
                 new BackgroundSize(1200, 104, true, true, true, false));
 
         gPane.setBackground(new Background(image));
+        Button backBtn = new Button("Back");
+        backBtn.setPrefSize(100,35);
+        backBtn.setOnMouseClicked(mouseEvent -> mObject.buildMenu());
+
 
         gPane.add(makeSavePane(primaryStage, 0), 0, 0);
         gPane.add(makeSavePane(primaryStage, 1), 1, 0);
@@ -370,6 +378,7 @@ public class LevelSelector {
         gPane.setHgap(25);
         gPane.setVgap(25);
         gPane.setAlignment(Pos.CENTER);
+        gPane.add(backBtn, 1, 2);
         gPane.setPadding(new Insets(100, 0, 0, 0));
 
         Scene scene = new Scene(gPane, 1200, 884);

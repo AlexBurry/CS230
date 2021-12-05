@@ -1,8 +1,6 @@
 package GUI;
 
-import Game.Level;
 import Game.Profile;
-import Game.ReadFile;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * This class is responsible for creating the GUI
@@ -126,7 +123,7 @@ public class Menu {
 
         options.setAlignment(Pos.CENTER);
         options.setPadding(new Insets(10, 40, 40, 40));
-        options.getChildren().addAll(playLbl,loadLbl, profileLbl, highscoreLbl, exitLbl);
+        options.getChildren().addAll(playLbl, loadLbl, profileLbl, highscoreLbl, exitLbl);
 
         BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasicBanner.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
@@ -157,7 +154,6 @@ public class Menu {
             messageBox.getChildren().add(motdLbl);
             messageBox.setPadding(new Insets(100, 10, 10, 10));
             messageBox.setAlignment(Pos.CENTER);
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -212,7 +208,6 @@ public class Menu {
                 try {
                     loginProcess(inputField, primaryStage, name);
                 } catch (FileNotFoundException e) {
-
                     e.printStackTrace();
                 }
             });
@@ -237,7 +232,6 @@ public class Menu {
      */
     public void loginProcess(TextField inputField, Stage primaryStage, String name) throws FileNotFoundException {
         if (!inputField.getText().isEmpty() && !inputField.getText().contains(",") || skip) {
-            System.out.println(inputField.getText());
             if (skip) {
                 p = new Profile("test");
             } else {
@@ -250,11 +244,6 @@ public class Menu {
                 case "p" -> buildProfile(primaryStage);
                 case "s" -> lvlSelect.saveSelector(primaryStage);
             }
-
-        } else {
-            //loginProcess(inputField,primaryStage,name);
-            //TODO: FIX THIS, SWING NOT ALLOWED!
-
         }
     }
 
@@ -309,7 +298,7 @@ public class Menu {
         System.out.println("Work in Progress...");
     }
 
-    public static Profile getProfile(){
+    public static Profile getProfile() {
         return p;
     }
 

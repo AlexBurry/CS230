@@ -168,7 +168,6 @@ public class DragAndDrop {
         gPane.add(hpBar, 0, 2);
 
         return gPane;
-
     }
 
     /**
@@ -210,7 +209,6 @@ public class DragAndDrop {
             });
 
             GridPane gPane2 = new GridPane();
-            gPane2.setHalignment(saveBtn, HPos.CENTER);
             gPane2.add(saveBtn, 0, 0);
 
             Scene optionScene = new Scene(gPane2,300,150);
