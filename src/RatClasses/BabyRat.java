@@ -41,11 +41,14 @@ public class BabyRat extends Rat {
         }
 
 
-        giveBirth();
-        checkRatCollision(); //do this before to make sure we are still in gas.
+
+
 
         if (count == 4) { //If one second has passed.
             counter();
+
+            //giveBirth();
+
             if (isInGas()) {
                 setSecondsInGas(getSecondsInGas() + 1);
             } else {
