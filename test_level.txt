@@ -12,7 +12,7 @@ w w w w w w w w w w w w w w w w w w w w
 w w w w w w w w w w w w w w w w w w w w
 w w w w w w w w w w w w w w w w w w w w
 w w w w w w w w w w w w w w w w w w w w
-f,1,7;m,1,7
+f,6,5;m,9,5
 b,1;g,1;s,1;p,1;m,5;f,1;n,1;d,1
-270
-50
+40
+5

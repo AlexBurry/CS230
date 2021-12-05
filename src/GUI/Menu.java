@@ -393,7 +393,7 @@ public class Menu {
             case 5 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (6 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_5.txt");
+                        buildLevel(primaryStage, "test_level.txt"); //TODO: Change on submission
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -422,19 +422,19 @@ public class Menu {
         BackgroundImage lvl1 = new BackgroundImage(new Image("Sprites/testlvlIcon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(125, 125, true, true, true, false));
-        BackgroundImage lvl2 = new BackgroundImage(new Image("Sprites/NoEntry.png"), BackgroundRepeat.NO_REPEAT,
+        BackgroundImage lvl2 = new BackgroundImage(new Image("Sprites/level_1Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(125, 125, true, true, true, false));
-        BackgroundImage lvl3 = new BackgroundImage(new Image("Sprites/NoEntry.png"), BackgroundRepeat.NO_REPEAT,
+        BackgroundImage lvl3 = new BackgroundImage(new Image("Sprites/level_2Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(125, 125, true, true, true, false));
-        BackgroundImage lvl4 = new BackgroundImage(new Image("Sprites/NoEntry.png"), BackgroundRepeat.NO_REPEAT,
+        BackgroundImage lvl4 = new BackgroundImage(new Image("Sprites/level_3Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(125, 125, true, true, true, false));
-        BackgroundImage lvl5 = new BackgroundImage(new Image("Sprites/NoEntry.png"), BackgroundRepeat.NO_REPEAT,
+        BackgroundImage lvl5 = new BackgroundImage(new Image("Sprites/level_4Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(125, 125, true, true, true, false));
-        BackgroundImage lvl6 = new BackgroundImage(new Image("Sprites/NoEntry.png"), BackgroundRepeat.NO_REPEAT,
+        BackgroundImage lvl6 = new BackgroundImage(new Image("Sprites/level_5Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(125, 125, true, true, true, false));
 
