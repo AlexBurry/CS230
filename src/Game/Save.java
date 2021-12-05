@@ -1,33 +1,49 @@
 package Game;
 
+import ItemClasses.Item;
+import RatClasses.Rat;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static java.lang.Character.toUpperCase;
 
 public class Save {
     private String playerName;
     private int mapX;
     private int mapY;
     private String[][] stringMap;
+    private ArrayList<String> ratList = new ArrayList<>();
 
-    public Save(int mapX, int mapY, String[][] tileMap) {
+    public Save(int mapX, int mapY, String[][] tileMap, ArrayList<Rat> rats, ArrayList<Item> items,
+                int timeLeft, int lossCondition) {
         Level INSTANCE = Level.getInstance();
         this.mapX = mapX;
         this.mapY = mapY;
         stringMap = tileMap;
+        ratList = getRatInfo(rats);
         makeFile();
         writeToFile();
     }
 
-//    public String[][] mapToString(Tile[][] tileMap) {
-//        String[][] stringMap = new String[mapX][mapY];
-//        for (int y = 0; y < mapY; y++) {
-//            for (int x = 0; x < mapX; x++) {
-//                 stringMap[x][y] = tileMap[x][y].getTileType();
-//            }
-//        }
-//        return stringMap;
-//    }
+    public ArrayList<String> getRatInfo(ArrayList<Rat> rats) {
+        ArrayList<String> ratList = new ArrayList<>();
+        char sex;
+        for (Rat r: rats) {
+            if (!r.isBaby()) {
+                sex = toUpperCase(r.getSex());
+            } else {
+                sex = r.getSex();
+            }
+            int x = r.getxPos();
+            int y = r.getyPos();
+            ratList.add(sex + "," + x + "," + y + ";");
+        }
+        return ratList;
+    }
 
     public void makeFile() {
         try {
@@ -54,6 +70,10 @@ public class Save {
                 }
                 myWriter.write("\n");
             }
+            for (String r: ratList) {
+                myWriter.write(r);
+            }
+            myWriter.write("\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {

@@ -164,7 +164,8 @@ public class Level {
     }
 
     public void save() {
-        new Save(levelBoard.getMapX(), levelBoard.getMapY(), levelBoard.getTempTileMap());
+        new Save(levelBoard.getMapX(), levelBoard.getMapY(), levelBoard.getTempTileMap(),
+                levelBoard.getRats(), levelBoard.getItems(), timeLeft, lossCondition);
     }
 
     public int getTimeLeft() {

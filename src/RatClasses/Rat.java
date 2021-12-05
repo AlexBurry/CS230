@@ -463,6 +463,19 @@ public class Rat implements ITickHandler {
         this.secondsInGas = secondsInGas;
     }
 
+    public boolean isBaby() {
+        return isBaby;
+    }
+
+    public int getxPos() {
+        return xPos;
+    }
+
+    public int getyPos() {
+        return yPos;
+    }
+
+
     @Override
     public String toString() {
         return "";

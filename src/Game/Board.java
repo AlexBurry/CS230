@@ -237,7 +237,7 @@ public class Board extends Application implements ITickHandler {
         }
         return false;
     }
-    
+
     public String[][] getTempTileMap() {
         return tempTileMap;
     }
@@ -248,6 +248,7 @@ public class Board extends Application implements ITickHandler {
 
     public int getMapY() {
         return mapY;
+    }
 
     /**
      * @return int gameWidthInTiles, the width in terms of tiles.
