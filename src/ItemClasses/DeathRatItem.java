@@ -51,7 +51,7 @@ public class DeathRatItem extends Item {
 
 
     /**
-     * Used to increment the kill counter from outside this class. I.e. from rat.
+     * Used to increment the kill gestationGrowthCounter from outside this class. I.e. from rat.
      */
     public void incrementKills() {
         killCount++;

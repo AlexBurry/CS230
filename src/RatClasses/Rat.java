@@ -99,7 +99,7 @@ public class Rat implements ITickHandler {
      */
     public Rat(char sex, boolean isDeathRat, boolean isSterile, int xPos, int yPos, boolean isBaby) {
         currentDirection = Directions.NORTH;
-        this.isBaby = Character.isLowerCase(sex);
+        this.isBaby = isBaby;
         sex = Character.toUpperCase(sex);
         this.sex = sex;
         this.xPos = xPos;
@@ -132,25 +132,27 @@ public class Rat implements ITickHandler {
      * a counter for the delay required when female rat gives birth and,
      * the time it takes for a baby to grow into an adult rat.
      */
-    public void counter() {
+    public void gestationGrowthCounter() {
 
         //tick timer: increments one after each tick
         // and resets when certain if statements are reached.
         tickTimer += 1;
-        //resets the counter
-
-        if (tickTimer == 8 && !isBaby) {
-            tickTimer = 0;
-            if (sex == 'F') {
-
+        if(isPregnant){
+            if(tickTimer == 8){ //8 seconds of gestation, produce children.
+                System.out.println("Sex is female, adding to queue: " + gestatingChildren.size());
                 babyRatsToQueue();
+
             }
-        } else if (tickTimer == 9 && isBaby) {
-
-
-            tickTimer = 0;
+            else if (tickTimer > 30){ //22 seconds since producing children, reset timer, and allow pregnancy.
+                tickTimer = 0;
+                isPregnant = false;
+            }
+        }
+        //Deletes this babyRat when it grows
+        if (tickTimer == 9 && isBaby) {
             growRat();
         }
+
     }
 
     /**
@@ -158,7 +160,7 @@ public class Rat implements ITickHandler {
      */
     public void growRat() {
 
-        Rat adultRat = new Rat(getSex(),isDeathRat,isSterile, xPos, yPos,isBaby);
+        Rat adultRat = new Rat(getSex(),isDeathRat,isSterile, xPos, yPos,false);
         instance.getLevelBoard().removeRat(this);
         instance.addRatToQueue(adultRat);
     }
@@ -168,7 +170,7 @@ public class Rat implements ITickHandler {
      * for the amount of baby rats to be born.
      */
     public void babyRatsToQueue() {
-        System.out.println(gestatingChildren.size());
+
         for (BabyRat rats : gestatingChildren) {
             rats.setPosition(getX(), getY());
             babyRatsQueue.add(rats);
@@ -194,11 +196,12 @@ public class Rat implements ITickHandler {
      * sets the female rat pregnant back to false.
      */
     public void giveBirth() {
+        System.out.println("giving birth.");
         for (Rat br : babyRatsQueue) {
             instance.addRatToQueue(br);
         }
         babyRatsQueue.clear();
-        isPregnant = false;
+
     }
 
     /**
@@ -216,18 +219,21 @@ public class Rat implements ITickHandler {
 
             if (canMove) {
                 move();
-                checkRatCollision();
+
             }
             if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
                 instance.getLevelBoard().redrawTile(xPos, yPos, false);
             }
 
-
+            checkRatCollision();
 
 
 
             if (count == 4) { //If one second has passed.
-                counter();
+                if(sex == 'F'){
+                    gestationGrowthCounter();
+                }
+
 
 
                 if (inGas) {
@@ -477,31 +483,36 @@ public class Rat implements ITickHandler {
 
         for (Rat rt : existingRats) {
             if (rt != this) {
-                if (rt.getX() == xPos && rt.getY() == yPos) {
+                if(sex == 'M'){
+                    if (rt.getX() == xPos && rt.getY() == yPos) {
 
-                    //check if male and female rat in same tile then sexy time
+                        //check if male and female rat in same tile then sexy time
 
-                    if (sex == 'M' && rt.getSex() == 'F'
-                            && !isPregnant && !isBaby && !isSterile) {
-                        System.out.println("mating");
-                        isPregnant = true;
+                        if (rt.getSex() == 'F' && !rt.isPregnant && !(rt.isSterile || isSterile)) {
 
-                        int numOfBabies = new Random().nextInt(3);
-                        for (int i = 0; i < numOfBabies; i++) {
-                            char ratGender = new Random().nextBoolean() ? 'f' : 'm';
-                            BabyRat babyRat = new BabyRat(ratGender, xPos, yPos);
-                            gestatingChildren.add(babyRat);
-                            System.out.println("Added a child to list. Size: " + gestatingChildren.size());
+                            int numOfBabies = new Random().nextInt(5);
+                            if(numOfBabies == 0){
+                                numOfBabies = 1;
+                            }
+                            for (int i = 0; i < numOfBabies; i++) {
+                                char ratGender = new Random().nextBoolean() ? 'f' : 'm';
+                                BabyRat babyRat = new BabyRat(ratGender, xPos, yPos);
+                                rt.gestatingChildren.add(babyRat);
+                                System.out.println("Added a child to list. Size: " + rt.gestatingChildren.size());
+
+                            }
+                            rt.isPregnant = true;
+                            this.canMove = false;
+                            rt.setCanMove(false);
+                            waitToReleaseRat();
+                            rt.waitToReleaseRat();
+
+
                         }
-                        this.canMove = false;
-                        rt.setCanMove(false);
-                        waitToReleaseRat();
-                        rt.waitToReleaseRat();
-
 
                     }
-
                 }
+
             }
         }
     }
