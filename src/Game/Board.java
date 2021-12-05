@@ -54,6 +54,7 @@ public class Board extends Application implements ITickHandler {
         tileMap = new Tile[this.mapX][this.mapY];
         tempTileMap = tiles;
         instance = Level.getInstance();
+        instance.addListener(this);
         for (String rt : rats) {
             String[] values = rt.split(",");
             Rat newRat;
@@ -68,7 +69,7 @@ public class Board extends Application implements ITickHandler {
             instance.addListener(newRat);
         }
 
-        instance.addListener(this);
+
 
         gameWidthInTiles = GAME_WIDTH / 60;
         gameWidthInTiles = (GAME_HEIGHT - 104) / 60;

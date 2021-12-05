@@ -231,7 +231,7 @@ public class DragAndDrop {
             gPane2.add(saveBtn, 0,0);
 
             Scene optionScene = new Scene(gPane2,300,150);
-            
+
             optionWindow.getIcons().add(new Image("Sprites/raticon.png"));
             optionWindow.setTitle("Rats: Save");
             optionWindow.setResizable(false);
