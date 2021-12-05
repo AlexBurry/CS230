@@ -25,7 +25,7 @@ public class Save {
     private int timeLeft;
     private int lossCondition;
     private int currentScore;
-    private int[] inv;
+    private String[] inv;
     private final String PROFILE_NAME;
     private final String LEVEL_NAME;
 
@@ -55,11 +55,12 @@ public class Save {
         stringMap = tileMap;
         ratList = getRatInfo(rats);
         itemList = getItemInfo(items);
-        this.inv = inv;
+        //this.inv = inv;
         this.itemsRespawnRate = itemsRespawnRate;
         this.timeLeft = timeLeft;
         this.lossCondition = lossCondition;
         this.currentScore = currentScore;
+        this.inv = getInvInfo(inv);
         makeFile();
         writeToFile();
     }
@@ -119,9 +120,18 @@ public class Save {
         return itemList;
     }
 
-//    public ArrayList<String> getInvInfo() {
-//
-//    }
+    public String[] getInvInfo(int[] inv) {
+        String[] inventory = new String[8];
+        inventory[0] = "b," + inv[0];
+        inventory[1] = "m," + inv[1];
+        inventory[2] = "f," + inv[2];
+        inventory[3] = "g," + inv[3];
+        inventory[4] = "p," + inv[4];
+        inventory[5] = "n," + inv[5];
+        inventory[6] = "s," + inv[6];
+        inventory[7] = "d," + inv[7];
+        return inventory;
+    }
 
     /**
      * Creates a new save file named after the player and current level
@@ -145,7 +155,7 @@ public class Save {
      */
     public void writeToFile() {
         try {
-            FileWriter myWriter = new FileWriter(PROFILE_NAME + LEVEL_NAME);
+            FileWriter myWriter = new FileWriter( PROFILE_NAME + LEVEL_NAME);
             myWriter.write(mapX + ", " + mapY + ",");
             myWriter.write("\n");
             for (int y = 0; y < mapY; y++) {
