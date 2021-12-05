@@ -68,7 +68,8 @@ public class Rat implements ITickHandler {
 
     /**
      * Constructor for rat class.
-     * @param sex the gender of the rat.
+     *
+     * @param sex  the gender of the rat.
      * @param xPos x position.
      * @param yPos y position.
      */
@@ -88,7 +89,8 @@ public class Rat implements ITickHandler {
 
     /**
      * Constructor for rat class.
-     * @param sex the gender of the rat.
+     *
+     * @param sex  the gender of the rat.
      * @param xPos x position.
      * @param yPos y position.
      */
@@ -104,7 +106,7 @@ public class Rat implements ITickHandler {
         this.isSterile = isSterile;
         instance = Level.getInstance();
 
-        if(isDeathRat){
+        if (isDeathRat) {
             instance.getLevelBoard().addRat(this);
             instance.addListener(this);
         }
@@ -117,6 +119,7 @@ public class Rat implements ITickHandler {
 
     /**
      * setter for a baby rat.
+     *
      * @param baby a boolean value true/false.
      */
     public void setBaby(boolean baby) {
@@ -124,11 +127,10 @@ public class Rat implements ITickHandler {
     }
 
     /**
-     * a timer for how long the female rat is pregnant for and when
-     * tickTimer increments by 1 after each time @tickEvent called,
-     * after certain conditional statements
+     * a counter for the delay required when female rat gives birth and,
+     * the time it takes for a baby to grow into an adult rat.
      */
-    public void counter(){
+    public void counter() {
 
         //tick timer: increments one after each tick
         // and resets when certain if statements are reached.
@@ -137,19 +139,30 @@ public class Rat implements ITickHandler {
 
         if (tickTimer == 8 && !isBaby) {
             tickTimer = 0;
-            if (sex == 'f' ) {
+            if (sex == 'f') {
                 babyRatsToQueue();
             }
         } else if (tickTimer == 9 && isBaby) {
 
             setBaby(false);
             tickTimer = 0;
-            Rat adultRat = new Rat(getSex(), xPos, yPos);
-            instance.getLevelBoard().removeRat(this);
-            instance.addRatToQueue(adultRat);
+            growRat();
         }
     }
 
+    /**
+     * removes this rat and adds a new adult rat in the same pos
+     */
+    public void growRat() {
+        Rat adultRat = new Rat(getSex(), xPos, yPos);
+        instance.getLevelBoard().removeRat(this);
+        instance.addRatToQueue(adultRat);
+    }
+
+    /**
+     * adds new baby rats to the queue and calls giveBirth
+     * for the amount of baby rats to be born.
+     */
     public void babyRatsToQueue() {
         for (BabyRat rats : gestatingChildren) {
             rats.setPosition(getX(), getY());
@@ -159,6 +172,9 @@ public class Rat implements ITickHandler {
         giveBirth();
     }
 
+    /**
+     * schedules a delay for the rat, before it begins to move again.
+     */
     public void waitToReleaseRat() {
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.schedule(releaseRat, 3, TimeUnit.SECONDS);
@@ -168,6 +184,10 @@ public class Rat implements ITickHandler {
         setCanMove(true);
     }
 
+    /**
+     * takes the amount of babyRats in queue and adds the amount of rats to the level,
+     * sets the female rat pregnant back to false.
+     */
     public void giveBirth() {
         for (Rat br : babyRatsQueue) {
             instance.addRatToQueue(br);
@@ -197,8 +217,6 @@ public class Rat implements ITickHandler {
             }
 
 
-
-
             checkRatCollision(); //do this before to make sure we are still in gas.
 
 
@@ -212,10 +230,7 @@ public class Rat implements ITickHandler {
                     secondsInGas = 0; //if we are not in gas, we are safe.
                 }
             }
-
-
         }
-
     }
 
     public int getX() {
@@ -265,8 +280,7 @@ public class Rat implements ITickHandler {
      * changes the direction the rat is facing depending on the direction it is going.
      */
     public void changeSprite() {
-
-
+        
         if (sex == 'm') {
             switch (currentDirection) {
                 case EAST -> sprite = ImageRefs.maleRatRight;
