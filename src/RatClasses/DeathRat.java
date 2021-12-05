@@ -1,29 +1,44 @@
 package RatClasses;
 
-import Game.Level;
 import ItemClasses.DeathRatItem;
 import Sprites.ImageRefs;
 
-import java.util.Random;
+/**
+ * Death rat kills all rats other than its own kind.
+ *
+ * @author Marcus, Trafford
+ * @version 0.1
+ * @since 0.1
+ */
 
 public class DeathRat extends Rat{
 
     private DeathRatItem item;
 
-    public DeathRat(char sex, boolean isDeath, boolean alive, boolean isSterile, int xPos, int yPos) {
-        super(sex, isDeath, alive, isSterile, xPos, yPos,false);
+    public DeathRat(char sex, boolean isDeath, boolean isSterile, int xPos, int yPos) {
+        super(sex, isDeath, isSterile, xPos, yPos,false);
         this.setImage(ImageRefs.deathRatUp);
 
     }
 
+    /**
+     * gets the item
+     */
     public DeathRatItem getItem(){
         return item;
     }
 
+    /**
+     * sets the item
+     * @param item must be a DeathRatItem
+     */
     public void setItem(DeathRatItem item){
         this.item = item;
     }
 
+    /**
+     * changes the death rat sprite depending on the direction it's going.
+     */
     @Override
     public void changeSprite() {
         switch (getCurrentDirection()) {

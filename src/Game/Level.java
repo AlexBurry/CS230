@@ -23,6 +23,7 @@ public class Level {
     private int currentScore;
     private final int ALLOWED_TIME;
     private int timeLeft;
+    private int levelNumber;
     private int lossCondition;
     private Board levelBoard;
     private Inventory levelInv;
@@ -268,4 +269,12 @@ public class Level {
      * @return lossCondition
      */
     public int getLossCondition() { return lossCondition; }
+
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
+    }
+
+    public int getLevelNumber() {
+        return levelNumber;
+    }
 }

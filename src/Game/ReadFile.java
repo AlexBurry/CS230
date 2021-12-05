@@ -62,8 +62,9 @@ public class ReadFile {
         ArrayList<String> respawns = readItemSpawnRates(new Scanner(in.nextLine()));
         int allowedTime = readTimeLimit(new Scanner(in.nextLine()));
         int lossCondition = readLossCondition(new Scanner(in.nextLine()));
-        int currentScore = readCurrentScore(new Scanner(in.nextLine()));
-        ArrayList<String> items = readItemLocations(in);
+        ArrayList<String> items = readItemLocations(new Scanner(in.nextLine()));
+        int currentScore = readCurrentScore(in);
+
 
         return new Level(mapX, mapY, map, rats, respawns, allowedTime, lossCondition, currentScore, items, primaryStage);
     }

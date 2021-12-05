@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * This class is responsible for creating the GUI
@@ -36,7 +37,8 @@ import java.io.IOException;
 public class Menu {
 
     private Stage primaryStage;
-    private Profile p;
+    private static Profile p;
+
     private boolean skip = false;
     private String font = "Comic Sans";
     private boolean loggedIn = false;
@@ -334,7 +336,7 @@ public class Menu {
             case 0 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (1 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_0.txt");
+                        buildLevel(primaryStage, "level_0.txt",0);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -346,7 +348,7 @@ public class Menu {
             case 1 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (2 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_1.txt");
+                        buildLevel(primaryStage, "level_1.txt",1);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -358,7 +360,7 @@ public class Menu {
             case 2 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (3 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_2.txt");
+                        buildLevel(primaryStage, "level_2.txt",2);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -370,7 +372,7 @@ public class Menu {
             case 3 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (4 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_3.txt");
+                        buildLevel(primaryStage, "level_3.txt",3);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -382,7 +384,7 @@ public class Menu {
             case 4 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (5 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_4.txt");
+                        buildLevel(primaryStage, "level_4.txt",4);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -394,7 +396,7 @@ public class Menu {
             case 5 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (6 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "test_level.txt"); //TODO: Change on submission
+                        buildLevel(primaryStage, "test_level.txt",5); //TODO: Change on submission
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -503,9 +505,8 @@ public class Menu {
 
         lvl.setBackground(new Background(image));
 
-        if (highestUnlock <= p.getHighestLevelUnlocked()) {
-            lvl = revealLevels(lvl, highestUnlock);
-            highestUnlock++;
+        if (p.getLevelsSavedTo().contains(selectionLvl)) {
+            lvl = revealSavedLevels(lvl, selectionLvl);
         }
 
         lvl.setPrefSize(125, 125);
@@ -513,72 +514,48 @@ public class Menu {
         switch (selectionLvl) {
             case 0 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (1 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_0.txt");
-                    } else {
-                        System.out.println("This Player Has Yet To " +
-                                "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                    if (p.getLevelsSavedTo().contains(0)) {
+                        loadLevel(primaryStage, p.getName() + "level_0.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 1 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (2 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_1.txt");
-                    } else {
-                        System.out.println("This Player Has Yet To " +
-                                "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                    if (p.getLevelsSavedTo().contains(1)) {
+                        loadLevel(primaryStage, p.getName() + "level_1.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 2 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (3 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_2.txt");
-                    } else {
-                        System.out.println("This Player Has Yet To " +
-                                "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                    if (p.getLevelsSavedTo().contains(2)) {
+                        loadLevel(primaryStage, p.getName() + "level_2.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 3 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (4 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_3.txt");
-                    } else {
-                        System.out.println("This Player Has Yet To " +
-                                "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                    if (p.getLevelsSavedTo().contains(3)) {
+                        loadLevel(primaryStage, p.getName() + "level_3.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 4 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (5 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_4.txt");
-                    } else {
-                        System.out.println("This Player Has Yet To " +
-                                "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                    if (p.getLevelsSavedTo().contains(4)) {
+                        loadLevel(primaryStage, p.getName() + "level_4.txt");
                     }
                 } catch (FileNotFoundException e) {
                 }
             });
             case 5 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
-                    if (6 <= p.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "test_level.txt"); //TODO: Change on submission
-                    } else {
-                        System.out.println("This Player Has Yet To " +
-                                "Unlock This Level! Highest Level Unlocked: "
-                                + p.getHighestLevelUnlocked());
+                    if (p.getLevelsSavedTo().contains(5)) {
+                        loadLevel(primaryStage, p.getName() + "test_level.txt"); //TODO: Change on submission
                     }
                 } catch (FileNotFoundException e) {
                 }
@@ -601,7 +578,7 @@ public class Menu {
         Pane savedPane = new Pane();
         BackgroundSize standardSize = new BackgroundSize(125, 125, true, true, true, false);
 
-        BackgroundImage lvl1 = new BackgroundImage(new Image("Sprites/testlvlIconSaved.png"), BackgroundRepeat.NO_REPEAT,
+        BackgroundImage lvl1 = new BackgroundImage(new Image("Sprites/level_0IconSaved.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 standardSize);
         BackgroundImage lvl2 = new BackgroundImage(new Image("Sprites/level_1IconSaved.png"), BackgroundRepeat.NO_REPEAT,
@@ -621,12 +598,12 @@ public class Menu {
 
 
         switch (levelSaved) {
-            case 1 -> savedPane.setBackground(new Background(lvl1));
-            case 2 -> savedPane.setBackground(new Background(lvl2));
-            case 3 -> savedPane.setBackground(new Background(lvl3));
-            case 4 -> savedPane.setBackground(new Background(lvl4));
-            case 5 -> savedPane.setBackground(new Background(lvl5));
-            case 6 -> savedPane.setBackground(new Background(lvl6));
+            case 0 -> savedPane.setBackground(new Background(lvl1));
+            case 1 -> savedPane.setBackground(new Background(lvl2));
+            case 2 -> savedPane.setBackground(new Background(lvl3));
+            case 3 -> savedPane.setBackground(new Background(lvl4));
+            case 4 -> savedPane.setBackground(new Background(lvl5));
+            case 5 -> savedPane.setBackground(new Background(lvl6));
         }
 
         return savedPane;
@@ -673,15 +650,32 @@ public class Menu {
      * @param primaryStage the Stage that is displayed for the user.
      * @throws FileNotFoundException
      */
-    public void buildLevel(Stage primaryStage, String level) throws FileNotFoundException {
+    public void buildLevel(Stage primaryStage, String level,int number) throws FileNotFoundException {
         primaryStage.setTitle("Rats: Steampunk Edition");
         primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
 
         Level newLevel = new ReadFile(level, primaryStage).newLevel();
+        newLevel.setLevelNumber(number);
         newLevel.addProfileName(p.getName());
         newLevel.addLevelName(level);
         //newLevel.save(); //testing - to be removed
+    }
+
+    /**
+     * This method loads a level
+     * @param primaryStage the Stage that is displayed for the user.
+     * @throws FileNotFoundException
+     */
+    public void loadLevel(Stage primaryStage, String level) throws FileNotFoundException {
+        primaryStage.setTitle("Rats: Steampunk Edition");
+        primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
+
+        Level newLevel = new ReadFile(level, primaryStage).loadLevel();
+
+        newLevel.addProfileName(p.getName());
+        newLevel.addLevelName(level);
+
     }
 
 
@@ -690,6 +684,10 @@ public class Menu {
      */
     public void buildHighScore() {
         System.out.println("Work in Progress...");
+    }
+
+    public static Profile getProfile(){
+        return p;
     }
 
 }

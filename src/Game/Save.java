@@ -155,8 +155,8 @@ public class Save {
      */
     public void writeToFile() {
         try {
-            FileWriter myWriter = new FileWriter( PROFILE_NAME + LEVEL_NAME);
-            myWriter.write(mapX + ", " + mapY + ",");
+            FileWriter myWriter = new FileWriter(PROFILE_NAME + LEVEL_NAME);
+            myWriter.write(mapX + "," + mapY + ",");
             myWriter.write("\n");
             for (int y = 0; y < mapY; y++) {
                 for (int x = 0; x < mapX; x++) {
