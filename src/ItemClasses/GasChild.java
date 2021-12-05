@@ -82,34 +82,34 @@ public class GasChild extends GasItem{
         Tile[][] allTiles = getLocalInstance().getLevelBoard().getTileMap();
 
 
-        if(expansionDirection != Rat.Directions.EAST && allTiles[left.x][left.y].getTraversable()){
+        if(expansionDirection != Rat.Directions.EAST && allTiles[left.getX()][left.getY()].getTraversable()){
 
-            if(!getLocalInstance().getLevelBoard().existsItemAt(left.x,left.y)){
-                GasChild child = new GasChild(left.x,left.y,false);
+            if(!getLocalInstance().getLevelBoard().existsItemAt(left.getX(),left.getY())){
+                GasChild child = new GasChild(left.getX(),left.getY(),false);
                 child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(expansionDirection != Rat.Directions.WEST && allTiles[right.x][right.y].getTraversable()){
+        if(expansionDirection != Rat.Directions.WEST && allTiles[right.getX()][right.getY()].getTraversable()){
 
-            if(!getLocalInstance().getLevelBoard().existsItemAt(left.x,left.y)){
-                GasChild child = new GasChild(left.x,left.y,false);
+            if(!getLocalInstance().getLevelBoard().existsItemAt(left.getX(),left.getY())){
+                GasChild child = new GasChild(left.getX(),left.getY(),false);
                 child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(expansionDirection != Rat.Directions.NORTH && allTiles[up.x][up.y].getTraversable()){
+        if(expansionDirection != Rat.Directions.NORTH && allTiles[up.getX()][up.getY()].getTraversable()){
 
-            if(!getLocalInstance().getLevelBoard().existsItemAt(up.x,up.y)){
-                GasChild child = new GasChild(up.x,up.y,false);
+            if(!getLocalInstance().getLevelBoard().existsItemAt(up.getX(),up.getY())){
+                GasChild child = new GasChild(up.getX(),up.getY(),false);
                 child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(expansionDirection != Rat.Directions.SOUTH && allTiles[down.x][down.y].getTraversable()){
+        if(expansionDirection != Rat.Directions.SOUTH && allTiles[down.getX()][down.getY()].getTraversable()){
 
-            if(!getLocalInstance().getLevelBoard().existsItemAt(down.x,down.y)){
-                GasChild child = new GasChild(down.x,down.y,false);
+            if(!getLocalInstance().getLevelBoard().existsItemAt(down.getX(),down.getY())){
+                GasChild child = new GasChild(down.getX(),down.getY(),false);
                 child.setParent(this);
                 associatedGas.add(child);
             }

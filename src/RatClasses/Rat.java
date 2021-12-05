@@ -63,6 +63,7 @@ public class Rat implements ITickHandler {
 
     /**
      * Constructor for rat class.
+     * Used when loading rats from a file
      *
      * @param sex  the gender of the rat.
      * @param xPos x position.
@@ -72,7 +73,11 @@ public class Rat implements ITickHandler {
         currentDirection = Directions.NORTH;
 
         this.isBaby = Character.isLowerCase(sex);
-        this.sex = Character.toLowerCase(sex);
+
+        if (Character.toLowerCase(sex) == 'f' || Character.toLowerCase(sex) == 'm') {
+            this.sex = sex;
+        }
+
         this.xPos = xPos;
         this.yPos = yPos;
         isDeathRat = false;
@@ -86,6 +91,7 @@ public class Rat implements ITickHandler {
 
     /**
      * Constructor for baby rat and death rat class.
+     * Only used for adult rats
      *
      * @param sex  the gender of the rat.
      * @param xPos x position.
@@ -93,10 +99,9 @@ public class Rat implements ITickHandler {
      */
     public Rat(char sex, boolean isDeathRat, boolean isSterile, int xPos, int yPos, boolean isBaby) {
         currentDirection = Directions.NORTH;
-        this.isBaby = isBaby;
-        if (sex == 'f' || sex == 'm') {
-            this.sex = sex;
-        }
+        this.isBaby = Character.isLowerCase(sex);
+        sex = Character.toUpperCase(sex);
+        this.sex = sex;
         this.xPos = xPos;
         this.yPos = yPos;
         this.isDeathRat = isDeathRat;
@@ -136,12 +141,13 @@ public class Rat implements ITickHandler {
 
         if (tickTimer == 8 && !isBaby) {
             tickTimer = 0;
-            if (sex == 'f') {
+            if (sex == 'F') {
+
                 babyRatsToQueue();
             }
         } else if (tickTimer == 9 && isBaby) {
 
-            setBaby(false);
+
             tickTimer = 0;
             growRat();
         }
@@ -151,7 +157,8 @@ public class Rat implements ITickHandler {
      * removes this rat and adds a new adult rat in the same pos
      */
     public void growRat() {
-        Rat adultRat = new Rat(getSex(), xPos, yPos);
+
+        Rat adultRat = new Rat(getSex(),isDeathRat,isSterile, xPos, yPos,isBaby);
         instance.getLevelBoard().removeRat(this);
         instance.addRatToQueue(adultRat);
     }
@@ -161,6 +168,7 @@ public class Rat implements ITickHandler {
      * for the amount of baby rats to be born.
      */
     public void babyRatsToQueue() {
+        System.out.println(gestatingChildren.size());
         for (BabyRat rats : gestatingChildren) {
             rats.setPosition(getX(), getY());
             babyRatsQueue.add(rats);
@@ -208,13 +216,14 @@ public class Rat implements ITickHandler {
 
             if (canMove) {
                 move();
+                checkRatCollision();
             }
             if (instance.getLevelBoard().getTileMap()[xPos][yPos].getTileType().equalsIgnoreCase("t")) {
                 instance.getLevelBoard().redrawTile(xPos, yPos, false);
             }
 
 
-            checkRatCollision(); //do this before to make sure we are still in gas.
+
 
 
             if (count == 4) { //If one second has passed.
@@ -278,8 +287,8 @@ public class Rat implements ITickHandler {
      * changes the direction the rat is facing depending on the direction it is going.
      */
     public void changeSprite() {
-        
-        if (sex == 'm') {
+
+        if (sex == 'M') {
             switch (currentDirection) {
                 case EAST -> sprite = ImageRefs.maleRatRight;
                 case WEST -> sprite = ImageRefs.maleRatLeft;
@@ -400,11 +409,20 @@ public class Rat implements ITickHandler {
                             }
                         }
                         case MSex -> {
-                            sex = 'm';
+                            if(isBaby){
+                                sex = 'm';
+                            }else{
+                                sex = 'M';
+                            }
+
                             itemsToDeleteOnCollision.add(it);
                         }
                         case FSex -> {
-                            sex = 'f';
+                            if(isBaby){
+                                sex = 'f';
+                            }else{
+                                sex = 'F';
+                            }
                             itemsToDeleteOnCollision.add(it);
                         }
                         case NoEntry -> {
@@ -462,8 +480,10 @@ public class Rat implements ITickHandler {
                 if (rt.getX() == xPos && rt.getY() == yPos) {
 
                     //check if male and female rat in same tile then sexy time
-                    if (sex == 'f' && rt.getSex() == 'm' && !isPregnant && !isBaby && !isSterile) {
 
+                    if (sex == 'M' && rt.getSex() == 'F'
+                            && !isPregnant && !isBaby && !isSterile) {
+                        System.out.println("mating");
                         isPregnant = true;
 
                         int numOfBabies = new Random().nextInt(3);
@@ -510,6 +530,7 @@ public class Rat implements ITickHandler {
 
     /**
      * gets the sprite.
+     *
      * @return type image
      */
     public Image getSprite() {
@@ -518,6 +539,7 @@ public class Rat implements ITickHandler {
 
     /**
      * sets the position.
+     *
      * @param x horizontal axis
      * @param y vertical axis
      */
@@ -537,8 +559,8 @@ public class Rat implements ITickHandler {
             instance.increaseScore(10);
         }
 
-        if(babyRatsQueue.size() > 0){
-            for (Rat bRat:babyRatsQueue) {
+        if (babyRatsQueue.size() > 0) {
+            for (Rat bRat : babyRatsQueue) {
                 instance.increaseScore(10);
             }
 
@@ -594,6 +616,7 @@ public class Rat implements ITickHandler {
 
     /**
      * gets the value of isBaby
+     *
      * @return boolean
      */
     public boolean getIsBaby() {
@@ -602,6 +625,7 @@ public class Rat implements ITickHandler {
 
     /**
      * gets x position
+     *
      * @return int
      */
     public int getxPos() {
@@ -610,10 +634,20 @@ public class Rat implements ITickHandler {
 
     /**
      * gets y position
+     *
      * @return int
      */
     public int getyPos() {
         return yPos;
     }
 
+    public void setSex(char sex) {
+        this.sex = sex;
+
+        if (this.sex == 'F' || this.sex == 'M') {
+            this.isBaby = false;
+        } else {
+            isBaby = true;
+        }
+    }
 }

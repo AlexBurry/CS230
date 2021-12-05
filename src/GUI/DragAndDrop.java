@@ -213,7 +213,7 @@ public class DragAndDrop {
             gPane2.add(saveBtn, 1, 1);
 
             Scene optionScene = new Scene(gPane2,300,150);
-            
+
             optionWindow.getIcons().add(new Image("Sprites/raticon.png"));
             optionWindow.setTitle("Rats: Save");
             optionWindow.setResizable(false);
@@ -241,7 +241,7 @@ public class DragAndDrop {
                 if (rats.get(i).getIsBaby()) {
                     babyRats++;
                 } else {
-                    switch (rats.get(i).getSex()) {
+                    switch (Character.toLowerCase(rats.get(i).getSex())) {
                         case 'm' -> maleRats++;
                         case 'f' -> femaleRats++;
                     }
