@@ -187,11 +187,13 @@ public class DragAndDrop {
      */
     public GridPane makeOptionsButton() {
         GridPane gPane = new GridPane();
+        Label textDisplay = new Label("Save? Will overwrite existing files!");
 
         Button optionBtn = new Button("Options");
         optionBtn.setPrefSize(50, 20);
         GridPane.setHalignment(optionBtn, HPos.RIGHT);
         gPane.add(optionBtn, 0, 2);
+        gPane.add(textDisplay,0,0);
 
         optionBtn.setOnAction(mouseEvent ->
         {
@@ -203,15 +205,15 @@ public class DragAndDrop {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     //temporary.
-                    optionWindow.close();
+                    instance.save();
                 }
             });
 
             GridPane gPane2 = new GridPane();
             gPane2.add(saveBtn, 0, 2);
             GridPane.setHalignment(saveBtn, HPos.CENTER);
-            Scene optionScene = new Scene(gPane2,200,200);
-
+            Scene optionScene = new Scene(gPane2,400,200);
+            optionWindow.setResizable(false);
             optionWindow.setScene(optionScene);
             optionWindow.show();
 

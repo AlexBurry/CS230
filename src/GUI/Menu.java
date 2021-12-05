@@ -681,7 +681,7 @@ public class Menu {
         Level newLevel = new ReadFile(level, primaryStage).newLevel();
         newLevel.addProfileName(p.getName());
         newLevel.addLevelName(level);
-        newLevel.save(); //testing - to be removed
+        //newLevel.save(); //testing - to be removed
     }
 
 
