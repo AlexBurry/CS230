@@ -38,9 +38,9 @@ public class LevelSelector {
      * @param primaryStage initialises primaryStage.
      * @param p initialises Profile.
      */
-    public LevelSelector(Stage primaryStage, Profile p) {
+    public LevelSelector(Stage primaryStage, Profile p, Menu menu) {
         this.primaryStage = primaryStage;
-        mObject = new Menu(primaryStage);
+        mObject = menu;
         this.p = p;
     }
 

@@ -24,18 +24,6 @@ public class GasItem extends Item implements ITickHandler {
 
     private int expansionStage = 0;
 
-    class Coordinate {
-
-        public int x;
-        public int y;
-
-        public Coordinate(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-    }
-
     //all tiles in each direction, allows us to create them in steps each second.
     private ArrayList<Coordinate> northernTiles = new ArrayList<>();
     private ArrayList<Coordinate> southernTiles = new ArrayList<>();

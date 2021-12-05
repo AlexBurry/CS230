@@ -238,7 +238,7 @@ public class Menu {
                 p = new Profile(inputField.getText());
             }
             loggedIn = true;
-            lvlSelect = new LevelSelector(primaryStage, p);
+            lvlSelect = new LevelSelector(primaryStage, p, this);
             switch (name) {
                 case "l" -> lvlSelect.levelSelector(primaryStage);
                 case "p" -> buildProfile(primaryStage);

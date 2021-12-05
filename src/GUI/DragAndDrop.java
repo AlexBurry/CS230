@@ -209,9 +209,11 @@ public class DragAndDrop {
             });
 
             GridPane gPane2 = new GridPane();
-            gPane2.add(saveBtn, 0, 0);
+            GridPane.setHalignment(saveBtn, HPos.CENTER);
+            gPane2.add(saveBtn, 1, 1);
 
             Scene optionScene = new Scene(gPane2,300,150);
+            
             optionWindow.getIcons().add(new Image("Sprites/raticon.png"));
             optionWindow.setTitle("Rats: Save");
             optionWindow.setResizable(false);
