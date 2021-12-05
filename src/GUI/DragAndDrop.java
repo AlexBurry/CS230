@@ -189,7 +189,8 @@ public class DragAndDrop {
         Label textDisplay = new Label("Save? Will overwrite existing files!");
 
         Button optionBtn = new Button("Options");
-        optionBtn.setPrefSize(50, 20);
+
+        //optionBtn.setPrefSize(175, 100);
         GridPane.setHalignment(optionBtn, HPos.RIGHT);
         gPane.add(optionBtn, 0, 2);
         gPane.add(textDisplay,0,0);
@@ -200,6 +201,7 @@ public class DragAndDrop {
             optionWindow.initModality(Modality.APPLICATION_MODAL);
 
             Button saveBtn = new Button("Save");
+            saveBtn.setPrefSize(70,70);
             saveBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
