@@ -27,6 +27,7 @@ public class Level {
     private Board levelBoard;
     private Inventory levelInv;
     private static Level instance;
+    private ArrayList<String> itemsRespawnRate = new ArrayList<>();
     private final int TICKRATE = 250;
     private int tickCount = 1; //used to keep ticks in line.
     private List<ITickHandler> listeners = new ArrayList<>();
@@ -53,16 +54,15 @@ public class Level {
         levelBoard = new Board(tiles, rats, mapX, mapY);
         levelBoard.start(primaryStage);
 
+        this.itemsRespawnRate = itemsRespawnRate;
         //game tick system
         Timeline tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play(); //can be used to pause the game
     }
 
-
     public void addListener(ITickHandler toAdd) {
         listeners.add(toAdd);
-
     }
 
     public List<ITickHandler> getListeners() {
@@ -92,8 +92,6 @@ public class Level {
         }
         ratsToAddAfterTick.clear();
 
-
-
         levelBoard.drawRats();
         levelBoard.drawItems();
         levelBoard.drawTunnels();
@@ -101,16 +99,10 @@ public class Level {
         tickCount++;
 
         if(tickCount > 4){
-
-
-
             timeLeft = timeLeft - 1;
             checkLossCondition();
             tickCount = 1;
         }
-
-
-
     }
 
     public void addRatToQueue(Rat rat){
@@ -164,8 +156,20 @@ public class Level {
     }
 
     public void save() {
+        int[] inv = new int[8];
+        inv[0] = levelInv.getNumberOfBombs();
+        inv[1] = levelInv.getNumberOfMSexChange();
+        inv[2] = levelInv.getNumberOfFSexChange();
+        inv[3] = levelInv.getNumberOfGas();
+        inv[4] = levelInv.getNumberOfPoison();
+        inv[5] = levelInv.getNumberOfNoEntry();
+        inv[6] = levelInv.getNumberOfSterilisation();
+        inv[7] = levelInv.getNumberOfDeathRat();
+
+
         new Save(levelBoard.getMapX(), levelBoard.getMapY(), levelBoard.getTempTileMap(),
-                levelBoard.getRats(), levelBoard.getItems(), timeLeft, lossCondition);
+                levelBoard.getRats(), itemsRespawnRate,  timeLeft, lossCondition, levelBoard.getItems(),
+                currentScore, inv);
     }
 
     public int getTimeLeft() {

@@ -16,15 +16,27 @@ public class Save {
     private int mapX;
     private int mapY;
     private String[][] stringMap;
-    private ArrayList<String> ratList = new ArrayList<>();
+    private ArrayList<String> ratList;
+    private ArrayList<String> itemsRespawnRate;
+    private ArrayList<String> itemList;
+    private int timeLeft;
+    private int lossCondition;
+    private int currentScore;
+    private int[] inv;
 
-    public Save(int mapX, int mapY, String[][] tileMap, ArrayList<Rat> rats, ArrayList<Item> items,
-                int timeLeft, int lossCondition) {
+    public Save(int mapX, int mapY, String[][] tileMap, ArrayList<Rat> rats, ArrayList<String> itemsRespawnRate,
+                int timeLeft, int lossCondition, ArrayList<Item> items, int currentScore, int[] inv) {
         Level INSTANCE = Level.getInstance();
         this.mapX = mapX;
         this.mapY = mapY;
         stringMap = tileMap;
         ratList = getRatInfo(rats);
+        itemList = getItemInfo(items);
+        this.inv = inv;
+        this.itemsRespawnRate = itemsRespawnRate;
+        this.timeLeft = timeLeft;
+        this.lossCondition = lossCondition;
+        this.currentScore = currentScore;
         makeFile();
         writeToFile();
     }
@@ -33,7 +45,7 @@ public class Save {
         ArrayList<String> ratList = new ArrayList<>();
         char sex;
         for (Rat r: rats) {
-            if (!r.isBaby()) {
+            if (!r.getIsBaby()) {
                 sex = toUpperCase(r.getSex());
             } else {
                 sex = r.getSex();
@@ -44,6 +56,33 @@ public class Save {
         }
         return ratList;
     }
+
+    public ArrayList<String> getItemInfo(ArrayList<Item> items) {
+        ArrayList<String> itemList = new ArrayList<>();
+        char type;
+        for (Item i: items) {
+            switch (i.getMyItemType()) {
+                case Gas -> type = 'g';
+                case NoEntry -> type = 'n';
+                case FSex -> type = 'f';
+                case MSex -> type = 'm';
+                case Poison -> type = 'p';
+                case DeathRat -> type = 'd';
+                case Bomb -> type = 'b';
+                case Sterilise -> type = 's';
+                default -> throw new IllegalStateException("Unexpected value: " + i.getMyItemType());
+            }
+
+            int x = i.getX();
+            int y = i.getY();
+            itemList.add(type + "," + x + "," + y + ";");
+        }
+        return itemList;
+    }
+
+//    public ArrayList<String> getInvInfo() {
+//
+//    }
 
     public void makeFile() {
         try {
@@ -74,6 +113,19 @@ public class Save {
                 myWriter.write(r);
             }
             myWriter.write("\n");
+            for (String irr: itemsRespawnRate) {
+                myWriter.write(irr + ";");
+            }
+            myWriter.write("\n");
+            myWriter.write(timeLeft);
+            myWriter.write("\n");
+            myWriter.write(lossCondition);
+            myWriter.write("\n");
+            for (String i: itemList) {
+                myWriter.write(i);
+            }
+            myWriter.write("\n");
+            myWriter.write(currentScore);
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {

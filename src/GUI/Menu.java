@@ -465,6 +465,7 @@ public class Menu {
         primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
         Level newLevel = new ReadFile(level, primaryStage).newLevel();
+        newLevel.save(); //testing - to be removed
     }
 
 

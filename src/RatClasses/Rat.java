@@ -463,7 +463,7 @@ public class Rat implements ITickHandler {
         this.secondsInGas = secondsInGas;
     }
 
-    public boolean isBaby() {
+    public boolean getIsBaby() {
         return isBaby;
     }
 
