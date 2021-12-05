@@ -245,19 +245,6 @@ public class Menu {
         }
     }
 
-    /**
-     * This method creates the Level if the user
-     * entered an acceptable username.
-     *
-     * @param primaryStage the Stage that is displayed for the user.
-     * @throws FileNotFoundException
-     */
-    public void buildLevel(Stage primaryStage) throws FileNotFoundException {
-        primaryStage.setTitle("Rats: Steampunk Edition");
-        primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
-
-        Level newLevel = new ReadFile("level_0.txt", primaryStage).newLevel();
-    }
 
     /**
      * Creates a Window containing the logged-in user's information
@@ -494,6 +481,8 @@ public class Menu {
         primaryStage.getIcons().add(new Image("Sprites/raticon.png"));
 
         Level newLevel = new ReadFile(level, primaryStage).newLevel();
+        newLevel.addProfileName(p.getName());
+        newLevel.addLevelName(level);
         newLevel.save(); //testing - to be removed
     }
 

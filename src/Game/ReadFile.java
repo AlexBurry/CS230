@@ -1,6 +1,5 @@
 package Game;
 
-import Game.Level;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -40,11 +39,33 @@ public class ReadFile {
         String[][] map = readMap(in);
         in.nextLine();
         ArrayList<String> rats = readSpawnRatLocations(new Scanner(in.nextLine()));
-        ArrayList<String> items = readItemSpawnRates(new Scanner(in.nextLine()));
+        ArrayList<String> respawns = readItemSpawnRates(new Scanner(in.nextLine()));
         int allowedTime = readTimeLimit(new Scanner(in.nextLine()));
         int lossCondition = readLossCondition(in);
 
-        return new Level(mapX, mapY, map, rats, items, allowedTime, lossCondition, primaryStage); //in can never be closed... oops. - alex
+        return new Level(mapX, mapY, map, rats, respawns, allowedTime, lossCondition, primaryStage); //in can never be closed... oops. - alex
+    }
+
+    /**
+     * Returns a level with data already in it
+     * @return a level which ahs been played
+     */
+    public Level loadLevel() {
+        Scanner scan = new Scanner(in.nextLine()).useDelimiter(",|\r\n| ");
+        mapX = mapSize(scan);
+        mapY = mapSize(scan);
+        scan.close();
+
+        String[][] map = readMap(in);
+        in.nextLine();
+        ArrayList<String> rats = readSpawnRatLocations(new Scanner(in.nextLine()));
+        ArrayList<String> respawns = readItemSpawnRates(new Scanner(in.nextLine()));
+        int allowedTime = readTimeLimit(new Scanner(in.nextLine()));
+        int lossCondition = readLossCondition(new Scanner(in.nextLine()));
+        int currentScore = readCurrentScore(new Scanner(in.nextLine()));
+        ArrayList<String> items = readItemLocations(in);
+
+        return new Level(mapX, mapY, map, rats, respawns, allowedTime, lossCondition, currentScore, items, primaryStage);
     }
 
     private int mapSize(Scanner in) {
@@ -88,5 +109,18 @@ public class ReadFile {
     private int readLossCondition(Scanner in) {
         return Integer.parseInt(in.next());
     }
-//
+
+    private int readCurrentScore(Scanner in) {
+        return Integer.parseInt(in.next());
+    }
+
+    private ArrayList<String> readItemLocations(Scanner itemScan) {
+        ArrayList<String> rats = new ArrayList<>();
+        itemScan.useDelimiter(";");
+        while (itemScan.hasNext()) {
+            rats.add(itemScan.next());
+        }
+        return rats;
+    }
+
 }
