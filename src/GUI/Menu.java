@@ -148,7 +148,7 @@ public class Menu {
             motdLbl.setMaxHeight(50);
             motdLbl.setWrapText(true); //sometimes the motd is too long!
             messageBox.getChildren().add(motdLbl);
-            messageBox.setPadding(new Insets(100,10,10,10));
+            messageBox.setPadding(new Insets(100, 10, 10, 10));
             messageBox.setAlignment(Pos.CENTER);
 
         } catch (IOException e) {
@@ -411,32 +411,32 @@ public class Menu {
      * This method reveals the levels that the player unlocked in
      * a previous session or in the current one.
      *
-     * @param pane the unrevealed Pane.
+     * @param pane          the unrevealed Pane.
      * @param levelUnlocked the level currently being revealed.
      * @return revealed Pane.
      */
     public Pane revealLevels(Pane pane, int levelUnlocked) {
         Pane unlockedPane = new Pane();
+        BackgroundSize standardSize = new BackgroundSize(125, 125, true, true, true, false);
 
-        // Please add Images here Trafford, thanks!
         BackgroundImage lvl1 = new BackgroundImage(new Image("Sprites/testlvlIcon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                new BackgroundSize(125, 125, true, true, true, false));
+                standardSize);
         BackgroundImage lvl2 = new BackgroundImage(new Image("Sprites/level_1Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                new BackgroundSize(125, 125, true, true, true, false));
+                standardSize);
         BackgroundImage lvl3 = new BackgroundImage(new Image("Sprites/level_2Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                new BackgroundSize(125, 125, true, true, true, false));
+                standardSize);
         BackgroundImage lvl4 = new BackgroundImage(new Image("Sprites/level_3Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                new BackgroundSize(125, 125, true, true, true, false));
+                standardSize);
         BackgroundImage lvl5 = new BackgroundImage(new Image("Sprites/level_4Icon.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                new BackgroundSize(125, 125, true, true, true, false));
+                standardSize);
         BackgroundImage lvl6 = new BackgroundImage(new Image("Sprites/level_5Icon.png"), BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                new BackgroundSize(125, 125, true, true, true, false));
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, standardSize);
+
 
         switch (levelUnlocked) {
             case 1 -> unlockedPane.setBackground(new Background(lvl1));
