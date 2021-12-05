@@ -1,14 +1,21 @@
 package RatClasses;
-
-import Game.Level;
 import Sprites.ImageRefs;
 
-import java.util.Random;
+/**
+ * baby rats grow into adult rats.
+ * @author Marcus
+ * @version 0.1
+ * @since 0.1
+ */
 
 public class BabyRat extends Rat {
 
-
-
+    /**
+     * Constructor for baby rat. It takes all its data from the Rats class and sets its sprite as a baby rat.
+     * @param sex gender of rat
+     * @param xPos x position
+     * @param yPos y position
+     */
     public BabyRat(char sex, int xPos, int yPos /*int speed, Boolean alive, Boolean isSterile,*/) {
         super(sex, xPos, yPos /*,speed, alive, isSterile*/);
         this.setImage(ImageRefs.babyRatUp);
@@ -16,6 +23,9 @@ public class BabyRat extends Rat {
         setBaby(true);
     }
 
+    /**
+     * changes the baby sprite depending on the direction it's going.
+     */
     @Override
     public void changeSprite() {
         switch (getCurrentDirection()) {
@@ -39,10 +49,6 @@ public class BabyRat extends Rat {
         if (getInstance().getLevelBoard().getTileMap()[getX()][getY()].getTileType().equalsIgnoreCase("t")) {
             getInstance().getLevelBoard().redrawTile(getX(), getY(), false);
         }
-
-
-
-
 
         if (count == 4) { //If one second has passed.
             counter();
