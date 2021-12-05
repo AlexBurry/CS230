@@ -17,8 +17,8 @@ import static java.lang.Character.toUpperCase;
  */
 public class Save {
     private String playerName;
-    private int mapX;
-    private int mapY;
+    private final int MAPX;
+    private final int MAPY;
     private String[][] stringMap;
     private ArrayList<String> ratList;
     private ArrayList<String> itemsRespawnRate;
@@ -34,8 +34,8 @@ public class Save {
      * Constructor for Save class
      * @param profileName players name
      * @param levelName current levels name
-     * @param mapX height of map
-     * @param mapY width of map
+     * @param MAPX height of map
+     * @param MAPY width of map
      * @param tileMap map of characters that correlate to tiles
      * @param rats list of rats and their data
      * @param itemsRespawnRate list of item respawn rates for the current level
@@ -45,14 +45,14 @@ public class Save {
      * @param currentScore current player score in level
      * @param inv inventory data
      */
-    public Save(String profileName, String levelName, int mapX, int mapY, String[][] tileMap, ArrayList<Rat> rats,
+    public Save(String profileName, String levelName, int MAPX, int MAPY, String[][] tileMap, ArrayList<Rat> rats,
                 ArrayList<String> itemsRespawnRate, int timeLeft, int lossCondition, ArrayList<Item> items,
                 int currentScore, int[] inv) {
         PROFILE_NAME = profileName;
         LEVEL_NAME = levelName;
         Level INSTANCE = Level.getInstance();
-        this.mapX = mapX;
-        this.mapY = mapY;
+        this.MAPX = MAPX;
+        this.MAPY = MAPY;
         stringMap = tileMap;
         ratList = getRatInfo(rats);
         itemList = getItemInfo(items);
@@ -121,6 +121,11 @@ public class Save {
         return itemList;
     }
 
+    /**
+     * Creates an array for inventory
+     * @param inv array of current inventory sizes
+     * @return array of current inventory sizes and the corresponding item chars
+     */
     public String[] getInvInfo(int[] inv) {
         String[] inventory = new String[8];
         inventory[0] = "b," + inv[0];
@@ -171,11 +176,11 @@ public class Save {
                 myWriter = new FileWriter(PROFILE_NAME + LEVEL_NAME);
             }
 
-            myWriter.write(mapX + "," + mapY + ",");
+            myWriter.write(MAPX + "," + MAPY + ",");
             myWriter.write("\n");
-            for (int y = 0; y < mapY; y++) {
-                for (int x = 0; x < mapX; x++) {
-                    if (x == mapX - 1) {
+            for (int y = 0; y < MAPY; y++) {
+                for (int x = 0; x < MAPX; x++) {
+                    if (x == MAPX - 1) {
                         myWriter.write(stringMap[x][y]);
                     } else {
                         myWriter.write(stringMap[x][y] + " ");
