@@ -54,8 +54,9 @@ public class Board extends Application implements ITickHandler {
         tempTileMap = tiles;
         instance = Level.getInstance();
         for (String rt : rats) {
-            Rat newRat = new Rat(rt.charAt(0),Character.getNumericValue(rt.charAt(2)),
-                    Character.getNumericValue(rt.charAt(4)));
+            String[] values = rt.split(",");
+            Rat newRat = new BabyRat(values[0].charAt(0),Integer.parseInt(values[1]),
+                    Integer.parseInt(values[2]));
             this.rats.add(newRat);
             instance.addListener(newRat);
         }

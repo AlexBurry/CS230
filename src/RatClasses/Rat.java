@@ -226,10 +226,10 @@ public class Rat implements ITickHandler {
      * a path to take.
      */
     public void detectOptions() {
-        boolean f;
-        boolean b;
-        boolean l;
-        boolean r;
+        boolean north;
+        boolean south;
+        boolean west;
+        boolean east;
         Directions relativeBack = switch (oldDirection) {
             case SOUTH -> Directions.NORTH;
             case NORTH -> Directions.SOUTH;
@@ -238,42 +238,43 @@ public class Rat implements ITickHandler {
         };
 
         Tile[][] tileMap = instance.getLevelBoard().getTileMap();
-        f = tileMap[xPos][yPos - 1].getTraversable();
-        b = tileMap[xPos][yPos + 1].getTraversable();
-        l = tileMap[xPos - 1][yPos].getTraversable();
-        r = tileMap[xPos + 1][yPos].getTraversable();
+
+        north = tileMap[xPos][yPos - 1].getTraversable();
+        south = tileMap[xPos][yPos + 1].getTraversable();
+        west = tileMap[xPos - 1][yPos].getTraversable();
+        east = tileMap[xPos + 1][yPos].getTraversable();
 
         ArrayList<Directions> options = new ArrayList<>();
-        if (f && b && l && r) {
+        if (north && south && west && east) {
             options.add(Directions.NORTH);
             options.add(Directions.WEST);
             options.add(Directions.EAST);
             options.add(Directions.SOUTH);
-        } else if (f) {
+        } else if (north) {
             options.add(Directions.NORTH);
-            if (l) {
+            if (west) {
                 options.add(Directions.WEST);
             }
-            if (r) {
+            if (east) {
                 options.add(Directions.EAST);
             }
-            if (b) {
+            if (south) {
                 options.add(Directions.SOUTH);
             }
-        } else if (b) {
+        } else if (south) {
             options.add(Directions.SOUTH);
-            if (l) {
+            if (west) {
                 options.add(Directions.WEST);
             }
-            if (r) {
+            if (east) {
                 options.add(Directions.EAST);
             }
-        } else if (l) {
+        } else if (west) {
             options.add(Directions.WEST);
-            if (r) {
+            if (east) {
                 options.add(Directions.EAST);
             }
-        } else if (r) {
+        } else if (east) {
             options.add(Directions.EAST);
         }
 

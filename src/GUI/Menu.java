@@ -115,13 +115,13 @@ public class Menu {
         VBox options = new VBox();
 
         options.setAlignment(Pos.CENTER);
-        options.setPadding(new Insets(100, 40, 40, 40));
+        options.setPadding(new Insets(80, 40, 40, 40));
         options.getChildren().addAll(playLbl, profileLbl, highscoreLbl, exitLbl);
 
         //menuPane.setTop(//MessageOfTheDayLbl); Message Of The Day Here!
 
         //menuPane.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasic.png"), BackgroundRepeat.NO_REPEAT,
+        BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasicBanner.png"), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(1200, 104, true, true, true, false));
         menuPane.setBackground(new Background(image));
@@ -143,7 +143,10 @@ public class Menu {
         MessageOfTheDay motd = new MessageOfTheDay();
         try {
             Label motdLbl = presetLabel(motd.getMessage(), font, 20);
-            motdLbl.setTextFill(Color.WHITE);
+            motdLbl.setTextFill(Color.BLACK);
+            motdLbl.setMaxWidth(1200);
+            motdLbl.setMaxHeight(50);
+            motdLbl.setWrapText(true); //sometimes the motd is too long!
             messageBox.getChildren().add(motdLbl);
             messageBox.setPadding(new Insets(100,10,10,10));
             messageBox.setAlignment(Pos.CENTER);
