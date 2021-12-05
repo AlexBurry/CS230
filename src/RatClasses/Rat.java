@@ -66,7 +66,12 @@ public class Rat implements ITickHandler {
     private Directions currentDirection;
     private Directions oldDirection;
 
-    //constructor for baby rat..
+    /**
+     * Constructor for rat class.
+     * @param sex the gender of the rat.
+     * @param xPos x position.
+     * @param yPos y position.
+     */
     public Rat(char sex, int xPos, int yPos) {
         currentDirection = Directions.NORTH;
         this.sex = sex;
@@ -81,7 +86,12 @@ public class Rat implements ITickHandler {
 
     }
 
-    //To be checked -> constructor below not actually being used for male and female rat? only death rat????
+    /**
+     * Constructor for rat class.
+     * @param sex the gender of the rat.
+     * @param xPos x position.
+     * @param yPos y position.
+     */
     public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, boolean isBaby) {
         currentDirection = Directions.NORTH;
         this.isBaby = isBaby;
@@ -105,10 +115,19 @@ public class Rat implements ITickHandler {
 
     }
 
+    /**
+     * setter for a baby rat.
+     * @param baby a boolean value true/false.
+     */
     public void setBaby(boolean baby) {
         isBaby = baby;
     }
 
+    /**
+     * a timer for how long the female rat is pregnant for and when
+     * tickTimer increments by 1 after each time @tickEvent called,
+     * after certain conditional statements
+     */
     public void counter(){
 
         //tick timer: increments one after each tick
@@ -118,9 +137,7 @@ public class Rat implements ITickHandler {
 
         if (tickTimer == 8 && !isBaby) {
             tickTimer = 0;
-            //if the female rat is pregnant it will no longer be.
             if (sex == 'f' ) {
-    
                 babyRatsToQueue();
             }
         } else if (tickTimer == 9 && isBaby) {
@@ -429,7 +446,7 @@ public class Rat implements ITickHandler {
                 if (rt.getX() == xPos && rt.getY() == yPos) {
 
                     //check if male and female rat in same tile then sexy time
-                    if (sex == 'f' && rt.getSex() == 'm' && !isPregnant && !isBaby) {
+                    if (sex == 'f' && rt.getSex() == 'm' && !isPregnant && !isBaby && !isSterile) {
 
                         isPregnant = true;
 
