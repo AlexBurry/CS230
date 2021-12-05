@@ -83,13 +83,10 @@ public class DragAndDrop {
         lbl.setFont(new Font("Comic Sans", 16));
         lbl.setTextFill(Color.WHITE);
 
-
         GridPane counterPane = new GridPane();
         GridPane.setHalignment(lbl, HPos.CENTER);
         counterPane.add(lbl, 0, 1);
         counterPane.add(item, 0, 2);
-
-
 
         return counterPane;
     }
@@ -134,16 +131,13 @@ public class DragAndDrop {
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInv().getNumberOfGas(), gas));
 
         Pane invisiblePane = new Pane();
-        invisiblePane.setPrefSize(470,40);
+        invisiblePane.setPrefSize(270,40);
         toolBar.getChildren().add(invisiblePane);
         toolBar.getChildren().add(makeHealthBar());
         toolBar.getChildren().add(makeOptionsButton());
 
+        toolBar.setOnMouseClicked(mouseEvent -> System.out.println(mouseEvent.getX()));
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
-
-
-
-
 
         return toolBar;
     }
@@ -156,14 +150,14 @@ public class DragAndDrop {
      * @return formatted GridPane as Health Bar.
      */
     public GridPane makeHealthBar() {
-        int availableSpace = 455;
+        int availableSpace = 380;
         HBox hpBar = new HBox();
         GridPane gPane = new GridPane();
 
         Label invisibleLbl = new Label("");
         invisibleLbl.setFont(new Font("Comic Sans", 24));
 
-        hpBar.setPrefSize(700, 50);
+        hpBar.setPrefSize(availableSpace, 50);
         countRats();
         Rectangle maleRect = new Rectangle((availableSpace/instance.getLossCondition()) * maleRats,50,Color.BLUE);
         Rectangle femaleRect = new Rectangle((availableSpace/instance.getLossCondition()) * femaleRats,50,Color.PINK);
@@ -186,13 +180,16 @@ public class DragAndDrop {
      */
     public GridPane makeOptionsButton() {
         GridPane gPane = new GridPane();
+
         Label textDisplay = new Label("Save? Will overwrite existing files!");
+        Label invisibleLbl = new Label("");
+        invisibleLbl.setFont(new Font("Comic Sans", 26));
 
         Button optionBtn = new Button("Options");
-        optionBtn.setPrefSize(50, 20);
-        GridPane.setHalignment(optionBtn, HPos.RIGHT);
+        optionBtn.setPrefSize(100, 35);
+
+        gPane.add(invisibleLbl, 0, 1);
         gPane.add(optionBtn, 0, 2);
-        gPane.add(textDisplay,0,0);
 
         optionBtn.setOnAction(mouseEvent ->
         {
@@ -211,18 +208,20 @@ public class DragAndDrop {
             });
 
             GridPane gPane2 = new GridPane();
-            gPane2.add(saveBtn, 0, 2);
-            GridPane.setHalignment(saveBtn, HPos.CENTER);
-            Scene optionScene = new Scene(gPane2,400,200);
+            gPane2.setHalignment(saveBtn, HPos.CENTER);
+            gPane2.add(saveBtn, 0, 0);
+
+            Scene optionScene = new Scene(gPane2,300,150);
+            optionWindow.getIcons().add(new Image("Sprites/raticon.png"));
+            optionWindow.setTitle("Rats: Save");
             optionWindow.setResizable(false);
             optionWindow.setScene(optionScene);
+            optionWindow.centerOnScreen();
             optionWindow.show();
-
 
         });
 
         return gPane;
-
     }
 
     /**
@@ -237,10 +236,13 @@ public class DragAndDrop {
             babyRats = 0;
             sexChangeUsed = false;
             for (int i = 0; i < rats.size(); i++) {
-                switch (rats.get(i).getSex()) {
-                    case 'm' -> maleRats++;
-                    case 'f' -> femaleRats++;
-                    default -> babyRats++;
+                if (rats.get(i).getIsBaby()) {
+                    babyRats++;
+                } else {
+                    switch (rats.get(i).getSex()) {
+                        case 'm' -> maleRats++;
+                        case 'f' -> femaleRats++;
+                    }
                 }
             }
             ratListSize = rats.size();
