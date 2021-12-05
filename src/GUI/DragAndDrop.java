@@ -188,6 +188,7 @@ public class DragAndDrop {
         Button optionBtn = new Button("Options");
         optionBtn.setPrefSize(100, 35);
 
+        gPane.setHalignment(optionBtn, HPos.RIGHT);
         gPane.add(invisibleLbl, 0, 1);
         gPane.add(optionBtn, 0, 2);
 
@@ -197,6 +198,7 @@ public class DragAndDrop {
             optionWindow.initModality(Modality.APPLICATION_MODAL);
 
             Button saveBtn = new Button("Save");
+            saveBtn.setPrefSize(70,70);
             saveBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {

@@ -88,7 +88,7 @@ public class Level {
         this.lossCondition = lossCondition;
         this.currentScore = currentScore;
         instance = this;
-
+        
 
         levelInv = new Inventory(itemsRespawnRate);
         levelBoard = new Board(tiles, rats, mapX, mapY);
