@@ -84,9 +84,9 @@ public class Menu {
         BorderPane menuPane = new BorderPane();
         menuPane.setTop(buildMOTD());
 
-        Label playLbl = presetLabel("Play", font, 70);
-        Label loadLbl = presetLabel("Load", font, 60);
-        Label profileLbl = presetLabel("Profile", font, 60);
+        Label playLbl = presetLabel("Play", font, 60);
+        Label loadLbl = presetLabel("Load", font, 50);
+        Label profileLbl = presetLabel("Profile", font, 50);
         Label highscoreLbl = presetLabel("Highscore", font, 45);
         Label exitLbl = presetLabel("Exit", font, 40);
         playLbl.setTextFill(Color.BLACK);
@@ -122,7 +122,7 @@ public class Menu {
         VBox options = new VBox();
 
         options.setAlignment(Pos.CENTER);
-        options.setPadding(new Insets(10, 40, 40, 40));
+        options.setPadding(new Insets(0, 0, 20, 0));
         options.getChildren().addAll(playLbl, loadLbl, profileLbl, highscoreLbl, exitLbl);
 
         BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasicBanner.png"), BackgroundRepeat.NO_REPEAT,
@@ -191,8 +191,6 @@ public class Menu {
         gPane.setVgap(5);
         gPane.setAlignment(Pos.CENTER);
 
-        System.out.println(loggedIn);
-
         Scene scene = new Scene(gPane, 1200, 884);
 
         BackgroundImage image = new BackgroundImage(new Image("Sprites/MenuBasic.png"), BackgroundRepeat.NO_REPEAT,
@@ -238,7 +236,7 @@ public class Menu {
                 p = new Profile(inputField.getText());
             }
             loggedIn = true;
-            lvlSelect = new LevelSelector(primaryStage, p);
+            lvlSelect = new LevelSelector(primaryStage, p, this);
             switch (name) {
                 case "l" -> lvlSelect.levelSelector(primaryStage);
                 case "p" -> buildProfile(primaryStage);
