@@ -83,13 +83,13 @@ public class Rat implements ITickHandler {
     }
 
     /**
-     * Constructor for rat class.
+     * Constructor for baby rat and death rat class.
      *
      * @param sex  the gender of the rat.
      * @param xPos x position.
      * @param yPos y position.
      */
-    public Rat(char sex, boolean isDeathRat, boolean alive, boolean isSterile, int xPos, int yPos, boolean isBaby) {
+    public Rat(char sex, boolean isDeathRat, boolean isSterile, int xPos, int yPos, boolean isBaby) {
         currentDirection = Directions.NORTH;
         this.isBaby = isBaby;
         if (sex == 'f' || sex == 'm') {
