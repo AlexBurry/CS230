@@ -1,6 +1,8 @@
 package Game;
 
 import GUI.Inventory;
+import GUI.Menu;
+import RatClasses.BabyRat;
 import RatClasses.DeathRat;
 import RatClasses.Rat;
 import javafx.animation.Animation;
@@ -200,8 +202,9 @@ public class Level {
      * @param pointsToAdd number of points to add since last tick if any rats have died
      */
     public void increaseScore(int pointsToAdd) {
-        currentScore = currentScore + pointsToAdd;
-        System.out.println(currentScore);
+        Profile profile = Menu.getProfile();
+        profile.setScore(pointsToAdd);
+        System.out.println("\n" + profile.getScore());
     }
 
     /**

@@ -88,11 +88,8 @@ public class BombItem extends Item implements ITickHandler {
         ArrayList<Tile> allTiles = getLocalInstance().getLevelBoard().getTraversableTiles();
         ArrayList<Tile> tilesChecked = new ArrayList<>();
         Tile[][] localMap = getLocalInstance().getLevelBoard().getTileMap();
-
-
         //check if we've found all the tiles in every direction.
         boolean foundAllTiles = false;
-
         //store the current pos as the items position.
         int currentXPos = getX();
         int currentYPos = getY();
@@ -102,7 +99,6 @@ public class BombItem extends Item implements ITickHandler {
         if (allTiles.contains(firstTile)) {
             tilesChecked.add(firstTile);
         }
-
         while (!foundAllTiles) { //while we haven't checked all directions
             switch (directionToCheck) { //adds or removes 1 on each index to move the "check"
                 case NORTH -> currentYPos -= 1;
@@ -127,10 +123,7 @@ public class BombItem extends Item implements ITickHandler {
                 currentXPos = getX();
                 currentYPos = getY();
             }
-
         }
-
-
         return tilesChecked;
 
     }
@@ -171,12 +164,8 @@ public class BombItem extends Item implements ITickHandler {
         for (Item it : toRemove) {
             it.deleteItem();
         }
-
-
-
         getLocalInstance().markListenerForRemoval(this); //Stop listening so that we dont call Tick on a dead object
         deleteItem();
-
 
     }
 

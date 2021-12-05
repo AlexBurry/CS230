@@ -32,8 +32,10 @@ public class GasItem extends Item implements ITickHandler {
 
     private ArrayList<GasChild> myChildren = new ArrayList<>();
 
+    /**
+     * Blank template, used for GasChild to call without calculating the AOE.
+     */
     public GasItem() {
-        //does nothing.
     }
 
     /**
@@ -59,12 +61,10 @@ public class GasItem extends Item implements ITickHandler {
      * This is achieved by checking 3 tiles in every direction.
      */
     private void calculateAOE() {
-
         Tile[][] localMap = getLocalInstance().getLevelBoard().getTileMap();
         //store the current pos as the items position.
         int currentXPos = getX();
         int currentYPos = getY();
-
 
         for (int i = 0; i < DIRECTION_LIMIT; i++) {
             currentYPos -= 1; //check north first
@@ -76,8 +76,6 @@ public class GasItem extends Item implements ITickHandler {
 
 
         }
-        System.out.println(northernTiles.size());
-
         currentYPos = getY(); //reset to the center
 
         for (int i = 0; i < DIRECTION_LIMIT; i++) {
@@ -90,8 +88,6 @@ public class GasItem extends Item implements ITickHandler {
 
 
         }
-        System.out.println(southernTiles.size());
-
         currentYPos = getY(); //reset to the center
 
         for (int i = 0; i < DIRECTION_LIMIT; i++) {
@@ -104,10 +100,7 @@ public class GasItem extends Item implements ITickHandler {
 
 
         }
-        System.out.println(westernTiles.size());
-
         currentXPos = getX(); //reset to the center
-
         for (int i = 0; i < DIRECTION_LIMIT; i++) {
             currentXPos += 1; //check east last
             if (localMap[currentXPos][currentYPos].getTraversable()) {
@@ -118,8 +111,6 @@ public class GasItem extends Item implements ITickHandler {
 
 
         }
-        System.out.println(easternTiles.size());
-
 
     }
 
@@ -133,7 +124,6 @@ public class GasItem extends Item implements ITickHandler {
             child.setParent(this);
             myChildren.add(child);
         }
-
     }
 
     /**
@@ -146,8 +136,6 @@ public class GasItem extends Item implements ITickHandler {
             myChildren.remove(child);
             child.removeSelf();
         }
-
-
     }
 
 
@@ -161,29 +149,25 @@ public class GasItem extends Item implements ITickHandler {
             //if a tile exists there, spawn gas on it.
             if (northernTiles.size() > expansionStage) {
                 if (northernTiles.get(expansionStage) != null) {
-                    replicateAt(northernTiles.get(expansionStage).x, northernTiles.get(expansionStage).y);
-                    System.out.println("Replicating at: " + northernTiles.get(expansionStage).x + "," + northernTiles.get(expansionStage).y);
+                    replicateAt(northernTiles.get(expansionStage).getX(), northernTiles.get(expansionStage).getY());
+                    System.out.println("Replicating at: " + northernTiles.get(expansionStage).getX() + "," + northernTiles.get(expansionStage).getY());
                 }
             }
-
             if (easternTiles.size() > expansionStage) {
                 if (easternTiles.get(expansionStage) != null) {
-                    replicateAt(easternTiles.get(expansionStage).x, easternTiles.get(expansionStage).y);
+                    replicateAt(easternTiles.get(expansionStage).getX(), easternTiles.get(expansionStage).getY());
                 }
             }
-
             if (westernTiles.size() > expansionStage) {
                 if (westernTiles.get(expansionStage) != null) {
-                    replicateAt(westernTiles.get(expansionStage).x, westernTiles.get(expansionStage).y);
+                    replicateAt(westernTiles.get(expansionStage).getX(), westernTiles.get(expansionStage).getY());
                 }
             }
-
             if (southernTiles.size() > expansionStage) {
                 if (southernTiles.get(expansionStage) != null) {
-                    replicateAt(southernTiles.get(expansionStage).x, southernTiles.get(expansionStage).y);
+                    replicateAt(southernTiles.get(expansionStage).getX(), southernTiles.get(expansionStage).getY());
                 }
             }
-
 
             expansionStage++;
 
@@ -194,33 +178,32 @@ public class GasItem extends Item implements ITickHandler {
 
     }
 
+    /**
+     * Handles the disappearance of gas.
+     */
     private void handleDissipationTick() {
         if (expansionStage >= 0) {
             //if a tile exists there, spawn gas on it.
             if (northernTiles.size() > expansionStage) {
                 if (northernTiles.get(expansionStage) != null) {
-                    removeAt(northernTiles.get(expansionStage).x, northernTiles.get(expansionStage).y);
+                    removeAt(northernTiles.get(expansionStage).getX(), northernTiles.get(expansionStage).getY());
                 }
             }
-
             if (easternTiles.size() > expansionStage) {
                 if (easternTiles.get(expansionStage) != null) {
-                    removeAt(easternTiles.get(expansionStage).x, easternTiles.get(expansionStage).y);
+                    removeAt(easternTiles.get(expansionStage).getX(), easternTiles.get(expansionStage).getY());
                 }
             }
-
             if (westernTiles.size() > expansionStage) {
                 if (westernTiles.get(expansionStage) != null) {
-                    removeAt(westernTiles.get(expansionStage).x, westernTiles.get(expansionStage).y);
+                    removeAt(westernTiles.get(expansionStage).getX(), westernTiles.get(expansionStage).getY());
                 }
             }
-
             if (southernTiles.size() > expansionStage) {
                 if (southernTiles.get(expansionStage) != null) {
-                    removeAt(southernTiles.get(expansionStage).x, southernTiles.get(expansionStage).y);
+                    removeAt(southernTiles.get(expansionStage).getX(), southernTiles.get(expansionStage).getY());
                 }
             }
-
             expansionStage--;
 
         } else {

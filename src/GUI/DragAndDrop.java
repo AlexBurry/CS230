@@ -126,9 +126,7 @@ public class DragAndDrop {
         gas.setImage(ImageRefs.iconGas);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfGas(), gas));
 
-        Pane invisiblePane = new Pane();
-        invisiblePane.setPrefSize(270,40);
-        toolBar.getChildren().add(invisiblePane);
+        toolBar.getChildren().add(makeScore());
         toolBar.getChildren().add(makeHealthBar());
         toolBar.getChildren().add(makeOptionsButton());
 
@@ -136,6 +134,20 @@ public class DragAndDrop {
         toolBar.setOnMouseDragged(mouseEvent -> itemMover(mouseEvent));
 
         return toolBar;
+    }
+
+    public GridPane makeScore() {
+        GridPane scoreGPane = new GridPane();
+        Label scoreLbl = new Label(("Current Score: " + String.valueOf(Menu.getProfile().getScore())));
+        scoreLbl.setFont(new Font("Comic Sans", 16));
+        scoreLbl.setTextFill(Color.WHITE);
+        Pane invisiblePane = new Pane();
+        invisiblePane.setPrefSize(270,40);
+        GridPane.setHalignment(scoreLbl, HPos.CENTER);
+        scoreGPane.add(scoreLbl, 0, 1);
+        scoreGPane.add(invisiblePane, 0, 2);
+
+        return scoreGPane;
     }
 
     /**
@@ -193,23 +205,29 @@ public class DragAndDrop {
             optionWindow.initModality(Modality.APPLICATION_MODAL);
 
             Button saveBtn = new Button("Save");
-            saveBtn.setPrefSize(70,70);
+            Button backToMenuBtn = new Button("Back To Menu");
+            backToMenuBtn.setPrefSize(100,35);
+            saveBtn.setPrefSize(70,35);
             saveBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     //temporary.
                     instance.save();
                     Menu.getProfile().addToSavedLevels(instance.getLevelNumber());
-
+                    Menu.getProfile().saveToProfile(Menu.getProfile().getName());
                 }
             });
 
             GridPane gPane2 = new GridPane();
-            GridPane.setHalignment(saveBtn, HPos.CENTER);
-            gPane2.add(saveBtn, 1, 1);
+
+            gPane2.setAlignment(Pos.CENTER);
+
+            gPane2.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+
+            gPane2.add(saveBtn, 0,0);
 
             Scene optionScene = new Scene(gPane2,300,150);
-            
+
             optionWindow.getIcons().add(new Image("Sprites/raticon.png"));
             optionWindow.setTitle("Rats: Save");
             optionWindow.setResizable(false);
@@ -228,7 +246,7 @@ public class DragAndDrop {
      */
     public void countRats() {
         ArrayList<Rat> rats = instance.getLevelBoard().getRats();
-        if (ratListSize != rats.size() || sexChangeUsed) {
+        if (ratListSize != rats.size() || sexChangeUsed || !babyRatExists(rats)) {
             maleRats = 0;
             femaleRats = 0;
             babyRats = 0;
@@ -238,8 +256,8 @@ public class DragAndDrop {
                     babyRats++;
                 } else {
                     switch (rats.get(i).getSex()) {
-                        case 'm' -> maleRats++;
-                        case 'f' -> femaleRats++;
+                        case 'M' -> maleRats++;
+                        case 'F' -> femaleRats++;
                     }
                 }
             }
@@ -247,6 +265,24 @@ public class DragAndDrop {
         }
     }
 
+    /**
+     * This method searches the list and checks if it
+     * contains any rats that are babies.
+     *
+     * @param rats List containing all rat objects.
+     * @return true if there is a baby in the list, false otherwise.
+     */
+    public boolean babyRatExists(ArrayList<Rat> rats) {
+        boolean babyRatExists = false;
+        for (int i = 0; i < rats.size(); i++) {
+            if (rats.get(i).getIsBaby()) {
+                babyRatExists = true;
+            } else {
+                babyRatExists = false;
+            }
+        }
+        return babyRatExists;
+    }
     /**
      * This method is called when the player drags something
      * on the "toolBar" HBox. It splits up the HBox into squares
