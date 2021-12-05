@@ -7,9 +7,12 @@ import ItemClasses.SteriliseItem;
 import RatClasses.BabyRat;
 import RatClasses.Rat;
 import javafx.application.Application;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -82,6 +85,7 @@ public class Board extends Application implements ITickHandler {
 
         toolBar = new DragAndDrop(canvas, tileMap);
         root.setTop(toolBar.makeToolBar());
+
 
         return root;
     }
