@@ -11,12 +11,12 @@ import Sprites.ImageRefs;
  * @since 0.1
  */
 
-public class DeathRat extends Rat{
+public class DeathRat extends Rat {
 
     private DeathRatItem item;
 
     public DeathRat(char sex, boolean isDeath, boolean isSterile, int xPos, int yPos) {
-        super(sex, isDeath, isSterile, xPos, yPos,false);
+        super(sex, isDeath, isSterile, xPos, yPos, false);
         this.setImage(ImageRefs.deathRatUp);
 
     }
@@ -24,15 +24,16 @@ public class DeathRat extends Rat{
     /**
      * gets the item
      */
-    public DeathRatItem getItem(){
+    public DeathRatItem getItem() {
         return item;
     }
 
     /**
      * sets the item
+     *
      * @param item must be a DeathRatItem
      */
-    public void setItem(DeathRatItem item){
+    public void setItem(DeathRatItem item) {
         this.item = item;
     }
 
@@ -48,7 +49,4 @@ public class DeathRat extends Rat{
             case SOUTH -> setImage(ImageRefs.deathRatDown);
         }
     }
-
-
-
 }

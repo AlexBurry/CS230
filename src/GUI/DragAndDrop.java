@@ -105,7 +105,6 @@ public class DragAndDrop {
 
         noEntry.setImage(ImageRefs.iconNoEntry);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfNoEntry(), noEntry));
-        Tooltip.install(noEntry, new Tooltip("Hello"));
 
         deathRat.setImage(ImageRefs.iconDeathRat);
         toolBar.getChildren().add(makeItemWithCounter(instance.getLevelInventory().getNumberOfDeathRat(), deathRat));
@@ -409,7 +408,6 @@ public class DragAndDrop {
                 if (instance.getLevelInventory().getNumberOfMSexChange() > 0) {
                     instance.getLevelInventory().decreaseNumberOfMSexChange();
                     new MFChange(x, y);
-                    sexChangeUsed = true;
                 } else {
                     System.out.println("No Male Sex Change left");
                 }
@@ -418,7 +416,6 @@ public class DragAndDrop {
                 if (instance.getLevelInventory().getNumberOfFSexChange() > 0) {
                     instance.getLevelInventory().decreaseNumberOfFSexChange();
                     new FMChange(x, y);
-                    sexChangeUsed = true;
                 } else {
                     System.out.println("No Female Sex Change left");
                 }
@@ -480,5 +477,9 @@ public class DragAndDrop {
                 event.consume();
             }
         });
+    }
+
+    public boolean setSexChanged(boolean sexChangedUsed) {
+       return this.sexChangeUsed = sexChangedUsed;
     }
 }

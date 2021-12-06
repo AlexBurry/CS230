@@ -107,7 +107,6 @@ public class Rat implements ITickHandler {
 
     /**
      * setter for a baby rat.
-     *
      * @param baby a boolean value true/false.
      */
     public void setBaby(boolean baby) {
@@ -387,7 +386,8 @@ public class Rat implements ITickHandler {
                             }
                         }
                         case MSex -> {
-                            if (isBaby) {
+                            INSTANCE.getLevelBoard().getToolBar().setSexChanged(true);
+                            if(isBaby){
                                 sex = 'm';
                             } else {
                                 sex = 'M';
@@ -396,7 +396,8 @@ public class Rat implements ITickHandler {
                             ITEMS_TO_DELETE_ON_COLLISION.add(it);
                         }
                         case FSex -> {
-                            if (isBaby) {
+                            INSTANCE.getLevelBoard().getToolBar().setSexChanged(true);
+                            if(isBaby){
                                 sex = 'f';
                             } else {
                                 sex = 'F';
@@ -420,7 +421,6 @@ public class Rat implements ITickHandler {
                             DeathRatItem a = (DeathRatItem) it;
                             a.incrementKills();
                             deleteRat();
-
                         }
                     }
                 }

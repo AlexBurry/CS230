@@ -48,7 +48,7 @@ public class NoEntryItem extends Item {
      * Called from rat to check if this item should be removed.
      * Prevents a ConcurrentModificationException by handling removals there.
      */
-    public boolean shouldKill(){
+    public boolean shouldKill() {
         return healthPoints <= 0;
     }
 

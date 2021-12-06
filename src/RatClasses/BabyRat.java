@@ -33,6 +33,7 @@ public class BabyRat extends Rat {
             case WEST -> setImage(ImageRefs.babyRatLeft);
             case NORTH -> setImage(ImageRefs.babyRatUp);
             case SOUTH -> setImage(ImageRefs.babyRatDown);
+            default -> throw new IllegalStateException("Unexpected value: " + getCurrentDirection());
         }
     }
 
@@ -42,7 +43,7 @@ public class BabyRat extends Rat {
      */
     @Override
     public void tickEvent(int count) {
-
+        final int TICKS_PER_SECOND = 4;
         //If 250ms have passed
         getInstance().getLevelBoard().redrawTile(getX(), getY(), true);
         move();
@@ -50,7 +51,7 @@ public class BabyRat extends Rat {
             getInstance().getLevelBoard().redrawTile(getX(), getY(), false);
         }
 
-        if (count == 4) { //If one second has passed.
+        if (count == TICKS_PER_SECOND) { //If one second has passed.
             gestationGrowthCounter();
 
             //giveBirth();

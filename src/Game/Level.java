@@ -96,12 +96,12 @@ public class Level {
         LEVEL_INVENTORY = new Inventory(itemsRespawnRate);
         reloadInv(inv);
         LEVEL_BOARD = new Board(tiles, rats, mapX, mapY);
-
+        LEVEL_BOARD.start(primaryStage);
         for (String i: items) {
             String[] values = i.split(",");
             LEVEL_BOARD.reloadItems(values[0].charAt(0), Integer.parseInt(values[1]), Integer.parseInt(values[2]));
         }
-        LEVEL_BOARD.start(primaryStage);
+
 
         createTick(); //begins tick
     }
