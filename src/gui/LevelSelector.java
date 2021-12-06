@@ -412,6 +412,7 @@ public class LevelSelector {
         newLevel.setLevelNumber(number);
         newLevel.addProfileName(profile.getName());
         newLevel.addLevelName(level);
+        newLevel.setMenuInstance(mObject);
         //newLevel.save(); //testing - to be removed
     }
 
@@ -428,6 +429,7 @@ public class LevelSelector {
 
         newLevel.addProfileName(profile.getName());
         newLevel.addLevelName(level);
+        newLevel.setMenuInstance(mObject);
     }
 
     public void setHighestUnlocked(int highestUnlocked) {

@@ -59,7 +59,7 @@ public class Inventory implements ITickHandler {
         sterilisationSpawnRateTimer = sterilisationSpawnRate;
         noEntrySpawnRateTimer = noEntrySpawnRate;
         deathRatSpawnRateTimer = deathRatSpawnRate;
-        Level INSTANCE = Level.getInstance();
+        Level INSTANCE = Level.getCurrentLevelInstance();
         INSTANCE.addListener(this);
     }
 

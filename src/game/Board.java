@@ -32,7 +32,6 @@ public class Board extends Application implements ITickHandler {
     private final String[][] tempTileMap;
     private final Tile[][] tileMap;
     private final Level INSTANCE;
-
     private ArrayList<Tile> traversableTiles = new ArrayList<>();
     private ArrayList<Tile> tunnelTiles = new ArrayList<>(); //used to make sure tunnels remain ontop
     private ArrayList<Item> items = new ArrayList<>();

@@ -72,7 +72,7 @@ public class Rat implements ITickHandler {
         this.yPos = yPos;
         IS_DEATH_RAT = false;
         isSterile = false;
-        INSTANCE = Level.getInstance();
+        INSTANCE = Level.getCurrentLevelInstance();
         isPregnant = false;
         changeSprite();
     }
@@ -97,7 +97,7 @@ public class Rat implements ITickHandler {
         this.yPos = yPos;
         this.IS_DEATH_RAT = isDeathRat;
         this.isSterile = isSterile;
-        INSTANCE = Level.getInstance();
+        INSTANCE = Level.getCurrentLevelInstance();
         if (isDeathRat) {
             INSTANCE.getLevelBoard().addRat(this);
             INSTANCE.addListener(this);
