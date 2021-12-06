@@ -358,7 +358,7 @@ public class Level {
     /**
      * sets the menu variable so we can load it.
      *
-     * @param mObject
+     * @param mObject menu- the menu instance
      */
     public void setMenuInstance(Menu mObject) {
         this.menu = mObject;
