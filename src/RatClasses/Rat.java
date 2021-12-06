@@ -560,15 +560,17 @@ public class Rat implements ITickHandler {
      * deletes rat from level, and increases the score every time a rat is removed.
      */
     public void deleteRat() {
-        instance.getLevelBoard().removeRat(this);
+
         if (!isDeathRat) {
             instance.increaseScore(10);
         }
-        if (babyRatsQueue.size() > 0) {
-            for (Rat bRat : babyRatsQueue) {
+        if (gestatingChildren.size() > 0) {
+            for (Rat bRat : gestatingChildren) {
                 instance.increaseScore(10);
             }
         }
+
+        instance.getLevelBoard().removeRat(this);
     }
 
     //sterilize rat method
