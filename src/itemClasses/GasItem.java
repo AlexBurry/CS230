@@ -10,9 +10,7 @@ import java.util.ArrayList;
  * The main gas node of a gas item. Controls gas dissipation
  *
  * @author Trafford
- * @author Jack
- * @version 0.1
- * @since 0.1
+ * @version 1
  */
 public class GasItem extends Item implements ITickHandler {
 
@@ -22,7 +20,6 @@ public class GasItem extends Item implements ITickHandler {
     private final ArrayList<Coordinate> westernTiles = new ArrayList<>();
     private final ArrayList<Coordinate> easternTiles = new ArrayList<>();
     private final ArrayList<GasChild> myChildren = new ArrayList<>();
-
 
 
     private boolean dissipating = false; //Should we reverse?

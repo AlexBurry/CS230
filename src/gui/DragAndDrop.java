@@ -33,7 +33,6 @@ import java.util.ArrayList;
  * @author Dominik
  * @author Trafford
  * @version 1.0
- * @since 1.0
  */
 public class DragAndDrop {
 
