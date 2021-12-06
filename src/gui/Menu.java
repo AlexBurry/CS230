@@ -296,4 +296,11 @@ public class Menu {
         return profile;
     }
 
+    public LevelSelector getLvlSelect() {
+        return lvlSelect;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 }

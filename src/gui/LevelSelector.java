@@ -3,12 +3,15 @@ package gui;
 import game.Level;
 import game.Profile;
 import game.ReadFile;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -28,6 +31,8 @@ public class LevelSelector {
     private Stage primaryStage;
     private Profile profile;
     private Menu mObject;
+    private boolean levelWon = false;
+    private boolean levelLost = false;
     private int highestUnlocked = 1;
 
     /**
@@ -230,6 +235,31 @@ public class LevelSelector {
         centerButton.getChildren().add(backBtn);
         gPane.add(centerButton, 1, 2);
         gPane.setPadding(new Insets(100, 0, 0, 0));
+
+        if (levelLost || levelWon) {
+            Stage endGameMessage = new Stage();
+            endGameMessage.initModality(Modality.APPLICATION_MODAL);
+
+            VBox centerBox = new VBox();
+            centerBox.setAlignment(Pos.CENTER);
+            Label lvlWonLbl = mObject.presetLabel("You Won! Well Done!", "Comic Sans", 20);
+            Label lvlLostLbl = mObject.presetLabel("You Lost, Unlucky!", "Comic Sans", 20);
+            Label scoreLbl = mObject.presetLabel("Score: " + profile.getScore(), "Comic Sans", 20);
+
+            System.out.println(lvlWonLbl);
+            if (levelWon) {
+                centerBox.getChildren().add(lvlWonLbl);
+            } else {
+                centerBox.getChildren().add(lvlLostLbl);
+            }
+            centerBox.getChildren().add(scoreLbl);
+
+            Scene scene = new Scene(centerBox,300,150);
+            mObject.presetStage(endGameMessage, "sprites/raticon.png","Rats: Results",scene);
+        }
+
+        levelLost = false;
+        levelWon = false;
 
         Scene scene = new Scene(gPane, 1200, 884);
         mObject.presetStage(primaryStage, "sprites/raticon.png", "Rats: Level Selection", scene);
@@ -434,5 +464,13 @@ public class LevelSelector {
 
     public void setHighestUnlocked(int highestUnlocked) {
         this.highestUnlocked = highestUnlocked;
+    }
+
+    public void setLevelWon(boolean levelWon) {
+        this.levelWon = levelWon;
+    }
+
+    public void setLevelLost(boolean levelLost) {
+        this.levelLost = levelLost;
     }
 }

@@ -28,6 +28,7 @@ public class Level {
     private int timeLeft;
     private int levelNumber;
     private int currentScore;
+    private Timeline tickTimeline;
     private String profileName;
     private String levelName;
     private ArrayList<String> itemsRespawnRate = new ArrayList<>();
@@ -129,7 +130,7 @@ public class Level {
     public void createTick() {
         //game tick system
         int TICKRATE = 250;
-        Timeline tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(TICKRATE), event -> tick()));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play(); //can be used to pause the game
     }
@@ -263,19 +264,45 @@ public class Level {
      */
     public void checkLossCondition() {
         if (LEVEL_BOARD.getRats().size() >= LOSS_CONDITION) {
-            System.out.println("Game over");
-            System.exit(0);
+            try {
+                menu.getLvlSelect().setHighestUnlocked(1);
+                menu.getLvlSelect().setLevelLost(true);
+                menu.getLvlSelect().levelSelector(menu.getPrimaryStage());
+                tickTimeline.stop();
+            } catch (Exception e) {
+                System.out.println("Couldn't Open Level Selector On Loss!");
+            }
         }
         if (timeLeft == 0) {
-            System.out.println("Game over");
-            System.exit(0);
+            try {
+                menu.getLvlSelect().setHighestUnlocked(1);
+                menu.getLvlSelect().setLevelLost(true);
+                menu.getLvlSelect().levelSelector(menu.getPrimaryStage());
+                tickTimeline.stop();
+            } catch (Exception e) {
+                System.out.println("Couldn't Open Level Selector On Loss!");
+            }
         }
         ArrayList<Rat> properRats = LEVEL_BOARD.getRats();
         properRats.removeIf(rat -> rat.getClass() == DeathRat.class); //removes deathrats from consideration in the rats
         if (properRats.size() == 0) {
             currentScore = currentScore + timeLeft;
-            System.out.println("Game won: " + currentScore);
-            System.exit(0);
+            try {
+                menu.getLvlSelect().setHighestUnlocked(1);
+                if (Menu.getProfile().getHighestLevelUnlocked() != 6) {
+                    Menu.getProfile().setHighestLevelUnlocked
+                            (Menu.getProfile().getHighestLevelUnlocked()+1);
+                    Menu.getProfile().setScore(currentScore);
+                    Menu.getProfile().setCurrentLevel
+                            (Menu.getProfile().getCurrentLevel()+1);
+                    Menu.getProfile().checkHighscore();
+                }
+                menu.getLvlSelect().setLevelWon(true);
+                menu.getLvlSelect().levelSelector(menu.getPrimaryStage());
+                tickTimeline.stop();
+            } catch (Exception e) {
+                System.out.println("Couldn't Open Level Selector On Loss!");
+            }
         }
     }
 
