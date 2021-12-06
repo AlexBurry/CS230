@@ -1,8 +1,10 @@
 package ItemClasses;
+
 import Game.ITickHandler;
 import Game.Tile;
 import RatClasses.Rat;
 import Sprites.ImageRefs;
+
 import java.util.ArrayList;
 
 /**
@@ -44,7 +46,7 @@ public class BombItem extends Item implements ITickHandler {
     @Override
     public void tickEvent(int count) {
 
-        if(count >= 4){
+        if (count >= 4) {
             countdown();
             if (timer == 3) {
                 this.setImage(ImageRefs.bombStage3);
@@ -54,7 +56,7 @@ public class BombItem extends Item implements ITickHandler {
                 this.setImage(ImageRefs.bombStage1);
             }
 
-            getLocalInstance().getLevelBoard().redrawTile(getX(),getY(),true);
+            getLocalInstance().getLevelBoard().redrawTile(getX(), getY(), true);
         }
 
     }
@@ -145,8 +147,8 @@ public class BombItem extends Item implements ITickHandler {
                 }
             }
 
-            for(Item it : items) {
-                if(it.getX() == tile.getLocation()[0] && it.getY() == tile.getLocation()[1]){
+            for (Item it : items) {
+                if (it.getX() == tile.getLocation()[0] && it.getY() == tile.getLocation()[1]) {
                     toRemove.add(it);
                 }
             }

@@ -3,23 +3,26 @@ package ItemClasses;
 import Game.Tile;
 import RatClasses.Rat;
 import Sprites.ImageRefs;
+
 import java.util.ArrayList;
 
 /**
  * Smaller node of gasItem, produces 2 duplicate nodes
  * to give it more of a natural look.
+ *
  * @author Trafford
  * @version 1.0
  * @since 04/12/2021
  */
-public class GasChild extends GasItem{
+public class GasChild extends GasItem {
 
-    private ArrayList<GasChild> associatedGas = new ArrayList<>();
+    private final ArrayList<GasChild> associatedGas = new ArrayList<>();
     private Rat.Directions expansionDirection;
     private GasItem parent;
 
     /**
      * Creates a new gas child. If this node can grow more, it should be told to do so.
+     *
      * @param x
      * @param y
      * @param growFurther should this node spawn up to 4 more nodes?
@@ -31,18 +34,16 @@ public class GasChild extends GasItem{
         this.setImage(ImageRefs.gasOuter);
         this.setMyItemType(itemType.Gas);
 
-        if(growFurther){
+        if (growFurther) {
             tryGrow();
-        }else{
+        } else {
             setImage(ImageRefs.gasOuterChild);
         }
 
 
-
-
     }
 
-    public void setParent(GasItem center){
+    public void setParent(GasItem center) {
         this.parent = center;
         setRelativePosToCenter();
     }
@@ -54,16 +55,13 @@ public class GasChild extends GasItem{
         int x = parent.getX();
         int y = parent.getY();
 
-        if(x < getX()){
+        if (x < getX()) {
             expansionDirection = Rat.Directions.EAST;
-        }
-        else if (x > getX()){
+        } else if (x > getX()) {
             expansionDirection = Rat.Directions.WEST;
-        }
-        else if (y < getY()){
+        } else if (y < getY()) {
             expansionDirection = Rat.Directions.NORTH;
-        }
-        else if (y > getY()){
+        } else if (y > getY()) {
             expansionDirection = Rat.Directions.SOUTH;
         }
     }
@@ -73,43 +71,43 @@ public class GasChild extends GasItem{
      * Try to grow once in all directions.
      * Works by checking each value is in range,
      */
-    public void tryGrow(){
-        Coordinate left = new Coordinate(getX() - 1,getY());
-        Coordinate right = new Coordinate(getX() + 1,getY());
-        Coordinate up = new Coordinate(getX(),getY() - 1);
-        Coordinate down = new Coordinate(getX(),getY() + 1);
+    public void tryGrow() {
+        Coordinate left = new Coordinate(getX() - 1, getY());
+        Coordinate right = new Coordinate(getX() + 1, getY());
+        Coordinate up = new Coordinate(getX(), getY() - 1);
+        Coordinate down = new Coordinate(getX(), getY() + 1);
 
         Tile[][] allTiles = getLocalInstance().getLevelBoard().getTileMap();
 
 
-        if(expansionDirection != Rat.Directions.EAST && allTiles[left.getX()][left.getY()].getTraversable()){
+        if (expansionDirection != Rat.Directions.EAST && allTiles[left.getX()][left.getY()].getTraversable()) {
 
-            if(!getLocalInstance().getLevelBoard().existsItemAt(left.getX(),left.getY())){
-                GasChild child = new GasChild(left.getX(),left.getY(),false);
+            if (!getLocalInstance().getLevelBoard().existsItemAt(left.getX(), left.getY())) {
+                GasChild child = new GasChild(left.getX(), left.getY(), false);
                 child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(expansionDirection != Rat.Directions.WEST && allTiles[right.getX()][right.getY()].getTraversable()){
+        if (expansionDirection != Rat.Directions.WEST && allTiles[right.getX()][right.getY()].getTraversable()) {
 
-            if(!getLocalInstance().getLevelBoard().existsItemAt(left.getX(),left.getY())){
-                GasChild child = new GasChild(left.getX(),left.getY(),false);
+            if (!getLocalInstance().getLevelBoard().existsItemAt(left.getX(), left.getY())) {
+                GasChild child = new GasChild(left.getX(), left.getY(), false);
                 child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(expansionDirection != Rat.Directions.NORTH && allTiles[up.getX()][up.getY()].getTraversable()){
+        if (expansionDirection != Rat.Directions.NORTH && allTiles[up.getX()][up.getY()].getTraversable()) {
 
-            if(!getLocalInstance().getLevelBoard().existsItemAt(up.getX(),up.getY())){
-                GasChild child = new GasChild(up.getX(),up.getY(),false);
+            if (!getLocalInstance().getLevelBoard().existsItemAt(up.getX(), up.getY())) {
+                GasChild child = new GasChild(up.getX(), up.getY(), false);
                 child.setParent(this);
                 associatedGas.add(child);
             }
         }
-        if(expansionDirection != Rat.Directions.SOUTH && allTiles[down.getX()][down.getY()].getTraversable()){
+        if (expansionDirection != Rat.Directions.SOUTH && allTiles[down.getX()][down.getY()].getTraversable()) {
 
-            if(!getLocalInstance().getLevelBoard().existsItemAt(down.getX(),down.getY())){
-                GasChild child = new GasChild(down.getX(),down.getY(),false);
+            if (!getLocalInstance().getLevelBoard().existsItemAt(down.getX(), down.getY())) {
+                GasChild child = new GasChild(down.getX(), down.getY(), false);
                 child.setParent(this);
                 associatedGas.add(child);
             }
@@ -120,8 +118,8 @@ public class GasChild extends GasItem{
     /**
      * remove this gas from the map
      */
-    public void removeSelf(){
-        for (Item it:associatedGas) {
+    public void removeSelf() {
+        for (Item it : associatedGas) {
             getLocalInstance().getLevelBoard().removeItem(it);
         }
 

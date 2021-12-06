@@ -31,6 +31,7 @@ public class Rat implements ITickHandler {
     private boolean isSterile;
     private boolean isPregnant;
     private boolean inGas;
+
     private int secondsInGas;
     private int tickTimer;
     private boolean isBaby;
