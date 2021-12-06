@@ -8,8 +8,6 @@ import ItemClasses.DeathRatItem;
 import ItemClasses.Item;
 import Game.ITickHandler;
 import javafx.scene.image.Image;
-
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -17,9 +15,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The main rat class. Covers all basic features of Rats.
- *
- * @author Marcus, Iggy
+ * The main rat class. Covers most important features of Rats.
+ * @author Marcus, Trafford, Iggy
  * @version 0.1
  * @since 0.1
  */
@@ -27,10 +24,10 @@ import java.util.concurrent.TimeUnit;
 public class Rat implements ITickHandler {
 
     private final Level INSTANCE;
-    private final boolean isDeathRat;
-    private final ArrayList<Item> ITEMS_TO_DELETE_ON_COLLISION = new ArrayList<>();
-    private final ArrayList<Rat> BABY_RATS_QUEUE = new ArrayList<>();
-    private final ArrayList<BabyRat> GESTATING_CHILDREN = new ArrayList<>();
+    private final boolean IS_DEATH_RAT;
+    private final ArrayList<Item> ITEMS_TO_DELETE_ON_COLLISION = new ArrayList<>(); //Used to add items to delete on collision
+    private final ArrayList<Rat> BABY_RATS_QUEUE = new ArrayList<>(); //Used to add baby rats to level when female rat is pregnant
+    private final ArrayList<BabyRat> GESTATING_CHILDREN = new ArrayList<>(); //Used during the process of gestating baby rats
     private char sex;
     private Image sprite;
     private boolean isSterile;
@@ -46,6 +43,9 @@ public class Rat implements ITickHandler {
     private Directions oldDirection;
     Runnable releaseRat = () -> releaseRat(); //Assigns the method to be a "runnable", used to execute a wait function.
 
+    /**
+     * The 4 cardinal directions for the movement of rat
+     */
     public enum Directions {
         EAST,
         WEST,
@@ -63,33 +63,30 @@ public class Rat implements ITickHandler {
      */
     public Rat(char sex, int xPos, int yPos) {
         currentDirection = Directions.NORTH;
-
         this.isBaby = Character.isLowerCase(sex);
 
         if (Character.toLowerCase(sex) == 'f' || Character.toLowerCase(sex) == 'm') {
             this.sex = sex;
         }
-
         this.xPos = xPos;
         this.yPos = yPos;
-        isDeathRat = false;
+        IS_DEATH_RAT = false;
         isSterile = false;
         INSTANCE = Level.getInstance();
         isPregnant = false;
         changeSprite();
-
     }
 
 
     /**
      *  Constructor for baby rat and death rat class.
      *  Only used for adult rats
-     * @param sex
-     * @param isDeathRat
-     * @param isSterile
-     * @param xPos
-     * @param yPos
-     * @param isBaby
+     * @param sex the gender of the rat.
+     * @param isDeathRat if the rat is a death rat.
+     * @param isSterile if the rat is sterile.
+     * @param xPos x position of rat.
+     * @param yPos y position of rat.
+     * @param isBaby if the rat is a baby
      */
     public Rat(char sex, boolean isDeathRat, boolean isSterile, int xPos, int yPos, boolean isBaby) {
         currentDirection = Directions.NORTH;
@@ -98,19 +95,14 @@ public class Rat implements ITickHandler {
         this.sex = sex;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.isDeathRat = isDeathRat;
+        this.IS_DEATH_RAT = isDeathRat;
         this.isSterile = isSterile;
         INSTANCE = Level.getInstance();
-
         if (isDeathRat) {
             INSTANCE.getLevelBoard().addRat(this);
             INSTANCE.addListener(this);
         }
-
-
         changeSprite();
-        //pregnantDuration();
-
     }
 
     /**
@@ -123,7 +115,7 @@ public class Rat implements ITickHandler {
     }
 
     /**
-     * a counter for the delay required when female rat gives birth and,
+     * a counter for the gestation period of the female rat and,
      * the time it takes for a baby to grow into an adult rat.
      */
     public void gestationGrowthCounter() {
@@ -150,7 +142,7 @@ public class Rat implements ITickHandler {
      * removes this rat and adds a new adult rat in the same pos
      */
     public void growRat() {
-        Rat adultRat = new Rat(getSex(), isDeathRat, isSterile, xPos, yPos, false);
+        Rat adultRat = new Rat(getSex(), IS_DEATH_RAT, isSterile, xPos, yPos, false);
         INSTANCE.addRatToQueue(adultRat);
         INSTANCE.getLevelBoard().removeRat(this);
     }
@@ -160,7 +152,6 @@ public class Rat implements ITickHandler {
      * for the amount of baby rats to be born.
      */
     public void babyRatsToQueue() {
-
         for (BabyRat rats : GESTATING_CHILDREN) {
             rats.setPosition(getX(), getY());
             BABY_RATS_QUEUE.add(rats);
@@ -254,11 +245,9 @@ public class Rat implements ITickHandler {
         int newyPos = yPos;
         //remembers the old direction of the rat
         oldDirection = currentDirection;
-
         detectOptions();
         if (currentDirection == Directions.EAST) {
             newxPos += 1;
-
         } else if (currentDirection == Directions.WEST) {
             newxPos -= 1;
         } else if (currentDirection == Directions.NORTH) {
@@ -268,17 +257,13 @@ public class Rat implements ITickHandler {
         }
         //checks if the new coordinates is traversable
         if (isTraversable(newxPos, newyPos)) {
-
             xPos = newxPos;
             yPos = newyPos;
             changeSprite();
-            if (isDeathRat) {
+            if (IS_DEATH_RAT) {
                 ((DeathRat) this).getItem().updatePos();
             }
-
-
         }
-
     }
 
     /**
@@ -286,7 +271,6 @@ public class Rat implements ITickHandler {
      * changes the direction the rat is facing depending on the direction it is going.
      */
     public void changeSprite() {
-
         if (sex == 'M') {
             switch (currentDirection) {
                 case EAST -> sprite = ImageRefs.maleRatRight;
@@ -302,8 +286,6 @@ public class Rat implements ITickHandler {
                 case SOUTH -> sprite = ImageRefs.femaleRatDown;
             }
         }
-
-
     }
 
     /**
@@ -376,10 +358,9 @@ public class Rat implements ITickHandler {
             currentDirection = options.get(0);
         }
         //death rats
-        if (!isDeathRat) {
+        if (!IS_DEATH_RAT) {
             checkItemCollision();
         }
-
     }
 
     /**
@@ -401,10 +382,8 @@ public class Rat implements ITickHandler {
                         }
                         case Gas -> {
                             inGas = true; //change back to true before the method finishes.
-                            System.out.println(secondsInGas);
-
                             if (secondsInGas >= 2) {
-                                INSTANCE.getLevelBoard().removeRat(this);
+                                deleteRat();
                             }
                         }
                         case MSex -> {
@@ -442,19 +421,15 @@ public class Rat implements ITickHandler {
                             a.incrementKills();
                             deleteRat();
 
-
                         }
                     }
                 }
             }
-
-
         }
 
         for (Item it : ITEMS_TO_DELETE_ON_COLLISION) {
             it.deleteItem();
         }
-
 
         if (!inGas) {
             secondsInGas = 0;
@@ -502,13 +477,9 @@ public class Rat implements ITickHandler {
                             rt.setCanMove(false);
                             waitToReleaseRat();
                             rt.waitToReleaseRat();
-
-
                         }
-
                     }
                 }
-
             }
         }
     }
@@ -559,22 +530,26 @@ public class Rat implements ITickHandler {
      * deletes rat from level, and increases the score every time a rat is removed.
      */
     public void deleteRat() {
-        //instance.markListenerForRemoval(this);
+
         INSTANCE.getLevelBoard().removeRat(this);
 
-        if (!isDeathRat) {
+        if (!IS_DEATH_RAT) {
             INSTANCE.increaseScore(10);
         }
 
-        if (BABY_RATS_QUEUE.size() > 0) {
-            for (Rat bRat : BABY_RATS_QUEUE) {
+        if (GESTATING_CHILDREN.size() > 0) {
+            for (Rat bRat : GESTATING_CHILDREN) {
                 INSTANCE.increaseScore(10);
             }
-
         }
+
+        INSTANCE.getLevelBoard().removeRat(this);
     }
 
-    //sterilize rat method
+
+    /**
+     * sets isSterile to true
+     */
     public void sterilizeRat() {
         isSterile = true;
     }
@@ -646,15 +621,5 @@ public class Rat implements ITickHandler {
      */
     public int getyPos() {
         return yPos;
-    }
-
-    public void setSex(char sex) {
-        this.sex = sex;
-
-        if (this.sex == 'F' || this.sex == 'M') {
-            this.isBaby = false;
-        } else {
-            isBaby = true;
-        }
     }
 }
