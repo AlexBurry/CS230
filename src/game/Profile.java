@@ -29,7 +29,6 @@ public class Profile {
             createProfile();
         } else {
             getProfile(name);
-            //advanceToLevel
         }
     }
 
@@ -295,15 +294,6 @@ public class Profile {
             System.out.println("Failed To Initialize File.");
         }
     }
-
-    /*
-    public void advanceToLevel() {
-        levelCleared = false;
-        currentLevel++;
-        checkHighscore();
-        //GoTo Next Game.Level
-    }
-    */
 
     /**
      * This method returns the player's name.

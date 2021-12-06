@@ -3,7 +3,6 @@ package game;
 import itemClasses.GasChild;
 import itemClasses.Item;
 import ratClasses.Rat;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,13 +21,13 @@ public class Save {
     private final int MAPY;
     private final String PROFILE_NAME;
     private final String LEVEL_NAME;
-    private String[][] stringMap;
+    private final String[][] stringMap;
     private ArrayList<String> ratList;
     private ArrayList<String> itemsRespawnRate;
     private ArrayList<String> itemList;
-    private int timeLeft;
-    private int lossCondition;
-    private int currentScore;
+    private final int timeLeft;
+    private final int lossCondition;
+    private final int currentScore;
     private String[] inv;
 
 
