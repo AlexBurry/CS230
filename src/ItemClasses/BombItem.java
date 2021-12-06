@@ -1,11 +1,8 @@
 package ItemClasses;
-
 import Game.ITickHandler;
 import Game.Tile;
 import RatClasses.Rat;
 import Sprites.ImageRefs;
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
 /**
@@ -140,7 +137,7 @@ public class BombItem extends Item implements ITickHandler {
         ArrayList<Item> toRemove = new ArrayList<>();
 
         for (Tile tile : bombZone) {
-            //TODO: Optimise and add VFX
+
             for (Rat rat : rats) { //for each rat on the entire board
                 if (rat.getX() == tile.getLocation()[0] && rat.getY() == tile.getLocation()[1]) {
                     //if the rat is on this tile
@@ -164,7 +161,8 @@ public class BombItem extends Item implements ITickHandler {
         for (Item it : toRemove) {
             it.deleteItem();
         }
-        getLocalInstance().markListenerForRemoval(this); //Stop listening so that we dont call Tick on a dead object
+        getLocalInstance().markListenerForRemoval(this); //Stop listening to tick
+
         deleteItem();
 
     }

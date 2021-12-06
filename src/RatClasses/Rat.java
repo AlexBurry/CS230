@@ -407,10 +407,8 @@ public class Rat implements ITickHandler {
                         }
                         case Gas -> {
                             inGas = true; //change back to true before the method finishes.
-                            System.out.println(secondsInGas);
-
                             if (secondsInGas >= 2) {
-                                instance.getLevelBoard().removeRat(this);
+                                deleteRat();
                             }
                         }
                         case MSex -> {
@@ -562,18 +560,14 @@ public class Rat implements ITickHandler {
      * deletes rat from level, and increases the score every time a rat is removed.
      */
     public void deleteRat() {
-        //instance.markListenerForRemoval(this);
         instance.getLevelBoard().removeRat(this);
-
         if (!isDeathRat) {
             instance.increaseScore(10);
         }
-
         if (babyRatsQueue.size() > 0) {
             for (Rat bRat : babyRatsQueue) {
                 instance.increaseScore(10);
             }
-
         }
     }
 
