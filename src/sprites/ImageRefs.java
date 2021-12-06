@@ -55,7 +55,7 @@ public class ImageRefs {
     public static final Image femaleToMaleSC = new Image("sprites/femaleMaleSexChange.png");
 
     //UI -------------------------------------
-            //for menu, buttons and backgrounds
+    //for menu, buttons and backgrounds
     public static final Image iconBomb = new Image("sprites/iconBomb.png");
     public static final Image iconSterilise = new Image("sprites/iconSterilise.png");
     public static final Image iconNoEntry = new Image("sprites/iconNoEntry.png");
@@ -65,5 +65,5 @@ public class ImageRefs {
     public static final Image iconPoison = new Image("sprites/iconPoison.png");
     public static final Image iconDeathRat = new Image("sprites/iconDeathRat.png");
     //other -------------------------------------
-            //for anything else
+    //for anything else
 }
