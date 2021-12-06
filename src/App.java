@@ -1,4 +1,4 @@
-import GUI.Menu;
+import gui.Menu;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

@@ -1,7 +1,3 @@
-import Game.Level;
-import Game.ReadFile;
-import Game.Save;
-
 import java.io.FileNotFoundException;
 
 public class SaveTest {
