@@ -74,6 +74,14 @@ public class Level {
         LEVEL_BOARD.start(primaryStage);
 
         createTick(); //begins tick
+
+
+        //adds a shutdown hook, causing the game to save if closed.
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run(){
+                save();
+            }
+        }));
     }
 
     /**
@@ -113,6 +121,14 @@ public class Level {
 
 
         createTick(); //begins tick
+
+
+        //adds a shutdown hook, causing the game to save if closed.
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run(){
+                save();
+            }
+        }));
     }
 
     /**
@@ -174,8 +190,8 @@ public class Level {
     /**
      * ITickHandler method for the game runtime, updates board every second/tick
      */
-    public void tick() { //TODO: figure out order through trial and error
-        //System.out.println(lossCondition);
+    public void tick() {
+
         for (ITickHandler t : nullListeners) {
             listeners.remove(t);
         }
@@ -270,6 +286,7 @@ public class Level {
             menu.buildMenu();
         }
     }
+
 
     /**
      * Reloads the current inventory values
