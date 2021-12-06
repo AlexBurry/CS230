@@ -256,18 +256,18 @@ public class Level {
     public void checkLossCondition() {
         if (LEVEL_BOARD.getRats().size() >= LOSS_CONDITION) {
             System.out.println("Game over");
-            System.exit(0);
+            menu.buildMenu();
         }
         if (timeLeft == 0) {
             System.out.println("Game over");
-            System.exit(0);
+            menu.buildMenu();
         }
         ArrayList<Rat> properRats = LEVEL_BOARD.getRats();
         properRats.removeIf(rat -> rat.getClass() == DeathRat.class); //removes deathrats from consideration in the rats
         if (properRats.size() == 0) {
             currentScore = currentScore + timeLeft;
             System.out.println("Game won: " + currentScore);
-            System.exit(0);
+            menu.buildMenu();
         }
     }
 
@@ -346,7 +346,19 @@ public class Level {
         return levelNumber;
     }
 
+    /**
+     * sets the menu variable so we can load it.
+     * @param mObject
+     */
     public void setMenuInstance(Menu mObject) {
         this.menu = mObject;
+    }
+
+    /**
+     * The menu which was used to launch the game.
+     * @return menu - the menu instance.
+     */
+    public Menu getMenu() {
+        return menu;
     }
 }
