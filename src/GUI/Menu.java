@@ -205,6 +205,7 @@ public class Menu {
                 }
             });
         } else {
+            lvlSelect.setHighestUnlocked(1);
             switch (name) {
                 case "l" -> lvlSelect.levelSelector(primaryStage);
                 case "p" -> buildProfile(primaryStage);

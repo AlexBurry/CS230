@@ -145,6 +145,7 @@ public class Profile {
             FileWriter writer = new FileWriter(playerDatabase, true);
             BufferedWriter buffWriter = new BufferedWriter(writer);
             buffWriter.write("\n" + name + "," + "1,1,0");
+            highestLevelUnlocked = 1;
             buffWriter.close();
         } catch (Exception e) {
             System.out.println("Oops. Couldn't Open Player Database!");
@@ -352,5 +353,13 @@ public class Profile {
 
     public void setScore(int addScore) {
         score += addScore;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public void setHighestLevelUnlocked(int highestLevelUnlocked) {
+        this.highestLevelUnlocked = highestLevelUnlocked;
     }
 }

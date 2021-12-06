@@ -26,7 +26,7 @@ public class SteriliseItem extends Item implements ITickHandler {
      * @param x the XCoordinate of the item
      * @param y the YCoordinate of the item
      */
-    public SteriliseItem(int x, int y){
+    public SteriliseItem(int x, int y) {
         super();
         this.setX(x);
         this.setY(y);
@@ -41,7 +41,7 @@ public class SteriliseItem extends Item implements ITickHandler {
      */
     @Override
     public void tickEvent(int count) {
-        if(count >= 4){
+        if (count >= 4) {
             countdown();
         }
     }
@@ -79,13 +79,13 @@ public class SteriliseItem extends Item implements ITickHandler {
 
         //loop though all tiles within radius spaces and save them to array
         for (int x = (radius * -1); x <= radius; x++) {
-           for (int y = (radius * -1); y <= radius; y++) {
-               if ((currentXPos + x) >= 0 && (currentXPos + x) <= 19
-                       && (currentYPos + y) >= 0 && (currentYPos+y <= 12)) {
-                   sterilizeZone.add(localMap[currentXPos + x][currentYPos + y]);
-               }
-           }
-       }
+            for (int y = (radius * -1); y <= radius; y++) {
+                if ((currentXPos + x) >= 0 && (currentXPos + x) <= 19
+                        && (currentYPos + y) >= 0 && (currentYPos + y <= 12)) {
+                    sterilizeZone.add(localMap[currentXPos + x][currentYPos + y]);
+                }
+            }
+        }
         return sterilizeZone;
     }
 

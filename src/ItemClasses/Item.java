@@ -20,7 +20,7 @@ public abstract class Item {
     private int yPos;
     private Level instance; //This stores a reference to our current level.
     private itemType myItemType; //This is the type of item this is
-    private boolean drawMyself = true; //TODO: Use this to stop drawing when on tunnels
+
 
     //Represents an item type and all its datatypes / choices.
     public enum itemType {

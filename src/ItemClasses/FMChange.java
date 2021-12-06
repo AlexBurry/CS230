@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 
 /**
  * Change the sex of a rat
+ *
  * @author Trafford
  * @author Jack
  * @version 0.1
@@ -18,7 +19,7 @@ public class FMChange extends Item {
      * @param x the XCoordinate of the item
      * @param y the YCoordinate of the item
      */
-    public FMChange(int x, int y){
+    public FMChange(int x, int y) {
         super();
         this.setX(x);
         this.setY(y);

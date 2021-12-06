@@ -19,23 +19,25 @@ import java.util.ArrayList;
  */
 public class GasItem extends Item implements ITickHandler {
 
-    private final int DIRECTION_LIMIT = 3; //when do we stop checking?
+    //all tiles in each direction, allows us to create them in steps each second.
+    private final ArrayList<Coordinate> northernTiles = new ArrayList<>();
+    private final ArrayList<Coordinate> southernTiles = new ArrayList<>();
+    private final ArrayList<Coordinate> westernTiles = new ArrayList<>();
+    private final ArrayList<Coordinate> easternTiles = new ArrayList<>();
+    private final ArrayList<GasChild> myChildren = new ArrayList<>();
+
+
+
     private boolean dissipating = false; //Should we reverse?
 
     private int expansionStage = 0;
 
-    //all tiles in each direction, allows us to create them in steps each second.
-    private ArrayList<Coordinate> northernTiles = new ArrayList<>();
-    private ArrayList<Coordinate> southernTiles = new ArrayList<>();
-    private ArrayList<Coordinate> westernTiles = new ArrayList<>();
-    private ArrayList<Coordinate> easternTiles = new ArrayList<>();
-
-    private ArrayList<GasChild> myChildren = new ArrayList<>();
 
     /**
      * Blank template, used for GasChild to call without calculating the AOE.
      */
     public GasItem() {
+
     }
 
     /**
@@ -61,6 +63,9 @@ public class GasItem extends Item implements ITickHandler {
      * This is achieved by checking 3 tiles in every direction.
      */
     private void calculateAOE() {
+
+        //System.out.println(getLocalInstance().getLevelBoard().getTileMap() == null);
+        final int DIRECTION_LIMIT = 3;
         Tile[][] localMap = getLocalInstance().getLevelBoard().getTileMap();
         //store the current pos as the items position.
         int currentXPos = getX();
@@ -215,6 +220,7 @@ public class GasItem extends Item implements ITickHandler {
 
     /**
      * For this class, it handles growth and dissipations.
+     *
      * @param count how many ticks have passed? Resets every second.
      */
     @Override

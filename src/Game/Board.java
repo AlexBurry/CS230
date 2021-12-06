@@ -73,6 +73,7 @@ public class Board extends Application implements ITickHandler {
 
         gameWidthInTiles = GAME_WIDTH / 60;
         gameWidthInTiles = (GAME_HEIGHT - 104) / 60;
+
     }
 
     public void start(Stage primaryStage) {
@@ -307,6 +308,10 @@ public class Board extends Application implements ITickHandler {
      */
     public int getGameHeightInTiles() {
         return gameHeightInTiles;
+    }
 
+    public DragAndDrop getToolBar() {
+        return toolBar;
     }
 }
+

@@ -31,6 +31,7 @@ public class Rat implements ITickHandler {
     private boolean isSterile;
     private boolean isPregnant;
     private boolean inGas;
+
     private int secondsInGas;
     private int tickTimer;
     private boolean isBaby;
@@ -407,13 +408,12 @@ public class Rat implements ITickHandler {
                         }
                         case Gas -> {
                             inGas = true; //change back to true before the method finishes.
-                            System.out.println(secondsInGas);
-
                             if (secondsInGas >= 2) {
-                                instance.getLevelBoard().removeRat(this);
+                                deleteRat();
                             }
                         }
                         case MSex -> {
+                            instance.getLevelBoard().getToolBar().setSexChanged(true);
                             if(isBaby){
                                 sex = 'm';
                             }else{
@@ -423,6 +423,7 @@ public class Rat implements ITickHandler {
                             itemsToDeleteOnCollision.add(it);
                         }
                         case FSex -> {
+                            instance.getLevelBoard().getToolBar().setSexChanged(true);
                             if(isBaby){
                                 sex = 'f';
                             }else{
@@ -447,14 +448,10 @@ public class Rat implements ITickHandler {
                             DeathRatItem a = (DeathRatItem) it;
                             a.incrementKills();
                             deleteRat();
-
-
                         }
                     }
                 }
             }
-
-
         }
 
         for (Item it : itemsToDeleteOnCollision) {
@@ -562,19 +559,17 @@ public class Rat implements ITickHandler {
      * deletes rat from level, and increases the score every time a rat is removed.
      */
     public void deleteRat() {
-        //instance.markListenerForRemoval(this);
-        instance.getLevelBoard().removeRat(this);
 
         if (!isDeathRat) {
             instance.increaseScore(10);
         }
-
-        if (babyRatsQueue.size() > 0) {
-            for (Rat bRat : babyRatsQueue) {
+        if (gestatingChildren.size() > 0) {
+            for (Rat bRat : gestatingChildren) {
                 instance.increaseScore(10);
             }
-
         }
+
+        instance.getLevelBoard().removeRat(this);
     }
 
     //sterilize rat method
