@@ -1,4 +1,4 @@
-Trafford,1,6,0,1
+Trafford,1,6,0,1,0,
 Alex,1,5,0
 Rex,1,6,0
 Jack,1,2,0
