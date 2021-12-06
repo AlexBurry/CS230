@@ -7,12 +7,25 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class for reading in a level file
+ *
+ * @author Alex
+ * @version 1.0
+ */
 public class ReadFile {
     private int mapX;
     private int mapY;
     private final Stage primaryStage;
     private Scanner in;
 
+    /**
+     * Constructor for read file class
+     *
+     * @param levelFile    level file to read from
+     * @param primaryStage the primary stage
+     * @throws FileNotFoundException throws if cannot find requested file
+     */
     public ReadFile(String levelFile, Stage primaryStage) throws FileNotFoundException {
         this.primaryStage = primaryStage;
         File inputFile = new File(levelFile);
@@ -28,6 +41,7 @@ public class ReadFile {
 
     /**
      * Returns a new level object for generation
+     *
      * @return new, fresh level
      */
     public Level newLevel() {
@@ -48,6 +62,7 @@ public class ReadFile {
 
     /**
      * Returns a level with data already in it
+     *
      * @return a level which ahs been played
      */
     public Level loadLevel() {
@@ -66,13 +81,25 @@ public class ReadFile {
         int currentScore = readCurrentScore(new Scanner(in.nextLine()));
         ArrayList<String> inv = readInv(in);
 
-        return new Level(mapX, mapY, map, rats, respawns, allowedTime, lossCondition, currentScore, items, inv,primaryStage);
+        return new Level(mapX, mapY, map, rats, respawns, allowedTime, lossCondition, currentScore, items, inv, primaryStage);
     }
 
+    /**
+     * Gets eitheer x or y of map
+     *
+     * @param in Scanner object
+     * @return x or y of map
+     */
     private int mapSize(Scanner in) {
         return Integer.parseInt(in.next());
     }
 
+    /**
+     * Reads in a 2D array of tilemap
+     *
+     * @param in Scanner object
+     * @return String 2D array tilemap
+     */
     private String[][] readMap(Scanner in) {
         String[][] tilemap = new String[mapX][mapY];
         for (int y = 0; y < mapY; y++) {
@@ -85,6 +112,12 @@ public class ReadFile {
         return tilemap;
     }
 
+    /**
+     * gets a list of rat spawn locations
+     *
+     * @param ratScan Scanner object
+     * @return rat spawn locations and sex
+     */
     private ArrayList<String> readSpawnRatLocations(Scanner ratScan) {
         ArrayList<String> rats = new ArrayList<>();
         ratScan.useDelimiter(";");
@@ -94,6 +127,12 @@ public class ReadFile {
         return rats;
     }
 
+    /**
+     * Gets a list of items spawn rates
+     *
+     * @param itemScan Scanner object
+     * @return item spawn rate in list
+     */
     private ArrayList<String> readItemSpawnRates(Scanner itemScan) {
         ArrayList<String> items = new ArrayList<>();
         itemScan.useDelimiter(";");
@@ -103,27 +142,57 @@ public class ReadFile {
         return items;
     }
 
+    /**
+     * Reads in the time limit
+     *
+     * @param in Scanner object
+     * @return level time limit
+     */
     private int readTimeLimit(Scanner in) {
         return Integer.parseInt(in.next());
     }
 
+    /**
+     * Reads in the loss condition
+     *
+     * @param in Scanner object
+     * @return level loss condition
+     */
     private int readLossCondition(Scanner in) {
         return Integer.parseInt(in.next());
     }
 
+    /**
+     * Reads in the current score
+     *
+     * @param in Scanner object
+     * @return current level score
+     */
     private int readCurrentScore(Scanner in) {
         return Integer.parseInt(in.next());
     }
 
+    /**
+     * Reads in the current item locations
+     *
+     * @param itemScan Scanner object
+     * @return current item types and locations
+     */
     private ArrayList<String> readItemLocations(Scanner itemScan) {
-        ArrayList<String> rats = new ArrayList<>();
+        ArrayList<String> items = new ArrayList<>();
         itemScan.useDelimiter(";");
         while (itemScan.hasNext()) {
-            rats.add(itemScan.next());
+            items.add(itemScan.next());
         }
-        return rats;
+        return items;
     }
 
+    /**
+     * Reads in the current inventory
+     *
+     * @param in Scanner object
+     * @return current level inventory
+     */
     private ArrayList<String> readInv(Scanner in) {
         ArrayList<String> inv = new ArrayList<>();
         in.useDelimiter(";");

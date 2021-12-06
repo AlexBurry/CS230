@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 /**
  * Inventory manager
+ *
  * @author Alex
  */
 public class Inventory implements ITickHandler {
@@ -39,6 +40,7 @@ public class Inventory implements ITickHandler {
 
     /**
      * Constructor for inventory
+     *
      * @param itemsRespawnRate ArrayList of all item respawn rate values as ints
      */
     public Inventory(ArrayList<String> itemsRespawnRate) {
@@ -63,6 +65,7 @@ public class Inventory implements ITickHandler {
 
     /**
      * Setter for all item respawn rats
+     *
      * @param itemsRespawnRate ArrayList of all item respawn rate values as ints
      */
     private void setItemRespawnTimers(ArrayList<String> itemsRespawnRate) {
@@ -89,10 +92,15 @@ public class Inventory implements ITickHandler {
         }
     }
 
+    /**
+     * Checks if the inventory should increase the number of items
+     *
+     * @param count how many ticks have passed? Resets every second.
+     */
     @Override
     public void tickEvent(int count) {
 
-        if(count >= 4){
+        if (count >= 4) {
             increaseNumberOfBombs();
             increaseNumberOfMSexChange();
             increaseNumberOfFSexChange();
@@ -105,25 +113,33 @@ public class Inventory implements ITickHandler {
 
     }
 
+    /**
+     * Increases number of Bombs
+     */
     public void increaseNumberOfBombs() {
         if (numberOfBombs != MAX_ITEM_NUMBER) {
             if (bombSpawnRateTimer == 0) {
                 numberOfBombs++;
                 bombSpawnRateTimer = bombSpawnRate;
 
-            }
-            else {
+            } else {
                 bombSpawnRateTimer--;
             }
         }
     }
 
+    /**
+     * Decreases number of Bombs
+     */
     public void decreaseNumberOfBombs() {
         if (numberOfBombs != 0) {
             numberOfBombs--;
         }
     }
 
+    /**
+     * Increases number of Male sex changes
+     */
     public void increaseNumberOfMSexChange() {
         if (numberOfMSexChange != MAX_ITEM_NUMBER) {
             if (mSexChangeSpawnRateTimer == 0) {
@@ -136,12 +152,18 @@ public class Inventory implements ITickHandler {
         }
     }
 
+    /**
+     * Decreases number of Male sex changes
+     */
     public void decreaseNumberOfMSexChange() {
         if (numberOfMSexChange != 0) {
             numberOfMSexChange--;
         }
     }
 
+    /**
+     * Increases number of Female sex changes
+     */
     public void increaseNumberOfFSexChange() {
         if (numberOfFSexChange != MAX_ITEM_NUMBER) {
             if (fSexChangeSpawnRateTimer == 0) {
@@ -154,12 +176,18 @@ public class Inventory implements ITickHandler {
         }
     }
 
+    /**
+     * Decreases number of Female sex changes
+     */
     public void decreaseNumberOfFSexChange() {
         if (numberOfFSexChange != 0) {
             numberOfFSexChange--;
         }
     }
 
+    /**
+     * Increases number of Gas
+     */
     public void increaseNumberOfGas() {
         if (numberOfGas != MAX_ITEM_NUMBER) {
             if (gasSpawnRateTimer == 0) {
@@ -172,12 +200,18 @@ public class Inventory implements ITickHandler {
         }
     }
 
+    /**
+     * Decreases number of Gas
+     */
     public void decreaseNumberOfGas() {
         if (numberOfGas != 0) {
             numberOfGas--;
         }
     }
 
+    /**
+     * Increases number of Sterilisation
+     */
     public void increaseNumberOfSterilisation() {
         if (numberOfSterilisation != MAX_ITEM_NUMBER) {
             if (sterilisationSpawnRateTimer == 0) {
@@ -190,12 +224,18 @@ public class Inventory implements ITickHandler {
         }
     }
 
+    /**
+     * Decreases number of Sterilisation
+     */
     public void decreaseNumberOfSterilisation() {
         if (numberOfSterilisation != 0) {
             numberOfSterilisation--;
         }
     }
 
+    /**
+     * Increases number of Poison
+     */
     public void increaseNumberOfPoison() {
         if (numberOfPoison != MAX_ITEM_NUMBER) {
             if (poisonSpawnRateTimer == 0) {
@@ -208,15 +248,21 @@ public class Inventory implements ITickHandler {
         }
     }
 
+    /**
+     * Decreases number of Poison
+     */
     public void decreaseNumberOfPoison() {
         if (numberOfPoison != 0) {
             numberOfPoison--;
         }
     }
 
+    /**
+     * Increases number of No Entry Signs
+     */
     public void increaseNumberOfNoEntry() {
         if (numberOfNoEntry != MAX_ITEM_NUMBER) {
-            if (noEntrySpawnRateTimer== 0) {
+            if (noEntrySpawnRateTimer == 0) {
                 numberOfNoEntry++;
                 noEntrySpawnRateTimer = noEntrySpawnRate;
 
@@ -226,12 +272,18 @@ public class Inventory implements ITickHandler {
         }
     }
 
+    /**
+     * Decreases number of No Entry signs
+     */
     public void decreaseNumberOfNoEntry() {
         if (numberOfNoEntry != 0) {
             numberOfNoEntry--;
         }
     }
 
+    /**
+     * Increases number of Death rats
+     */
     public void increaseNumberOfDeathRat() {
         if (numberOfDeathRat != MAX_ITEM_NUMBER) {
             if (deathRatSpawnRateTimer == 0) {
@@ -244,72 +296,155 @@ public class Inventory implements ITickHandler {
         }
     }
 
+    /**
+     * Decreases number of Death rats
+     */
     public void decreaseNumberOfDeathRat() {
         if (numberOfDeathRat != 0) {
             numberOfDeathRat--;
         }
     }
 
+    /**
+     * Gets the number of bombs
+     *
+     * @return int value of bombs
+     */
     public int getNumberOfBombs() {
         return numberOfBombs;
     }
 
+    /**
+     * Gets the number of male sex changes
+     *
+     * @return int value of male sex changes
+     */
     public int getNumberOfMSexChange() {
         return numberOfMSexChange;
     }
 
+    /**
+     * Gets the number of female sex changes
+     *
+     * @return int value of female sex changes
+     */
     public int getNumberOfFSexChange() {
         return numberOfFSexChange;
     }
 
+    /**
+     * Gets the number of gas items
+     *
+     * @return int value of gas
+     */
     public int getNumberOfGas() {
         return numberOfGas;
     }
 
+    /**
+     * Gets the number of sterilisation
+     *
+     * @return int value of sterilsiation
+     */
     public int getNumberOfSterilisation() {
         return numberOfSterilisation;
     }
 
+    /**
+     * Gets the number of poison
+     *
+     * @return int value of poison
+     */
     public int getNumberOfPoison() {
         return numberOfPoison;
     }
 
+    /**
+     * Gets the number of No entry signs
+     *
+     * @return int value of no entry signs
+     */
     public int getNumberOfNoEntry() {
         return numberOfNoEntry;
     }
 
+    /**
+     * Gets the number of Death rats
+     *
+     * @return int value of death rats
+     */
     public int getNumberOfDeathRat() {
         return numberOfDeathRat;
     }
 
+    /**
+     * set number of bombs
+     *
+     * @param numberOfBombs int
+     */
     public void setNumberOfBombs(int numberOfBombs) {
         this.numberOfBombs = numberOfBombs;
     }
 
+    /**
+     * sets number of male sex changes
+     *
+     * @param numberOfMSexChange int
+     */
     public void setNumberOfMSexChange(int numberOfMSexChange) {
         this.numberOfMSexChange = numberOfMSexChange;
     }
 
+    /**
+     * Sests number of female sex changes
+     *
+     * @param numberOfFSexChange int
+     */
     public void setNumberOfFSexChange(int numberOfFSexChange) {
         this.numberOfFSexChange = numberOfFSexChange;
     }
 
+    /**
+     * sets number of gas
+     *
+     * @param numberOfGas int
+     */
     public void setNumberOfGas(int numberOfGas) {
         this.numberOfGas = numberOfGas;
     }
 
+    /**
+     * sets number of sterilisation
+     *
+     * @param numberOfSterilisation int
+     */
     public void setNumberOfSterilisation(int numberOfSterilisation) {
         this.numberOfSterilisation = numberOfSterilisation;
     }
 
+    /**
+     * sets number of poison
+     *
+     * @param numberOfPoison int
+     */
     public void setNumberOfPoison(int numberOfPoison) {
         this.numberOfPoison = numberOfPoison;
     }
 
+    /**
+     * sets number of no entry signs
+     *
+     * @param numberOfNoEntry int
+     */
     public void setNumberOfNoEntry(int numberOfNoEntry) {
         this.numberOfNoEntry = numberOfNoEntry;
     }
 
+    /**
+     * Sets number of death rats
+     *
+     * @param numberOfDeathRat int
+     */
     public void setNumberOfDeathRat(int numberOfDeathRat) {
         this.numberOfDeathRat = numberOfDeathRat;
     }

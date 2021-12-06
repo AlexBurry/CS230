@@ -20,7 +20,6 @@ import java.util.ArrayList;
  * @author Alex
  * @author Trafford
  * @version 0.1
- * @since 0.1
  */
 public class Board extends Application implements ITickHandler {
 
@@ -72,6 +71,11 @@ public class Board extends Application implements ITickHandler {
 
     }
 
+    /**
+     * Starts the javaFX and begins drawing the board and scene
+     *
+     * @param primaryStage primary stage
+     */
     public void start(Stage primaryStage) {
         Pane root = buildGUI();
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
@@ -81,6 +85,11 @@ public class Board extends Application implements ITickHandler {
         primaryStage.show();
     }
 
+    /**
+     * Builds the basic gui pane
+     *
+     * @return BorderPane object
+     */
     private Pane buildGUI() {
         root = new BorderPane();
         root.setCenter(canvas);
@@ -92,6 +101,9 @@ public class Board extends Application implements ITickHandler {
         return root;
     }
 
+    /**
+     * Draws the entire game board
+     */
     public void drawBoard() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
@@ -117,12 +129,19 @@ public class Board extends Application implements ITickHandler {
 
     }
 
+
+    /**
+     * Draw all tunnels
+     */
     public void drawTunnels() {
         for (Tile t : tunnelTiles) {
             t.draw(canvas);
         }
     }
 
+    /**
+     * Draw all rats on the board
+     */
     public void drawRats() {
         for (Rat rt : rats) {
             gc.drawImage(rt.getSprite(), rt.getX() * TILE_SIZE_PX, rt.getY() * TILE_SIZE_PX);
@@ -132,8 +151,8 @@ public class Board extends Application implements ITickHandler {
     /**
      * The same as DrawRats, but only draws them at a specified tile.
      *
-     * @param x
-     * @param y
+     * @param x x position
+     * @param y y position
      */
     public void drawRats(int x, int y) {
         for (Rat rt : rats) {
@@ -144,6 +163,9 @@ public class Board extends Application implements ITickHandler {
         }
     }
 
+    /**
+     * Draws all items on the board
+     */
     public void drawItems() {
         for (Item it : items) {
             if (it.getMyItemType() == Item.itemType.Gas) {
@@ -159,9 +181,9 @@ public class Board extends Application implements ITickHandler {
     /**
      * Reloads items onto the board
      *
-     * @param t
-     * @param xPos
-     * @param yPos
+     * @param t    char type of item
+     * @param xPos int x position of item
+     * @param yPos int y position of item
      */
     public void reloadItems(char t, int xPos, int yPos) {
 //        GasItem parent;
@@ -197,29 +219,49 @@ public class Board extends Application implements ITickHandler {
         this.drawItems();
     }
 
+    /**
+     * removes item from board
+     *
+     * @param item object of an item
+     */
     public void removeItem(Item item) {
-
-
         if (items.contains(item)) {
             if (item.getMyItemType() == Item.itemType.Gas || item.getMyItemType() == Item.itemType.Bomb
                     || item.getMyItemType() == Item.itemType.Sterilise) {
                 //if we are listeners..
                 instance.markListenerForRemoval((ITickHandler) item);
             }
-
             items.remove(item);
             redrawTile(item.getX(), item.getY(), true);
         }
     }
 
+    /**
+     * gets the tile map
+     *
+     * @return tile map
+     */
     public Tile[][] getTileMap() {
         return tileMap;
     }
 
+
+    /**
+     * gets a list of traversable tiles
+     *
+     * @return traversable tiles
+     */
     public ArrayList<Tile> getTraversableTiles() {
         return traversableTiles;
     }
 
+    /**
+     * Redraws tile at a specific location
+     *
+     * @param x           tile x position
+     * @param y           tile y position
+     * @param redrawItems whether to redraw items on tile
+     */
     public void redrawTile(int x, int y, boolean redrawItems) {
         if (x >= 0 && y >= 0) { //ensures we never try to draw out of bounds.
             Tile tile = tileMap[x][y];
@@ -231,11 +273,21 @@ public class Board extends Application implements ITickHandler {
         }
     }
 
+    /**
+     * adds a rat to the board
+     *
+     * @param rat object of a rat
+     */
     public void addRat(Rat rat) {
         rats.add(rat);
         toolBar.countRats();
     }
 
+    /**
+     * removes rat from the board
+     *
+     * @param rat object of a rat
+     */
     public void removeRat(Rat rat) {
         //remove the listener. All rats are listeners.
         instance.markListenerForRemoval(rat);
@@ -248,14 +300,29 @@ public class Board extends Application implements ITickHandler {
         }
     }
 
+    /**
+     * gets a list of all rats
+     *
+     * @return ArrayList of rat objects
+     */
     public ArrayList<Rat> getRats() {
         return rats;
     }
 
+    /**
+     * gets a list of all items
+     *
+     * @return Arraylist of item objects
+     */
     public ArrayList<Item> getItems() {
         return items;
     }
 
+    /**
+     * remakes toolbar every second
+     *
+     * @param count how many ticks have passed? Resets every second.
+     */
     @Override
     public void tickEvent(int count) {
         root.setTop(toolBar.makeToolBar());
@@ -283,14 +350,29 @@ public class Board extends Application implements ITickHandler {
         return false;
     }
 
+    /**
+     * gets tile map in the form of strings
+     *
+     * @return 2D array of strings
+     */
     public String[][] getTempTileMap() {
         return tempTileMap;
     }
 
+    /**
+     * Map x size
+     *
+     * @return int mapX
+     */
     public int getMapX() {
         return mapX;
     }
 
+    /**
+     * Map Y size
+     *
+     * @return int mapY
+     */
     public int getMapY() {
         return mapY;
     }

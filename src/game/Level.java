@@ -48,14 +48,15 @@ public class Level {
 
     /**
      * Level constructor for a new level
-     * @param mapX Width of map
-     * @param mapY Height of map
-     * @param tiles 2D array of the tile map as strings
-     * @param rats list of rats as a string
+     *
+     * @param mapX             Width of map
+     * @param mapY             Height of map
+     * @param tiles            2D array of the tile map as strings
+     * @param rats             list of rats as a string
      * @param itemsRespawnRate list of item spawn rates
-     * @param allowedTime amount of time allowed in level to start off
-     * @param lossCondition amount of rats on the board for game to be lost
-     * @param primaryStage primary stage scene
+     * @param allowedTime      amount of time allowed in level to start off
+     * @param lossCondition    amount of rats on the board for game to be lost
+     * @param primaryStage     primary stage scene
      */
     public Level(int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
                  int allowedTime, int lossCondition, Stage primaryStage) {
@@ -77,17 +78,18 @@ public class Level {
 
     /**
      * Level constructor for loading a level
-     * @param mapX Width of map
-     * @param mapY Height of map
-     * @param tiles 2D array of the tile map as strings
-     * @param rats list of rats as a string
+     *
+     * @param mapX             Width of map
+     * @param mapY             Height of map
+     * @param tiles            2D array of the tile map as strings
+     * @param rats             list of rats as a string
      * @param itemsRespawnRate list of item spawn rates
-     * @param timeLeft amount of time left in level
-     * @param lossCondition amount of rats on the board for game to be lost
-     * @param items list of all items and their locations
-     * @param primaryStage primary stage scene
-     * @param currentScore current score of the level
-     * @param inv amount of all inventory items
+     * @param timeLeft         amount of time left in level
+     * @param lossCondition    amount of rats on the board for game to be lost
+     * @param items            list of all items and their locations
+     * @param primaryStage     primary stage scene
+     * @param currentScore     current score of the level
+     * @param inv              amount of all inventory items
      */
     public Level(int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
                  int timeLeft, int lossCondition, int currentScore, ArrayList<String> items, ArrayList<String> inv,
@@ -104,7 +106,7 @@ public class Level {
         reloadInv(inv);
         LEVEL_BOARD = new Board(tiles, rats, mapX, mapY);
         LEVEL_BOARD.start(primaryStage);
-        for (String i: items) {
+        for (String i : items) {
             String[] values = i.split(",");
             LEVEL_BOARD.reloadItems(values[0].charAt(0), Integer.parseInt(values[1]), Integer.parseInt(values[2]));
         }
@@ -126,6 +128,7 @@ public class Level {
 
     /**
      * adds the current logged in profile name
+     *
      * @param profileName current profile username
      */
     public void addProfileName(String profileName) {
@@ -134,6 +137,7 @@ public class Level {
 
     /**
      * adds the current level name
+     *
      * @param levelName current level file name
      */
     public void addLevelName(String levelName) {
@@ -142,6 +146,7 @@ public class Level {
 
     /**
      * adds a listener to the tick event
+     *
      * @param toAdd object to be added to listeners list
      */
     public void addListener(ITickHandler toAdd) {
@@ -150,6 +155,7 @@ public class Level {
 
     /**
      * gets the listeners for the tick event
+     *
      * @return list of current tick event listeners
      */
     public List<ITickHandler> getListeners() {
@@ -158,6 +164,7 @@ public class Level {
 
     /**
      * Marks an object for removal from the tick event
+     *
      * @param toAdd object to be removed from listeners list
      */
     public void markListenerForRemoval(ITickHandler toAdd) {
@@ -177,7 +184,7 @@ public class Level {
         }
 
         //add rats after, so we don't modify the collection.
-        for (Rat rt : ratsToAddAfterTick){
+        for (Rat rt : ratsToAddAfterTick) {
             getLevelBoard().addRat(rt);
             listeners.add(rt);
         }
@@ -189,7 +196,7 @@ public class Level {
 
         tickCount++;
 
-        if(tickCount > 4){
+        if (tickCount > 4) {
             timeLeft = timeLeft - 1;
             checkLossCondition();
             tickCount = 1;
@@ -198,14 +205,16 @@ public class Level {
 
     /**
      * Adds rats to rat list
+     *
      * @param rat new rat object
      */
-    public void addRatToQueue(Rat rat){
+    public void addRatToQueue(Rat rat) {
         ratsToAddAfterTick.add(rat);
     }
 
     /**
      * Increases the current score every tick
+     *
      * @param pointsToAdd number of points to add since last tick if any rats have died
      */
     public void increaseScore(int pointsToAdd) {
@@ -216,6 +225,7 @@ public class Level {
 
     /**
      * Getter for the Board object
+     *
      * @return Board object
      */
     public Board getLevelBoard() {
@@ -224,6 +234,7 @@ public class Level {
 
     /**
      * get the level inventory
+     *
      * @return inventory object
      */
     public Inventory getLevelInventory() {
@@ -232,6 +243,7 @@ public class Level {
 
     /**
      * Idk
+     *
      * @return Instance of this Level object
      */
     public static Level getCurrentLevelInstance() {
@@ -261,10 +273,11 @@ public class Level {
 
     /**
      * Reloads the current inventory values
+     *
      * @param inv arraylist of inventory values stored as strings
      */
     public void reloadInv(ArrayList<String> inv) {
-        for (String item: inv) {
+        for (String item : inv) {
             switch (item.charAt(0)) {
                 case 'b' -> LEVEL_INVENTORY.setNumberOfBombs(Character.getNumericValue(item.charAt(2)));
                 case 'f' -> LEVEL_INVENTORY.setNumberOfFSexChange(Character.getNumericValue(item.charAt(2)));
@@ -294,7 +307,7 @@ public class Level {
 
 
         new Save(profileName, levelName, LEVEL_BOARD.getMapX(), LEVEL_BOARD.getMapY(), LEVEL_BOARD.getTempTileMap(),
-                LEVEL_BOARD.getRats(), itemsRespawnRate,  timeLeft, LOSS_CONDITION, LEVEL_BOARD.getItems(),
+                LEVEL_BOARD.getRats(), itemsRespawnRate, timeLeft, LOSS_CONDITION, LEVEL_BOARD.getItems(),
                 currentScore, inv);
     }
 
@@ -308,14 +321,27 @@ public class Level {
 
     /**
      * Gets the loss condition value
+     *
      * @return lossCondition
      */
-    public int getLOSS_CONDITION() { return LOSS_CONDITION; }
+    public int getLOSS_CONDITION() {
+        return LOSS_CONDITION;
+    }
 
+    /**
+     * Sets the current level number
+     *
+     * @param levelNumber int of level
+     */
     public void setLevelNumber(int levelNumber) {
         this.levelNumber = levelNumber;
     }
 
+    /**
+     * Gets the current level number
+     *
+     * @return int of level
+     */
     public int getLevelNumber() {
         return levelNumber;
     }

@@ -13,6 +13,9 @@ import static java.lang.Character.toUpperCase;
 
 /**
  * Save classes that save the games current data and writes it to a File
+ *
+ * @author Alex
+ * @version 1.0
  */
 public class Save {
     private String playerName;
@@ -31,18 +34,19 @@ public class Save {
 
     /**
      * Constructor for Save class
-     * @param profileName players name
-     * @param levelName current levels name
-     * @param MAPX height of map
-     * @param MAPY width of map
-     * @param tileMap map of characters that correlate to tiles
-     * @param rats list of rats and their data
+     *
+     * @param profileName      players name
+     * @param levelName        current levels name
+     * @param MAPX             height of map
+     * @param MAPY             width of map
+     * @param tileMap          map of characters that correlate to tiles
+     * @param rats             list of rats and their data
      * @param itemsRespawnRate list of item respawn rates for the current level
-     * @param timeLeft amount of time left in the level
-     * @param lossCondition the loss condition for the level
-     * @param items list of items and their data
-     * @param currentScore current player score in level
-     * @param inv inventory data
+     * @param timeLeft         amount of time left in the level
+     * @param lossCondition    the loss condition for the level
+     * @param items            list of items and their data
+     * @param currentScore     current player score in level
+     * @param inv              inventory data
      */
     public Save(String profileName, String levelName, int MAPX, int MAPY, String[][] tileMap, ArrayList<Rat> rats,
                 ArrayList<String> itemsRespawnRate, int timeLeft, int lossCondition, ArrayList<Item> items,
@@ -67,13 +71,14 @@ public class Save {
 
     /**
      * Retrieves relevant info from each rat
+     *
      * @param rats arraylist of rat objects
      * @return an arraylist of rats and their positions
      */
     public ArrayList<String> getRatInfo(ArrayList<Rat> rats) {
         ArrayList<String> ratList = new ArrayList<>();
         char sex;
-        for (Rat r: rats) {
+        for (Rat r : rats) {
             if (!r.getIsBaby()) {
                 sex = toUpperCase(r.getSex());
             } else {
@@ -88,20 +93,21 @@ public class Save {
 
     /**
      * Retrieves relevant info from each item
+     *
      * @param items arraylist of item objects
      * @return an arraylist of items and their positions
      */
     public ArrayList<String> getItemInfo(ArrayList<Item> items) {
         ArrayList<String> itemList = new ArrayList<>();
         char type;
-        for (Item i: items) {
+        for (Item i : items) {
             switch (i.getMyItemType()) {
                 case Gas -> {
-                        if(i.getClass() == GasChild.class){
-                            type = 'c';
-                        }else{
-                            type = 'g';
-                        }
+                    if (i.getClass() == GasChild.class) {
+                        type = 'c';
+                    } else {
+                        type = 'g';
+                    }
                 }
                 case NoEntry -> type = 'n';
                 case FSex -> type = 'f';
@@ -122,6 +128,7 @@ public class Save {
 
     /**
      * Creates an array for inventory
+     *
      * @param inv array of current inventory sizes
      * @return array of current inventory sizes and the corresponding item chars
      */
@@ -187,11 +194,11 @@ public class Save {
                 }
                 myWriter.write("\r\n");
             }
-            for (String r: ratList) {
+            for (String r : ratList) {
                 myWriter.write(r);
             }
             myWriter.write("\n");
-            for (String irr: itemsRespawnRate) {
+            for (String irr : itemsRespawnRate) {
                 myWriter.write(irr + ";");
             }
             myWriter.write("\n");
@@ -199,15 +206,15 @@ public class Save {
             myWriter.write("\n");
             myWriter.write(String.valueOf(lossCondition));
             myWriter.write("\n");
-            for (String i: itemList) {
+            for (String i : itemList) {
                 myWriter.write(i);
             }
             myWriter.write("\n");
             myWriter.write("" + currentScore);
             myWriter.write("\n");
 
-            for (String i: inv) {
-                myWriter.write(i +";");
+            for (String i : inv) {
+                myWriter.write(i + ";");
             }
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
