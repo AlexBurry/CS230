@@ -8,7 +8,6 @@ import sprites.ImageRefs;
  *
  * @author Jack
  * @version 1
- * @since 1
  */
 public class MFChange extends Item {
 

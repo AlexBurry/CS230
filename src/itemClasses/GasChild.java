@@ -12,7 +12,6 @@ import java.util.ArrayList;
  *
  * @author Trafford
  * @version 1.0
- * @since 04/12/2021
  */
 public class GasChild extends GasItem {
 

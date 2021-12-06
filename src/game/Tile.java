@@ -9,7 +9,6 @@ import java.util.Objects;
  * Creates a Game.Tile object and draws it on the map
  * @author Alex
  * @version 0.1
- * @since 0.1
  */
 public class Tile {
     private final String type;
