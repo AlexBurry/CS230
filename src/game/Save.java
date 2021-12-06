@@ -49,7 +49,7 @@ public class Save {
                 int currentScore, int[] inv) {
         PROFILE_NAME = profileName;
         LEVEL_NAME = levelName;
-        Level INSTANCE = Level.getInstance();
+        Level INSTANCE = Level.getCurrentLevelInstance();
         this.MAPX = MAPX;
         this.MAPY = MAPY;
         stringMap = tileMap;

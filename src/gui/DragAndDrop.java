@@ -63,7 +63,7 @@ public class DragAndDrop {
         this.canvas = canvas;
         this.tileMap = tileMap;
         selectedItem = Item.itemType.NoEntry; //Default to NoEntry for now.
-        instance = Level.getInstance();
+        instance = Level.getCurrentLevelInstance();
     }
 
     /**

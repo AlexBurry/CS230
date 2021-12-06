@@ -61,7 +61,7 @@ public abstract class Item {
      * Sets the instance.
      */
     protected void setInstance() {
-        instance = Level.getInstance();
+        instance = Level.getCurrentLevelInstance();
     }
 
     /**

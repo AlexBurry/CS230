@@ -31,15 +31,14 @@ public class Board extends Application implements ITickHandler {
     private final int TILE_SIZE_PX = 60;
     private final String[][] tempTileMap;
     private final Tile[][] tileMap;
+    private final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    private final GraphicsContext gc = canvas.getGraphicsContext2D();
+
     private ArrayList<Tile> traversableTiles = new ArrayList<>();
     private ArrayList<Tile> tunnelTiles = new ArrayList<>(); //used to make sure tunnels remain ontop
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
-
-
     private Level instance;
-    private final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
-    private final GraphicsContext gc = canvas.getGraphicsContext2D();
     private DragAndDrop toolBar;
     private BorderPane root;
 
@@ -54,7 +53,7 @@ public class Board extends Application implements ITickHandler {
         this.mapY = mapY;
         tileMap = new Tile[this.mapX][this.mapY];
         tempTileMap = tiles;
-        instance = Level.getInstance();
+        instance = Level.getCurrentLevelInstance();
         instance.addListener(this);
         for (String rt : rats) {
             String[] values = rt.split(",");

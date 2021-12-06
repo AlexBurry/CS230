@@ -20,22 +20,30 @@ import java.util.List;
  * @version 1.0
  */
 public class Level {
-    private float timeRemaining;
-    private int currentScore;
-    private final int ALLOWED_TIME;
-    private int timeLeft;
-    private int levelNumber;
+
+    private static Level currentLevelInstance;
+
     private final int LOSS_CONDITION;
     private final Board LEVEL_BOARD;
+
     private final Inventory LEVEL_INVENTORY;
+    private final int ALLOWED_TIME;
+
+
+    private int currentScore;
+
+    private int timeLeft;
+    private int levelNumber;
+
     private String profileName;
     private String levelName;
-    private static Level instance;
+
     private ArrayList<String> itemsRespawnRate = new ArrayList<>();
     private int tickCount = 1; //used to keep ticks in line.
     private List<ITickHandler> listeners = new ArrayList<>();
     private ArrayList<ITickHandler> nullListeners = new ArrayList<>();
     private ArrayList<Rat> ratsToAddAfterTick = new ArrayList<>();
+    private Menu menu;
 
 
     /**
@@ -51,7 +59,7 @@ public class Level {
      */
     public Level(int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
                  int allowedTime, int lossCondition, Stage primaryStage) {
-        instance = this;
+        currentLevelInstance = this;
 
         this.ALLOWED_TIME = allowedTime;
         timeLeft = this.ALLOWED_TIME;
@@ -84,7 +92,7 @@ public class Level {
     public Level(int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
                  int timeLeft, int lossCondition, int currentScore, ArrayList<String> items, ArrayList<String> inv,
                  Stage primaryStage) {
-        instance = this;
+        currentLevelInstance = this;
 
         this.ALLOWED_TIME = timeLeft;
         this.timeLeft = this.ALLOWED_TIME;
@@ -226,8 +234,8 @@ public class Level {
      * Idk
      * @return Instance of this Level object
      */
-    public static Level getInstance() {
-        return instance;
+    public static Level getCurrentLevelInstance() {
+        return currentLevelInstance;
     }
 
     /**
@@ -310,5 +318,9 @@ public class Level {
 
     public int getLevelNumber() {
         return levelNumber;
+    }
+
+    public void setMenuInstance(Menu mObject) {
+        this.menu = mObject;
     }
 }
