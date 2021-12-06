@@ -5,25 +5,30 @@ import ItemClasses.*;
 import RatClasses.BabyRat;
 import RatClasses.Rat;
 import javafx.application.Application;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
 /**
  * Represents the board.
+ *
  * @author Alex
  * @author Trafford
  * @version 0.1
  * @since 0.1
  */
 public class Board extends Application implements ITickHandler {
+
+    private final int mapX;
+    private final int mapY;
+    private final int GAME_WIDTH = 1200;
+    private final int GAME_HEIGHT = 884;
+    private final int TILE_SIZE_PX = 60;
     private final String[][] tempTileMap;
     private final Tile[][] tileMap;
     private ArrayList<Tile> traversableTiles = new ArrayList<>();
@@ -31,21 +36,18 @@ public class Board extends Application implements ITickHandler {
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
 
-    private final int mapX;
-    private final int mapY;
-    private final int GAME_WIDTH = 1200;
-    private final int GAME_HEIGHT = 884;
 
     private Level instance;
-    private final Canvas canvas= new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    private final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     private final GraphicsContext gc = canvas.getGraphicsContext2D();
     private DragAndDrop toolBar;
     private BorderPane root;
 
     /**
      * Constructor function for board
+     *
      * @param tiles tile map in 2D array
-     * @param rats rats in an Array List
+     * @param rats  rats in an Array List
      */
     public Board(String[][] tiles, ArrayList<String> rats, int mapX, int mapY) {
         this.mapX = mapX;
@@ -58,10 +60,10 @@ public class Board extends Application implements ITickHandler {
             String[] values = rt.split(",");
             Rat newRat;
             if (Character.isLowerCase(values[0].charAt(0))) {
-                newRat = new BabyRat(values[0].charAt(0),Integer.parseInt(values[1]),
+                newRat = new BabyRat(values[0].charAt(0), Integer.parseInt(values[1]),
                         Integer.parseInt(values[2]));
             } else {
-                newRat = new Rat(values[0].charAt(0),Integer.parseInt(values[1]),
+                newRat = new Rat(values[0].charAt(0), Integer.parseInt(values[1]),
                         Integer.parseInt(values[2]));
             }
             this.rats.add(newRat);
@@ -101,9 +103,9 @@ public class Board extends Application implements ITickHandler {
             for (int x = 0; x < mapX; x++) {
                 tileMap[x][y] = new Tile(tempTileMap[x][y], x, y, canvas);
                 Tile thisTile = tileMap[x][y];
-                if(thisTile.getTraversable()){
+                if (thisTile.getTraversable()) {
                     traversableTiles.add(thisTile);
-                    if(thisTile.getTileType().equals("t")){
+                    if (thisTile.getTileType().equals("t")) {
                         tunnelTiles.add(thisTile);
                     }
                 }
@@ -116,46 +118,48 @@ public class Board extends Application implements ITickHandler {
 
     }
 
-    public void drawTunnels(){
-        for (Tile t:tunnelTiles) {
+    public void drawTunnels() {
+        for (Tile t : tunnelTiles) {
             t.draw(canvas);
         }
     }
 
     public void drawRats() {
-        for (Rat rt: rats) {
-            gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
+        for (Rat rt : rats) {
+            gc.drawImage(rt.getSprite(), rt.getX() * TILE_SIZE_PX, rt.getY() * TILE_SIZE_PX);
         }
     }
 
     /**
      * The same as DrawRats, but only draws them at a specified tile.
+     *
      * @param x
      * @param y
      */
     public void drawRats(int x, int y) {
-        for (Rat rt: rats) {
-            if(rt.getX() == x && rt.getY() == y){
-                gc.drawImage(rt.getSprite(),rt.getX()*60,rt.getY()*60);
+        for (Rat rt : rats) {
+            if (rt.getX() == x && rt.getY() == y) {
+                gc.drawImage(rt.getSprite(), rt.getX() * TILE_SIZE_PX, rt.getY() * TILE_SIZE_PX);
             }
 
         }
     }
 
     public void drawItems() {
-        for (Item it: items) {
-            if(it.getMyItemType() == Item.itemType.Gas){
-                redrawTile(it.getX(),it.getY(),false);
-                drawRats(it.getX(),it.getY());
+        for (Item it : items) {
+            if (it.getMyItemType() == Item.itemType.Gas) {
+                redrawTile(it.getX(), it.getY(), false);
+                drawRats(it.getX(), it.getY());
             }
 
-            gc.drawImage(it.getImage(),it.getX() * 60,it.getY() * 60);
+            gc.drawImage(it.getImage(), it.getX() * TILE_SIZE_PX, it.getY() * TILE_SIZE_PX);
         }
 
     }
 
     /**
      * Reloads items onto the board
+     *
      * @param t
      * @param xPos
      * @param yPos
@@ -181,6 +185,7 @@ public class Board extends Application implements ITickHandler {
 
     /**
      * Function to add an item to the item list and board
+     *
      * @param item the item object
      */
     public void addItem(Item item) {
@@ -196,16 +201,15 @@ public class Board extends Application implements ITickHandler {
     public void removeItem(Item item) {
 
 
-
-        if(items.contains(item)){
-            if(item.getMyItemType() == Item.itemType.Gas || item.getMyItemType() == Item.itemType.Bomb
-                    || item.getMyItemType() == Item.itemType.Sterilise){
+        if (items.contains(item)) {
+            if (item.getMyItemType() == Item.itemType.Gas || item.getMyItemType() == Item.itemType.Bomb
+                    || item.getMyItemType() == Item.itemType.Sterilise) {
                 //if we are listeners..
                 instance.markListenerForRemoval((ITickHandler) item);
             }
 
             items.remove(item);
-            redrawTile(item.getX(),item.getY(),true);
+            redrawTile(item.getX(), item.getY(), true);
         }
     }
 
@@ -213,16 +217,16 @@ public class Board extends Application implements ITickHandler {
         return tileMap;
     }
 
-    public ArrayList<Tile> getTraversableTiles(){
+    public ArrayList<Tile> getTraversableTiles() {
         return traversableTiles;
     }
 
     public void redrawTile(int x, int y, boolean redrawItems) {
-        if(x >= 0 && y >= 0){ //ensures we never try to draw out of bounds.
+        if (x >= 0 && y >= 0) { //ensures we never try to draw out of bounds.
             Tile tile = tileMap[x][y];
             tile.draw(canvas);
 
-            if(redrawItems){
+            if (redrawItems) {
                 drawItems();
             }
         }
@@ -237,11 +241,11 @@ public class Board extends Application implements ITickHandler {
         //remove the listener. All rats are listeners.
         instance.markListenerForRemoval(rat);
 
-        if(rats.contains(rat)){
+        if (rats.contains(rat)) {
             int x = rat.getX();
             int y = rat.getY();
             rats.remove(rat);
-            redrawTile(x,y,true);
+            redrawTile(x, y, true);
         }
     }
 
@@ -259,19 +263,20 @@ public class Board extends Application implements ITickHandler {
     }
 
     public void drawRat(Rat rat) {
-        redrawTile(rat.getX(),rat.getY(),false);
-        gc.drawImage(rat.getSprite(),rat.getX(),rat.getY());
+        redrawTile(rat.getX(), rat.getY(), false);
+        gc.drawImage(rat.getSprite(), rat.getX(), rat.getY());
     }
 
     /**
      * Check if an item exists at a given location already.
+     *
      * @param x
      * @param y
      * @return true if an item exists, false otherwise.
      */
     public boolean existsItemAt(int x, int y) {
-        for(Item item: items){
-            if(item.getX() == x && item.getY() == y){
+        for (Item item : items) {
+            if (item.getX() == x && item.getY() == y) {
                 return true;
             }
 

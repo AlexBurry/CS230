@@ -103,6 +103,7 @@ public class BombItem extends Item implements ITickHandler {
                 case SOUTH -> currentYPos += 1;
                 case WEST -> currentXPos -= 1;
                 case EAST -> currentXPos += 1;
+                default -> throw new IllegalStateException("Unexpected value: " + directionToCheck);
             }
 
             Tile tempTile = localMap[currentXPos][currentYPos];

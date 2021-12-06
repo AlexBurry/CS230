@@ -2,7 +2,6 @@ package ItemClasses;
 
 import RatClasses.DeathRat;
 import Sprites.ImageRefs;
-import javafx.scene.image.Image;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -18,9 +17,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class DeathRatItem extends Item {
 
+    private static final int DESIRED_KILLS = 5;
     private int killCount = 0; //the amount of rats it has killed.
     private DeathRat deathRat; //the deathrat object.
-    Runnable makeRat = () -> spawnDeathRat(); //Assigns the method to be a "runnable", used to execute a wait function.
+
+    private Runnable makeRat = () -> spawnDeathRat(); //Assigns the method to be a "runnable", used to execute a wait function.
 
 
     /**
@@ -43,7 +44,7 @@ public class DeathRatItem extends Item {
      * Checks the kill count of the deathRat and marks it for deletion if its task is completed.
      */
     public void checkKillCount() {
-        if (killCount >= 5) {
+        if (killCount >= DESIRED_KILLS) {
             deathRat.deleteRat();
             deleteItem();
         }
