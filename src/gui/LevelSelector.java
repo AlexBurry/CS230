@@ -23,7 +23,6 @@ import java.io.FileNotFoundException;
  *
  * @author Dominik
  * @version 1.0
- * @since 1.0
  */
 
 public class LevelSelector {

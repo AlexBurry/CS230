@@ -1,0 +1,21 @@
+20,13,
+w w w w w w w w w w w w w w w w w w w w
+w p p p w p p p w p p p w p p p p w w w
+w p w p w p w p w w p w w p w w w w w w
+w p p p w p p p w w p w w p p p p w w w
+w t w w w t w t w w t w w w w w t t p w
+w p p w w p w p w w p w w w w w p w p w
+w p w p w p w p w w p w w p p p p w p w
+w t w t w w w t w w t w w w w t w w p w
+w t w t w w w p p p t w w p w t w p p w
+w p p p p w w p w w w w w p w w w p w w
+w p w w p p p p p p p p p p p p p p w w
+w p p p p w w w p w w w w w p w w w w w
+w w w w w w w w w w w w w w w w w w w w
+
+b,10;g,4;s,15;p,10;m,5;f,5;n,4;d,20;
+228
+30
+n,3,3;g,10,6;c,10,5;c,10,4;c,10,7;c,10,8;c,10,4;c,10,3;c,10,8;c,9,8;g,7,5;c,10,3;c,10,2;c,7,4;c,7,3;c,7,6;c,7,7;c,7,3;c,6,3;c,7,2;c,7,7;c,7,8;c,7,2;c,7,1;c,7,8;c,6,8;c,7,9;
+228
+b,2;m,4;f,4;g,3;p,1;n,4;s,1;d,2;

@@ -7,14 +7,22 @@ import sprites.ImageRefs;
  * Death rat kills all rats other than its own kind.
  *
  * @author Marcus, Trafford
- * @version 0.1
- * @since 0.1
+ * @version 1
  */
 
 public class DeathRat extends Rat {
 
     private DeathRatItem item;
 
+    /**
+     * Creates a new death rat.
+     *
+     * @param sex       the gender. This does not matter.
+     * @param isDeath   this is always a death rat.
+     * @param isSterile this is always true.
+     * @param xPos      starting x position of the rat.
+     * @param yPos      starting y position of the rat.
+     */
     public DeathRat(char sex, boolean isDeath, boolean isSterile, int xPos, int yPos) {
         super(sex, isDeath, isSterile, xPos, yPos, false);
         this.setImage(ImageRefs.deathRatUp);

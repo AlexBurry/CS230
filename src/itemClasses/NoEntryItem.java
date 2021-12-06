@@ -7,8 +7,7 @@ import sprites.ImageRefs;
  * move through it
  *
  * @author Trafford
- * @version 0.1
- * @since 0.1
+ * @version 1
  */
 public class NoEntryItem extends Item {
 

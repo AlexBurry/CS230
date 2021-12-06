@@ -6,8 +6,7 @@ import sprites.ImageRefs;
  * baby rats grow into adult rats.
  *
  * @author Marcus
- * @version 0.1
- * @since 0.1
+ * @version 1
  */
 
 public class BabyRat extends Rat {
@@ -19,10 +18,9 @@ public class BabyRat extends Rat {
      * @param xPos x position
      * @param yPos y position
      */
-    public BabyRat(char sex, int xPos, int yPos /*int speed, Boolean alive, Boolean isSterile,*/) {
-        super(sex, xPos, yPos /*,speed, alive, isSterile*/);
+    public BabyRat(char sex, int xPos, int yPos) {
+        super(sex, xPos, yPos);
         this.setImage(ImageRefs.babyRatUp);
-        //Level.getInstance().getLevelBoard().addRat(this);
         setBaby(true);
     }
 
@@ -50,14 +48,9 @@ public class BabyRat extends Rat {
         //If 250ms have passed
         getInstance().getLevelBoard().redrawTile(getX(), getY(), true);
         move();
-        if (getInstance().getLevelBoard().getTileMap()[getX()][getY()].getTileType().equalsIgnoreCase("t")) {
-            getInstance().getLevelBoard().redrawTile(getX(), getY(), false);
-        }
 
         if (count == TICKS_PER_SECOND) { //If one second has passed.
             gestationGrowthCounter();
-
-            //giveBirth();
 
             if (isInGas()) {
                 setSecondsInGas(getSecondsInGas() + 1);
@@ -65,7 +58,6 @@ public class BabyRat extends Rat {
                 setSecondsInGas(0); //if we are not in gas, we are safe.
             }
         }
-
 
     }
 }

@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * @author Trafford
  * @version 1.0
  * @see Item
- * @since 01/12/21
  */
 public class BombItem extends Item implements ITickHandler {
 

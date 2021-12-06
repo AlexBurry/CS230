@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
  * @see Item
  * Represents the Item behind a death rat. Follows it around the board.
  * Keeps track of kills, Handles deletion.
- * @since 01/12/21
  */
 public class DeathRatItem extends Item {
 

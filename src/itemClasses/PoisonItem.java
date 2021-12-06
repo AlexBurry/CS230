@@ -8,7 +8,6 @@ import sprites.ImageRefs;
  *
  * @author Trafford
  * @version 1
- * @since 0.1
  */
 public class PoisonItem extends Item { //Poison is more of an electric trap in our art-style.
 

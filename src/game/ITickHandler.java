@@ -7,7 +7,6 @@ package game;
  * @author Trafford
  * @author Alex
  * @version 1.0
- * @since 29/11/21
  */
 public interface ITickHandler {
     /**

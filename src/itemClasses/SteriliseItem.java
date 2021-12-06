@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * @author Jack
  * @version 1.0
  * @see Item
- * @since 04/12/2021
  */
 public class SteriliseItem extends Item implements ITickHandler {
     private int timer = 4;

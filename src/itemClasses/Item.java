@@ -9,8 +9,8 @@ import javafx.scene.image.Image;
  * Cannot be instantiated itself.
  *
  * @author Trafford
- * @version 0.1
- * @since 0.1
+ * @version 1
+ * @since 1
  */
 public abstract class Item {
 
