@@ -145,7 +145,7 @@ public class Save {
     public void makeFile() {
         try {
             File myObj;
-            boolean matches = Pattern.matches(PROFILE_NAME, LEVEL_NAME);
+            boolean matches = LEVEL_NAME.contains(PROFILE_NAME);
             if (matches) {
                 myObj = new File(LEVEL_NAME);
             } else {
@@ -169,7 +169,7 @@ public class Save {
         try {
             FileWriter myWriter;
 
-            boolean matches = Pattern.matches(PROFILE_NAME, LEVEL_NAME);
+            boolean matches = LEVEL_NAME.contains(PROFILE_NAME);
             if (matches) {
                 myWriter = new FileWriter(LEVEL_NAME);
             } else {

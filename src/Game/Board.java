@@ -35,8 +35,7 @@ public class Board extends Application implements ITickHandler {
     private final int mapY;
     private final int GAME_WIDTH = 1200;
     private final int GAME_HEIGHT = 884;
-    private int gameWidthInTiles;
-    private int gameHeightInTiles;
+
     private Level instance;
     private final Canvas canvas= new Canvas(GAME_WIDTH, GAME_HEIGHT);
     private final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -69,10 +68,6 @@ public class Board extends Application implements ITickHandler {
             instance.addListener(newRat);
         }
 
-
-
-        gameWidthInTiles = GAME_WIDTH / 60;
-        gameWidthInTiles = (GAME_HEIGHT - 104) / 60;
 
     }
 
@@ -294,20 +289,6 @@ public class Board extends Application implements ITickHandler {
 
     public int getMapY() {
         return mapY;
-    }
-
-    /**
-     * @return int gameWidthInTiles, the width in terms of tiles.
-     */
-    public int getGameWidthInTiles(){
-        return gameWidthInTiles;
-    }
-
-    /**
-     * @return int gameHeightInTiles, the height in terms of tiles, accounting for the inventory box.
-     */
-    public int getGameHeightInTiles() {
-        return gameHeightInTiles;
     }
 
     public DragAndDrop getToolBar() {
