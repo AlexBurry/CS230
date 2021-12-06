@@ -24,7 +24,6 @@ public class GasItem extends Item implements ITickHandler {
     private final ArrayList<GasChild> myChildren = new ArrayList<>();
 
 
-
     private boolean dissipating = false; //Should we reverse?
 
     private int expansionStage = 0;

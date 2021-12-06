@@ -14,7 +14,7 @@ public class PoisonItem extends Item { //Poison is more of an electric trap in o
 
     /**
      * Simple class, doesn't need any unique methods as RatClasses.Rat handles it.
-     *
+     * <p>
      * Set all relevant info for Poison.
      *
      * @param x the XCoordinate.

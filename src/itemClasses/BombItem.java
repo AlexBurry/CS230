@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @since 01/12/21
  */
 public class BombItem extends Item implements ITickHandler {
-    
+
     private final ArrayList<Tile> bombZoneTiles; //The tiles to detonate on
     private int timer = 4; //The countdown period
     private Rat.Directions directionToCheck; //our local variable which holds our current direction.

@@ -1,6 +1,7 @@
 package itemClasses;
 
 import sprites.ImageRefs;
+
 /**
  * Makes a tile collide with rats, not allowing them to
  * move through it
@@ -16,6 +17,7 @@ public class NoEntryItem extends Item {
     /**
      * Creates a new no entry item. In our game,
      * this is actually a stop sign.
+     *
      * @param x
      * @param y
      */
