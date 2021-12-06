@@ -307,6 +307,10 @@ public class Board extends Application implements ITickHandler {
      */
     public int getGameHeightInTiles() {
         return gameHeightInTiles;
+    }
 
+    public DragAndDrop getToolBar() {
+        return toolBar;
     }
 }
+

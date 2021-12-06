@@ -414,6 +414,7 @@ public class Rat implements ITickHandler {
                             }
                         }
                         case MSex -> {
+                            instance.getLevelBoard().getToolBar().setSexChanged(true);
                             if(isBaby){
                                 sex = 'm';
                             }else{
@@ -423,6 +424,7 @@ public class Rat implements ITickHandler {
                             itemsToDeleteOnCollision.add(it);
                         }
                         case FSex -> {
+                            instance.getLevelBoard().getToolBar().setSexChanged(true);
                             if(isBaby){
                                 sex = 'f';
                             }else{
@@ -447,14 +449,10 @@ public class Rat implements ITickHandler {
                             DeathRatItem a = (DeathRatItem) it;
                             a.incrementKills();
                             deleteRat();
-
-
                         }
                     }
                 }
             }
-
-
         }
 
         for (Item it : itemsToDeleteOnCollision) {

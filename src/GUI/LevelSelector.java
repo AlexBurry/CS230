@@ -61,8 +61,9 @@ public class LevelSelector {
 
         lvl.setBackground(new Background(image));
 
+
         if (highestUnlocked <= profile.getHighestLevelUnlocked()) {
-            lvl = revealLevels(lvl, highestUnlocked);
+            lvl = revealLevels(highestUnlocked);
             highestUnlocked++;
         }
 
@@ -73,6 +74,7 @@ public class LevelSelector {
                 try {
                     if (1 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_0.txt",0);
+                        profile.setCurrentLevel(0);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -85,6 +87,7 @@ public class LevelSelector {
                 try {
                     if (2 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_1.txt",1);
+                        profile.setCurrentLevel(1);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -97,6 +100,7 @@ public class LevelSelector {
                 try {
                     if (3 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_2.txt",2);
+                        profile.setCurrentLevel(2);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -109,6 +113,7 @@ public class LevelSelector {
                 try {
                     if (4 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_3.txt",3);
+                        profile.setCurrentLevel(3);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -121,6 +126,7 @@ public class LevelSelector {
                 try {
                     if (5 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "level_4.txt",4);
+                        profile.setCurrentLevel(4);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -133,6 +139,7 @@ public class LevelSelector {
                 try {
                     if (6 <= profile.getHighestLevelUnlocked()) {
                         buildLevel(primaryStage, "test_level.txt",5); //TODO: Change on submission
+                        profile.setCurrentLevel(5);
                     } else {
                         System.out.println("This Player Has Yet To " +
                                 "Unlock This Level! Highest Level Unlocked: "
@@ -150,11 +157,10 @@ public class LevelSelector {
      * This method reveals the levels that the player unlocked in
      * a previous session or in the current one.
      *
-     * @param pane          the unrevealed Pane.
      * @param levelUnlocked the level currently being revealed.
      * @return revealed Pane.
      */
-    public Pane revealLevels(Pane pane, int levelUnlocked) {
+    public Pane revealLevels(int levelUnlocked) {
         Pane unlockedPane = new Pane();
         BackgroundSize standardSize = new BackgroundSize(125, 125, true, true, true, false);
 
@@ -422,5 +428,9 @@ public class LevelSelector {
 
         newLevel.addProfileName(profile.getName());
         newLevel.addLevelName(level);
+    }
+
+    public void setHighestUnlocked(int highestUnlocked) {
+        this.highestUnlocked = highestUnlocked;
     }
 }
