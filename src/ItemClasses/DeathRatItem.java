@@ -19,17 +19,16 @@ public class DeathRatItem extends Item {
 
     private static final int DESIRED_KILLS = 5;
     private int killCount = 0; //the amount of rats it has killed.
-    private DeathRat deathRat; //the deathrat object.
-
-    private Runnable makeRat = () -> spawnDeathRat(); //Assigns the method to be a "runnable", used to execute a wait function.
+    private DeathRat deathRat; //the death rat object.
+    private Runnable makeRat = () -> spawnDeathRat();
 
 
     /**
      * Constructs an Item of type Death Rat. NOT the same as DeathRat of type Rat.
      * Immediately calls wait function on instantiation.
      *
-     * @param x
-     * @param y
+     * @param x X coordinate
+     * @param y Y coordinate
      */
     public DeathRatItem(int x, int y) {
         super();

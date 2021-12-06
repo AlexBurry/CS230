@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class BombItem extends Item implements ITickHandler {
     
-    private final ArrayList<Tile> BOMB_ZONE; //The tiles to detonate on
+    private final ArrayList<Tile> bombZoneTiles; //The tiles to detonate on
     private int timer = 4; //The countdown period
     private Rat.Directions directionToCheck; //our local variable which holds our current direction.
 
@@ -34,7 +34,7 @@ public class BombItem extends Item implements ITickHandler {
         this.setImage(ImageRefs.bombStage4); //Defaults to the highest number, bomb-4seconds
         this.setMyItemType(itemType.Bomb); //Sets the item type to a Bomb.
         this.directionToCheck = Rat.Directions.NORTH; //Default to north as our first direction to check.
-        this.BOMB_ZONE = getBOMB_ZONE();
+        this.bombZoneTiles = getBombZoneTiles();
 
     }
 
@@ -82,7 +82,7 @@ public class BombItem extends Item implements ITickHandler {
      *
      * @return tilesChecked : the list of tiles that need to be detonated on.
      */
-    private ArrayList<Tile> getBOMB_ZONE() {
+    private ArrayList<Tile> getBombZoneTiles() {
         ArrayList<Tile> allTiles = getLocalInstance().getLevelBoard().getTraversableTiles();
         ArrayList<Tile> tilesChecked = new ArrayList<>();
         Tile[][] localMap = getLocalInstance().getLevelBoard().getTileMap();
@@ -138,7 +138,7 @@ public class BombItem extends Item implements ITickHandler {
         ArrayList<Rat> toKill = new ArrayList<>();
         ArrayList<Item> toRemove = new ArrayList<>();
 
-        for (Tile tile : BOMB_ZONE) {
+        for (Tile tile : bombZoneTiles) {
 
             for (Rat rat : rats) { //for each rat on the entire board
                 if (rat.getX() == tile.getLocation()[0] && rat.getY() == tile.getLocation()[1]) {

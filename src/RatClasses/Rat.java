@@ -439,7 +439,7 @@ public class Rat implements ITickHandler {
                                 case EAST -> Directions.WEST;
                             };
                             NoEntryItem noEntryItem = (NoEntryItem) it;
-                            noEntryItem.hit();
+                            noEntryItem.hitSign();
                             if (noEntryItem.shouldKill()) {
                                 itemsToDeleteOnCollision.add(it);
                             }
