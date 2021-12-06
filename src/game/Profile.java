@@ -330,24 +330,49 @@ public class Profile {
         return highestLevelUnlocked;
     }
 
+    /**
+     * This method returns  the array list of levels saved.
+     *
+     * @return the array list of levels saved.
+     */
     public ArrayList<Integer> getLevelsSavedTo() {
         return levelsSavedTo;
     }
 
-    public void addToSavedLevels(int i){
-        if(!levelsSavedTo.contains(i)){
+    /**
+     * This method adds the levels into the levelsSaved array list.
+     *
+     * @param i level added to the saves list.
+     */
+    public void addToSavedLevels(int i) {
+        if (!levelsSavedTo.contains(i)) {
             levelsSavedTo.add(i);
         }
     }
 
+    /**
+     * This method sets high score to itself and the user input.
+     *
+     * @param addScore score being added to the score.
+     */
     public void setScore(int addScore) {
         score += addScore;
     }
 
+    /**
+     * This method sets the current level to the user input.
+     *
+     * @param currentLevel the variable current level is being set to.
+     */
     public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
     }
 
+    /**
+     * This method sets the highest level unlocked to the user input.
+     *
+     * @param highestLevelUnlocked the variable highest level unlocked is set to.
+     */
     public void setHighestLevelUnlocked(int highestLevelUnlocked) {
         this.highestLevelUnlocked = highestLevelUnlocked;
     }

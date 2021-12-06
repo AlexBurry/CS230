@@ -10,8 +10,6 @@ public class App extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         Menu m = new Menu(primaryStage);
         m.buildMenu();
-
-
     }
 
     public static void main(String[] args) {

@@ -3,7 +3,6 @@ package gui;
 import game.Level;
 import game.Profile;
 import game.ReadFile;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -38,7 +37,7 @@ public class LevelSelector {
      * This method is used to initialise objects.
      *
      * @param primaryStage initialises primaryStage.
-     * @param profile initialises Profile.
+     * @param profile      initialises Profile.
      */
     public LevelSelector(Stage primaryStage, Profile profile, Menu mObject) {
         this.primaryStage = primaryStage;
@@ -77,7 +76,7 @@ public class LevelSelector {
             case 0 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (1 <= profile.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_0.txt",0);
+                        buildLevel(primaryStage, "level_0.txt", 0);
                         profile.setCurrentLevel(0);
                     } else {
                         System.out.println("This Player Has Yet To " +
@@ -90,7 +89,7 @@ public class LevelSelector {
             case 1 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (2 <= profile.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_1.txt",1);
+                        buildLevel(primaryStage, "level_1.txt", 1);
                         profile.setCurrentLevel(1);
                     } else {
                         System.out.println("This Player Has Yet To " +
@@ -103,7 +102,7 @@ public class LevelSelector {
             case 2 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (3 <= profile.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_2.txt",2);
+                        buildLevel(primaryStage, "level_2.txt", 2);
                         profile.setCurrentLevel(2);
                     } else {
                         System.out.println("This Player Has Yet To " +
@@ -116,7 +115,7 @@ public class LevelSelector {
             case 3 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (4 <= profile.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_3.txt",3);
+                        buildLevel(primaryStage, "level_3.txt", 3);
                         profile.setCurrentLevel(3);
                     } else {
                         System.out.println("This Player Has Yet To " +
@@ -129,7 +128,7 @@ public class LevelSelector {
             case 4 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (5 <= profile.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "level_4.txt",4);
+                        buildLevel(primaryStage, "level_4.txt", 4);
                         profile.setCurrentLevel(4);
                     } else {
                         System.out.println("This Player Has Yet To " +
@@ -142,7 +141,7 @@ public class LevelSelector {
             case 5 -> lvl.setOnMouseClicked(mouseEvent -> {
                 try {
                     if (6 <= profile.getHighestLevelUnlocked()) {
-                        buildLevel(primaryStage, "test_level.txt",5); //TODO: Change on submission
+                        buildLevel(primaryStage, "test_level.txt", 5); //TODO: Change on submission
                         profile.setCurrentLevel(5);
                     } else {
                         System.out.println("This Player Has Yet To " +
@@ -216,7 +215,7 @@ public class LevelSelector {
 
         gPane.setBackground(new Background(image));
         Button backBtn = new Button("Back");
-        backBtn.setPrefSize(100,35);
+        backBtn.setPrefSize(100, 35);
         backBtn.setOnMouseClicked(mouseEvent -> mObject.buildMenu());
 
         gPane.add(makeLevelPane(primaryStage, 0), 0, 0);
@@ -253,8 +252,8 @@ public class LevelSelector {
             }
             centerBox.getChildren().add(scoreLbl);
 
-            Scene scene = new Scene(centerBox,300,150);
-            mObject.presetStage(endGameMessage, "sprites/raticon.png","Rats: Results",scene);
+            Scene scene = new Scene(centerBox, 300, 150);
+            mObject.presetStage(endGameMessage, "sprites/raticon.png", "Rats: Results", scene);
         }
 
         levelLost = false;
@@ -346,7 +345,7 @@ public class LevelSelector {
     /**
      * This method reveals the levels that have save files.
      *
-     * @param pane          the unrevealed Pane.
+     * @param pane       the unrevealed Pane.
      * @param levelSaved the level currently being revealed.
      * @return revealed Pane.
      */
@@ -403,7 +402,7 @@ public class LevelSelector {
 
         gPane.setBackground(new Background(image));
         Button backBtn = new Button("Back");
-        backBtn.setPrefSize(100,35);
+        backBtn.setPrefSize(100, 35);
         backBtn.setOnMouseClicked(mouseEvent -> mObject.buildMenu());
 
         gPane.add(makeSavePane(primaryStage, 0), 0, 0);
@@ -432,7 +431,7 @@ public class LevelSelector {
      * @param primaryStage the Stage that is displayed for the user.
      * @throws FileNotFoundException
      */
-    public void buildLevel(Stage primaryStage, String level,int number) throws FileNotFoundException {
+    public void buildLevel(Stage primaryStage, String level, int number) throws FileNotFoundException {
         primaryStage.setTitle("Rats: Steampunk Edition");
         primaryStage.getIcons().add(new Image("sprites/raticon.png"));
 
@@ -447,6 +446,7 @@ public class LevelSelector {
 
     /**
      * This method loads a level
+     *
      * @param primaryStage the Stage that is displayed for the user.
      * @throws FileNotFoundException
      */
@@ -461,14 +461,29 @@ public class LevelSelector {
         newLevel.setMenuInstance(mObject);
     }
 
+    /**
+     * This method sets the highest unlocked to the user's input.
+     *
+     * @param highestUnlocked the variable highest unlock is set to.
+     */
     public void setHighestUnlocked(int highestUnlocked) {
         this.highestUnlocked = highestUnlocked;
     }
 
+    /**
+     * This method sets the level won to the user's input.
+     *
+     * @param levelWon the variable level won is set to.
+     */
     public void setLevelWon(boolean levelWon) {
         this.levelWon = levelWon;
     }
 
+    /**
+     * This method sets the level lost to the user's input.
+     *
+     * @param levelLost the variable level lost is set to.
+     */
     public void setLevelLost(boolean levelLost) {
         this.levelLost = levelLost;
     }

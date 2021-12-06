@@ -3,8 +3,6 @@ package gui;
 import game.Level;
 import game.Tile;
 import itemClasses.*;
-import ratClasses.Rat;
-import sprites.ImageRefs;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -23,6 +21,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ratClasses.Rat;
+import sprites.ImageRefs;
 
 import java.util.ArrayList;
 
@@ -71,7 +71,7 @@ public class DragAndDrop {
      * and the Item Image in a GridPane layout.
      *
      * @param numberOfItem number of available Items.
-     * @param item image of the Item.
+     * @param item         image of the Item.
      * @return formatted GridPane with item image and number embedded.
      */
     public GridPane makeItemWithCounter(int numberOfItem, ImageView item) {
@@ -146,7 +146,7 @@ public class DragAndDrop {
         scoreLbl.setFont(new Font("Comic Sans", 16));
         scoreLbl.setTextFill(Color.WHITE);
         Pane invisiblePane = new Pane();
-        invisiblePane.setPrefSize(270,40);
+        invisiblePane.setPrefSize(270, 40);
         GridPane.setHalignment(scoreLbl, HPos.CENTER);
         scoreGPane.add(scoreLbl, 0, 1);
         scoreGPane.add(invisiblePane, 0, 2);
@@ -171,9 +171,9 @@ public class DragAndDrop {
         hpBar.setPrefSize(AVAILABLE_SPACE, 50);
         countRats();
 
-        hpBar.getChildren().addAll(rectangleWithText(Color.BLUE,maleRats)
-                ,rectangleWithText(Color.PINK,femaleRats)
-                ,rectangleWithText(Color.WHITE,babyRats));
+        hpBar.getChildren().addAll(rectangleWithText(Color.BLUE, maleRats)
+                , rectangleWithText(Color.PINK, femaleRats)
+                , rectangleWithText(Color.WHITE, babyRats));
 
         gPane.add(invisibleLbl, 0, 1);
         gPane.add(hpBar, 0, 2);
@@ -186,13 +186,13 @@ public class DragAndDrop {
      * rectangle with a label to create a numerical and
      * visual display for enemy Rats.
      *
-     * @param color Color of the Rectangle.
+     * @param color      Color of the Rectangle.
      * @param multiplier Number of Rats.
      * @return formatted StackPane.
      */
     public StackPane rectangleWithText(Color color, int multiplier) {
         StackPane completedPane = new StackPane();
-        Rectangle rectName = new Rectangle((AVAILABLE_SPACE/instance.getLOSS_CONDITION()) * multiplier,50,color);
+        Rectangle rectName = new Rectangle((AVAILABLE_SPACE / instance.getLOSS_CONDITION()) * multiplier, 50, color);
         Label ratCount = new Label(String.valueOf(multiplier));
         ratCount.setTextFill(Color.BLACK);
         ratCount.setFont(new Font("Comic Sans", 24));
@@ -231,8 +231,8 @@ public class DragAndDrop {
 
             Button saveBtn = new Button("Save");
             Button backToMenuBtn = new Button("Back To Menu");
-            backToMenuBtn.setPrefSize(100,35);
-            saveBtn.setPrefSize(70,35);
+            backToMenuBtn.setPrefSize(100, 35);
+            saveBtn.setPrefSize(70, 35);
             saveBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -249,9 +249,9 @@ public class DragAndDrop {
 
             gPane2.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
-            gPane2.add(saveBtn, 0,0);
+            gPane2.add(saveBtn, 0, 0);
 
-            Scene optionScene = new Scene(gPane2,300,150);
+            Scene optionScene = new Scene(gPane2, 300, 150);
 
             optionWindow.getIcons().add(new Image("sprites/raticon.png"));
             optionWindow.setTitle("Rats: Save");
@@ -478,6 +478,6 @@ public class DragAndDrop {
     }
 
     public boolean setSexChanged(boolean sexChangedUsed) {
-       return this.sexChangeUsed = sexChangedUsed;
+        return this.sexChangeUsed = sexChangedUsed;
     }
 }
