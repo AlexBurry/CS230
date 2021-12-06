@@ -50,7 +50,7 @@ public class Board extends Application implements ITickHandler {
         this.mapY = mapY;
         tileMap = new Tile[this.mapX][this.mapY];
         tempTileMap = tiles;
-        INSTANCE = Level.getInstance();
+        INSTANCE = Level.getCurrentLevelInstance();
         INSTANCE.addListener(this);
         for (String rt : rats) {
             String[] values = rt.split(",");

@@ -35,6 +35,7 @@ public class Level {
     private List<ITickHandler> listeners = new ArrayList<>();
     private ArrayList<ITickHandler> nullListeners = new ArrayList<>();
     private ArrayList<Rat> ratsToAddAfterTick = new ArrayList<>();
+    private Menu menu;
 
 
     /**
@@ -237,7 +238,7 @@ public class Level {
      *
      * @return Instance of this Level object
      */
-    public static Level getInstance() {
+    public static Level getCurrentLevelInstance() {
         return instance;
     }
 
@@ -335,5 +336,22 @@ public class Level {
      */
     public int getLevelNumber() {
         return levelNumber;
+    }
+
+    /**
+     * sets the menu variable so we can load it.
+     *
+     * @param mObject
+     */
+    public void setMenuInstance(Menu mObject) {
+        this.menu = mObject;
+    }
+
+    /**
+     * The menu which was used to launch the game
+     * @return menu- the menu instance
+     */
+    public Menu getMenu() {
+        return menu;
     }
 }
