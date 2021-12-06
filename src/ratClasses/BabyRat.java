@@ -1,8 +1,10 @@
 package ratClasses;
+
 import sprites.ImageRefs;
 
 /**
  * baby rats grow into adult rats.
+ *
  * @author Marcus
  * @version 0.1
  * @since 0.1
@@ -12,7 +14,8 @@ public class BabyRat extends Rat {
 
     /**
      * Constructor for baby rat. It takes all its data from the Rats class and sets its sprite as a baby rat.
-     * @param sex gender of rat
+     *
+     * @param sex  gender of rat
      * @param xPos x position
      * @param yPos y position
      */

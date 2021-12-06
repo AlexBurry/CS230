@@ -8,6 +8,7 @@ import itemClasses.DeathRatItem;
 import itemClasses.Item;
 import game.ITickHandler;
 import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The main rat class. Covers most important features of Rats.
+ *
  * @author Marcus, Trafford, Iggy
  * @version 0.1
  * @since 0.1
@@ -79,14 +81,15 @@ public class Rat implements ITickHandler {
 
 
     /**
-     *  Constructor for baby rat and death rat class.
-     *  Only used for adult rats
-     * @param sex the gender of the rat.
+     * Constructor for baby rat and death rat class.
+     * Only used for adult rats
+     *
+     * @param sex        the gender of the rat.
      * @param isDeathRat if the rat is a death rat.
-     * @param isSterile if the rat is sterile.
-     * @param xPos x position of rat.
-     * @param yPos y position of rat.
-     * @param isBaby if the rat is a baby
+     * @param isSterile  if the rat is sterile.
+     * @param xPos       x position of rat.
+     * @param yPos       y position of rat.
+     * @param isBaby     if the rat is a baby
      */
     public Rat(char sex, boolean isDeathRat, boolean isSterile, int xPos, int yPos, boolean isBaby) {
         currentDirection = Directions.NORTH;
@@ -107,6 +110,7 @@ public class Rat implements ITickHandler {
 
     /**
      * setter for a baby rat.
+     *
      * @param baby a boolean value true/false.
      */
     public void setBaby(boolean baby) {
@@ -387,7 +391,7 @@ public class Rat implements ITickHandler {
                         }
                         case MSex -> {
                             INSTANCE.getLevelBoard().getToolBar().setSexChanged(true);
-                            if(isBaby){
+                            if (isBaby) {
                                 sex = 'm';
                             } else {
                                 sex = 'M';
@@ -397,7 +401,7 @@ public class Rat implements ITickHandler {
                         }
                         case FSex -> {
                             INSTANCE.getLevelBoard().getToolBar().setSexChanged(true);
-                            if(isBaby){
+                            if (isBaby) {
                                 sex = 'f';
                             } else {
                                 sex = 'F';
