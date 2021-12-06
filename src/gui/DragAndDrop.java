@@ -260,6 +260,10 @@ public class DragAndDrop {
             optionWindow.centerOnScreen();
             optionWindow.show();
 
+            instance.getTickTimeline().pause(); //pauses the game tick
+            optionWindow.setOnCloseRequest(windowEvent -> {
+                instance.getTickTimeline().play(); //resumes the game tick on close
+            });
         });
 
         return gPane;

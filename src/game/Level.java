@@ -10,6 +10,7 @@ import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -397,5 +398,9 @@ public class Level {
      */
     public Menu getMenu() {
         return menu;
+    }
+
+    public Timeline getTickTimeline() {
+        return tickTimeline;
     }
 }
