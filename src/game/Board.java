@@ -22,23 +22,21 @@ import java.util.ArrayList;
  * @version 0.1
  */
 public class Board extends Application implements ITickHandler {
-
     private final int mapX;
     private final int mapY;
     private final int GAME_WIDTH = 1200;
     private final int GAME_HEIGHT = 884;
     private final int TILE_SIZE_PX = 60;
+    private final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    private final GraphicsContext gc = canvas.getGraphicsContext2D();
     private final String[][] tempTileMap;
     private final Tile[][] tileMap;
+    private final Level INSTANCE;
+
     private ArrayList<Tile> traversableTiles = new ArrayList<>();
     private ArrayList<Tile> tunnelTiles = new ArrayList<>(); //used to make sure tunnels remain ontop
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Rat> rats = new ArrayList<>();
-
-
-    private Level instance;
-    private final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
-    private final GraphicsContext gc = canvas.getGraphicsContext2D();
     private DragAndDrop toolBar;
     private BorderPane root;
 
@@ -53,8 +51,8 @@ public class Board extends Application implements ITickHandler {
         this.mapY = mapY;
         tileMap = new Tile[this.mapX][this.mapY];
         tempTileMap = tiles;
-        instance = Level.getInstance();
-        instance.addListener(this);
+        INSTANCE = Level.getInstance();
+        INSTANCE.addListener(this);
         for (String rt : rats) {
             String[] values = rt.split(",");
             Rat newRat;
@@ -66,10 +64,8 @@ public class Board extends Application implements ITickHandler {
                         Integer.parseInt(values[2]));
             }
             this.rats.add(newRat);
-            instance.addListener(newRat);
+            INSTANCE.addListener(newRat);
         }
-
-
     }
 
     /**
@@ -214,7 +210,7 @@ public class Board extends Application implements ITickHandler {
 
         if (item.getClass() == BombItem.class || item.getClass() == SteriliseItem.class) {
 
-            instance.addListener((ITickHandler) item);
+            INSTANCE.addListener((ITickHandler) item);
         }
         items.add(item);
         this.drawItems();
@@ -230,7 +226,7 @@ public class Board extends Application implements ITickHandler {
             if (item.getMyItemType() == Item.itemType.Gas || item.getMyItemType() == Item.itemType.Bomb
                     || item.getMyItemType() == Item.itemType.Sterilise) {
                 //if we are listeners..
-                instance.markListenerForRemoval((ITickHandler) item);
+                INSTANCE.markListenerForRemoval((ITickHandler) item);
             }
             items.remove(item);
             redrawTile(item.getX(), item.getY(), true);
@@ -291,7 +287,7 @@ public class Board extends Application implements ITickHandler {
      */
     public void removeRat(Rat rat) {
         //remove the listener. All rats are listeners.
-        instance.markListenerForRemoval(rat);
+        INSTANCE.markListenerForRemoval(rat);
 
         if (rats.contains(rat)) {
             int x = rat.getX();
@@ -337,8 +333,8 @@ public class Board extends Application implements ITickHandler {
     /**
      * Check if an item exists at a given location already.
      *
-     * @param x
-     * @param y
+     * @param x X position
+     * @param y Y position
      * @return true if an item exists, false otherwise.
      */
     public boolean existsItemAt(int x, int y) {

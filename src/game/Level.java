@@ -20,17 +20,16 @@ import java.util.List;
  * @version 1.0
  */
 public class Level {
-    private float timeRemaining;
-    private int currentScore;
+    private static Level instance;
     private final int ALLOWED_TIME;
-    private int timeLeft;
-    private int levelNumber;
     private final int LOSS_CONDITION;
     private final Board LEVEL_BOARD;
     private final Inventory LEVEL_INVENTORY;
+    private int timeLeft;
+    private int levelNumber;
+    private int currentScore;
     private String profileName;
     private String levelName;
-    private static Level instance;
     private ArrayList<String> itemsRespawnRate = new ArrayList<>();
     private int tickCount = 1; //used to keep ticks in line.
     private List<ITickHandler> listeners = new ArrayList<>();
