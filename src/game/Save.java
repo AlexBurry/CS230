@@ -18,9 +18,10 @@ import static java.lang.Character.toUpperCase;
  * @version 1.0
  */
 public class Save {
-    private String playerName;
     private final int MAPX;
     private final int MAPY;
+    private final String PROFILE_NAME;
+    private final String LEVEL_NAME;
     private String[][] stringMap;
     private ArrayList<String> ratList;
     private ArrayList<String> itemsRespawnRate;
@@ -29,8 +30,7 @@ public class Save {
     private int lossCondition;
     private int currentScore;
     private String[] inv;
-    private final String PROFILE_NAME;
-    private final String LEVEL_NAME;
+
 
     /**
      * Constructor for Save class
@@ -53,13 +53,11 @@ public class Save {
                 int currentScore, int[] inv) {
         PROFILE_NAME = profileName;
         LEVEL_NAME = levelName;
-        Level INSTANCE = Level.getCurrentLevelInstance();
         this.MAPX = MAPX;
         this.MAPY = MAPY;
         stringMap = tileMap;
         ratList = getRatInfo(rats);
         itemList = getItemInfo(items);
-        //this.inv = inv;
         this.itemsRespawnRate = itemsRespawnRate;
         this.timeLeft = timeLeft;
         this.lossCondition = lossCondition;

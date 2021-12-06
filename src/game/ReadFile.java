@@ -14,9 +14,9 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class ReadFile {
+    private final Stage primaryStage;
     private int mapX;
     private int mapY;
-    private final Stage primaryStage;
     private Scanner in;
 
     /**

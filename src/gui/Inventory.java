@@ -12,6 +12,7 @@ import java.util.Scanner;
  * @author Alex
  */
 public class Inventory implements ITickHandler {
+    private final int MAX_ITEM_NUMBER = 4;
     private int bombSpawnRate;
     private int mSexChangeSpawnRate;
     private int fSexChangeSpawnRate;
@@ -36,7 +37,6 @@ public class Inventory implements ITickHandler {
     private int numberOfPoison;
     private int numberOfNoEntry;
     private int numberOfDeathRat;
-    private final int MAX_ITEM_NUMBER = 4;
 
     /**
      * Constructor for inventory

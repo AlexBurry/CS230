@@ -20,24 +20,16 @@ import java.util.List;
  * @version 1.0
  */
 public class Level {
-
-    private static Level currentLevelInstance;
-
+    private static Level instance;
+    private final int ALLOWED_TIME;
     private final int LOSS_CONDITION;
     private final Board LEVEL_BOARD;
-
     private final Inventory LEVEL_INVENTORY;
-    private final int ALLOWED_TIME;
-
-
-    private int currentScore;
-
     private int timeLeft;
     private int levelNumber;
-
+    private int currentScore;
     private String profileName;
     private String levelName;
-
     private ArrayList<String> itemsRespawnRate = new ArrayList<>();
     private int tickCount = 1; //used to keep ticks in line.
     private List<ITickHandler> listeners = new ArrayList<>();
@@ -60,7 +52,7 @@ public class Level {
      */
     public Level(int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
                  int allowedTime, int lossCondition, Stage primaryStage) {
-        currentLevelInstance = this;
+        instance = this;
 
         this.ALLOWED_TIME = allowedTime;
         timeLeft = this.ALLOWED_TIME;
@@ -102,7 +94,7 @@ public class Level {
     public Level(int mapX, int mapY, String[][] tiles, ArrayList<String> rats, ArrayList<String> itemsRespawnRate,
                  int timeLeft, int lossCondition, int currentScore, ArrayList<String> items, ArrayList<String> inv,
                  Stage primaryStage) {
-        currentLevelInstance = this;
+        instance = this;
 
         this.ALLOWED_TIME = timeLeft;
         this.timeLeft = this.ALLOWED_TIME;
@@ -263,7 +255,7 @@ public class Level {
      * @return Instance of this Level object
      */
     public static Level getCurrentLevelInstance() {
-        return currentLevelInstance;
+        return instance;
     }
 
     /**
@@ -272,18 +264,18 @@ public class Level {
     public void checkLossCondition() {
         if (LEVEL_BOARD.getRats().size() >= LOSS_CONDITION) {
             System.out.println("Game over");
-            menu.buildMenu();
+            System.exit(0);
         }
         if (timeLeft == 0) {
             System.out.println("Game over");
-            menu.buildMenu();
+            System.exit(0);
         }
         ArrayList<Rat> properRats = LEVEL_BOARD.getRats();
         properRats.removeIf(rat -> rat.getClass() == DeathRat.class); //removes deathrats from consideration in the rats
         if (properRats.size() == 0) {
             currentScore = currentScore + timeLeft;
             System.out.println("Game won: " + currentScore);
-            menu.buildMenu();
+            System.exit(0);
         }
     }
 
@@ -365,6 +357,7 @@ public class Level {
 
     /**
      * sets the menu variable so we can load it.
+     *
      * @param mObject
      */
     public void setMenuInstance(Menu mObject) {
@@ -372,8 +365,8 @@ public class Level {
     }
 
     /**
-     * The menu which was used to launch the game.
-     * @return menu - the menu instance.
+     * The menu which was used to launch the game
+     * @return menu- the menu instance
      */
     public Menu getMenu() {
         return menu;
